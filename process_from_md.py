@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-from ogbujipt.embedding.pgvector import DataDB
+from ogbujipt.embedding.pgvector import DataDB  # XXX: THIS IMPLEMENTATION OF OGBUJIPT REQUIRES BEING ON 0.9.1 OR HIGHER
 
 # setup
 e_model = SentenceTransformer('all-MiniLM-L6-v2')  # Load the embedding model
