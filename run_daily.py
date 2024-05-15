@@ -28,11 +28,10 @@ SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'
 DEFAULT_DOTS_SPACING = 0.2  # Number of seconds between each dot printed to console
 
 
-# Not currently used
-# async def indicate_progress(pause=DEFAULT_DOTS_SPACING):
-#     while True:
-#         print('.', end='', flush=True)
-#         await asyncio.sleep(pause)
+async def indicate_progress(pause=DEFAULT_DOTS_SPACING):
+    while True:
+        print('.', end='', flush=True)
+        await asyncio.sleep(pause)
 
 
 async def do_sxng_news_search(terms):
