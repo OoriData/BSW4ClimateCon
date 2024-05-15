@@ -124,10 +124,6 @@ async def main(searxng_JSON):
     newsDB = await DB_upload(newsDB, news_batch)
     print('Uploaded!')
 
-    print('\nCleanup: dropping table...')
-    await newsDB.drop_table()
-    print('Dropped!')
-
     print('\nDone!')
 
 
