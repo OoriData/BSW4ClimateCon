@@ -59,9 +59,16 @@ def LLM_summarize(news_content, sumarize_prompt):
     return summarized_news
 
 
-def LLM_action_plan(news_data):
+def LLM_action_plan(news_summary, action_prompt):
+    # Have not tested yet
+    call_prompt = action_prompt.format(news_summary = news_summary)
 
-    
+    action_plan  = LLM_obj.call(
+        prompt = call_prompt,
+        max_tokens=2047
+    ).first_choice_text
+
+    return action_plan
 
     return
 
