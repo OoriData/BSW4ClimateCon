@@ -55,6 +55,8 @@ def MD_extract(searxng_JSON):
     '''
     Takes in json from searchXNG(?) and extract the URL/Source, Title of article, and content of the page
     '''
+    search_query = searxng_JSON['query']
+
     refined_data = []
     for raw_result in searxng_JSON['results']:
 
@@ -64,7 +66,7 @@ def MD_extract(searxng_JSON):
             'content': raw_result.get('content'),           # item content as a MD
             'search_engine': raw_result.get('engine'),      # engine that got this item
             'search_score': raw_result.get('score'),        # relevance score from engine
-            'search_query': raw_result.get('search_query')  # 
+            'search_query': search_query
         }
         refined_data.append(extracted_item)
 
@@ -101,6 +103,7 @@ async def DB_upload(newsDB, news_batch):
                 'title': item['title'],                  # title
                 'search_engine': item['search_engine'],  # search_engine
                 'search_score': item['search_score'],    # search_score
+                'search_query': item['search_query']
             }
         ) for item in news_batch)
 
