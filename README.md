@@ -44,6 +44,8 @@ Support code & processes:
 
 * Complete pull process for e-mail addresses from Google Form
 * Complete data pipeline
-* Implement prototype LLM processing tree (via [OgbujiPT]())
+* Separate out language using [Word Loom](https://github.com/OoriData/OgbujiPT/wiki/Word-Loom:-A-format-for-managing-language-for-AI-LLMs-(including-prompts))
+* Implement prototype LLM processing tree (via [OgbujiPT](https://github.com/OoriData/OgbujiPT))
 * Data flow & other engineering diagrams
 * Implement e-mail batch send process
+* Combine separate program files such as `process_from_md.py` into `run_daily.py` (using )
