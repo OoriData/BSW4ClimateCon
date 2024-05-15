@@ -49,3 +49,32 @@ Support code & processes:
 * Data flow & other engineering diagrams
 * Implement e-mail batch send process
 * Combine separate program files such as `process_from_md.py` into `run_daily.py` (using )
+
+# Dev setup
+
+```sh
+python3.11 -m venv $HOME/.local/venv/bsw
+pip install -Ur requirements.txt 
+
+```
+
+# WHITEBOARD notes from Kickoff day (Tuesday)
+
+## Problem:
+**keeping up with climate news is overwhelming and demoralizing**
+
+## Solution:
+- Hub to push info/ideas/actions to user based on climate news
+- utilizing AI to customize/agregate/summarize(/score on the backend?) feed based on specific interests
+- email the user actionable steps
+  - daily weather
+  - summarize relevant news (for the user)
+  - give users a selection of action items relevant to the situation
+
+## maybe out of scope, but cool ideas!
+- gamification?
+  - UX focused around a big thermometer that's goin up with climate change and when you do an action, you make a dent on it!
+- show/record what the user has done to keep them invested
+- (geographical) scale filtering?
+- politicization?
+- group action?
