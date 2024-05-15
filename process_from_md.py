@@ -122,6 +122,13 @@ async def main(searxng_JSON):
     newsDB = await DB_upload(newsDB, news_batch)
     print('Uploaded!')
 
+    print('Cleanup: dropping table...')
+    newsDB.drop_table()
+    print('Dropped!')
+
+    print('done!')
+
+
 if __name__ == '__main__':
     # Open the JSON file in read mode
     with open('sample_serps_plus_content.json', 'r') as file:

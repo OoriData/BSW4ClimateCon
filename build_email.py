@@ -53,7 +53,6 @@ You are a climate activist bot. Your role is to read summaries of news articles 
 {news_summary} 
 ```
 
-
 Based on the issues highlighted in the summary, please provide a simple, actionable step that the user can incorporate into their daily life to address one of the climate challenges mentioned. Ensure the action is feasible and directly related to the content of the summary.  Bonus points for a suggested action that is impactful and fun.
 
 '''
