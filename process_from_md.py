@@ -110,23 +110,25 @@ async def DB_upload(newsDB, news_batch):
 
 
 async def main(searxng_JSON):
-    print('Processing searxng results JSON...')
+    print('\nProcessing searxng results to Database:')
+
+    print('\nProcessing searxng results JSON...')
     news_batch = MD_extract(searxng_JSON)
     print(f'Got {len(news_batch)} stories!')
 
-    print('Checking if news table exists in database, if not creating one...')
+    print('\nChecking if news table exists in database, if not creating one...')
     newsDB = await build_DB()
     print('Database ready!')
     
-    print('Uploading stories to database...')
+    print('\nUploading stories to database...')
     newsDB = await DB_upload(newsDB, news_batch)
     print('Uploaded!')
 
-    print('Cleanup: dropping table...')
-    newsDB.drop_table()
+    print('\nCleanup: dropping table...')
+    await newsDB.drop_table()
     print('Dropped!')
 
-    print('done!')
+    print('\nDone!')
 
 
 if __name__ == '__main__':
