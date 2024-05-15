@@ -1,3 +1,7 @@
 click
 httpx
 trafilatura
+
+ogbujipt
+sentence_transformers
+pgvector

@@ -1,0 +1,2 @@
+# If needed to pin to some specific commit or branch, use the following syntax:
+OgbujiPT @ git+https://github.com/OoriData/OgbujiPT@{BRANCH_OR_COMMIT}
