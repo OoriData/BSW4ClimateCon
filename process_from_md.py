@@ -79,3 +79,12 @@ def relivant_news():
     '''
     get relivant news from db
     '''
+
+def main():
+    return
+
+if __name__ == '__main__':
+    # load JSON
+
+    # feed JSON to main loop
+    main()
