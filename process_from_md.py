@@ -19,7 +19,6 @@ PASSWORD = 'example'
 
 app = FastAPI()
 
-
 @app.post("/")
 async def search_result_to_DB(file: UploadFile):
     searxng_JSON = json.load(file.file)
@@ -41,7 +40,7 @@ def MD_extract(searxng_JSON):
         extracted_item = {
             'url': raw_result.get('url'),
             'title': raw_result.get('title'),
-            'content': raw_result.get('content'),           # item content as a MD
+            'content': raw_result.get('markdown_content'),  # item content as a MD
             'search_engine': raw_result.get('engine'),      # engine that got this item
             'search_score': raw_result.get('score'),        # relevance score from engine
             'search_query': search_query
