@@ -26,6 +26,7 @@
   padding: 0.5em 1em;
   border-radius: 9px;
   border: 0 none;
+  cursor: pointer;
 }
 
 /* Enable hover only on non-touch devices */
