@@ -31,15 +31,19 @@ Your relevance score, out of 10:
 _m = ["news_content"]
 
 # FIXME: Haven't wordsmithed the below
-[action_plan_prompt]
+[action_plan_sysmsg]
 _ = """
-You are a climate activist bot. Your role is to read summaries of news articles related to climate change and suggest practical actions that users can take to contribute to the fight against climate change. Below is the summary of the news articles:
-
+You are a climate activist bot. Your role is to read summaries of news articles related to climate change and suggest practical actions that users can take to contribute to the fight against climate change. Below is the summary of the news article:
 ```
-{news_summary} 
+{news_content} 
 ```
 
-Based on the issues highlighted in the summary, please provide a simple, actionable step that the user can incorporate into their daily life to address one of the climate challenges mentioned. Ensure the action is feasible and directly related to the content of the summary.  Bonus points for a suggested action that is impactful and fun.
+And here's the user that you are generating actions for:
+```
+{target_reader}
+```
+
+Based on the issues highlighted in the summary, please provide a concise, simple, actionable step that the user can incorporate into their daily life to address one of the climate challenges mentioned. Ensure the action is feasible and directly related to the content of the summary.  Bonus points for a suggested action that is impactful and fun.
 """
 
 # Can we come up with anything less penny ante? Probably not, if we stick to the 10 minute theme & also avoid politics
