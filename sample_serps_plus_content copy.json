@@ -1,0 +1,462 @@
+{
+  "query": "climate boulder",
+  "number_of_results": 0,
+  "results": [
+    {
+      "url": "https://www.weather.gov/bou/",
+      "title": "Denver/Boulder, CO",
+      "content": "3 hours ago \u2014 NWS Forecast Office Boulder, CO \u00b7 Satellite \u00b7 Local Ice Accumulation Reports \u00b7 Snowfall Analysis \u00b7 Observed Precipitation \u00b7 Observations \u00b7 Local Storm Reports ...\u200eWatches, Warnings & Advisories \u00b7 \u200eWeather Story \u00b7 \u200eFire Weather \u00b7 \u200eHigh Wind Warning",
+      "img_src": null,
+      "engine": "google",
+      "parsed_url": [
+        "https",
+        "www.weather.gov",
+        "/bou/",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "google"
+      ],
+      "positions": [
+        1
+      ],
+      "score": 1.0,
+      "category": "general",
+      "markdown_content": "NWS\nAll NOAA\n\nPrivacy Policy\n\nDenver/Boulder, CO\n\nWeather Forecast Office\n\nLast Map Update: Tue, May. 14, 2024 at 3:19:14 pm MDT\n\nHAZARDS\nCurrent Hazards\nEnhanced Decision Support\nSPC Outlooks\n\nFORECASTS\nForecast Discussion\nFire Weather\nAviation\nText Products\n\nCURRENT CONDITIONS\nCurrent Observations\n\nPAST WEATHER RECORDS\nLocal Climate Plots\nWeather Records\nOn this day in Wx History\n\nWEATHER SAFETY\nNOAA Wx Radio\nSkyWarn\n\nOFFICE ACTIVITIES\nCooperative Program\nHistorical Observation Sites\n\nUS Dept of Commerce\nNational Oceanic and Atmospheric Administration\nNational Weather Service\nDenver/Boulder, CO325 BroadwayBoulder, CO 80305-3328303-494-3210 for a recording call 303-494-4221Comments? Questions? Please Contact Us.\n"
+    },
+    {
+      "url": "https://www.colorado.edu/today/2024/05/08/council-discusses-climate-plan-energy-plant-april-meeting",
+      "title": "Council discusses climate plan, energy plant at April meeting",
+      "content": "18 hours ago \u2014 The Campus Sustainability Executive Council convened Tuesday, April 9, to discuss the following topics: Climate Action Plan next steps.",
+      "img_src": null,
+      "engine": "google",
+      "parsed_url": [
+        "https",
+        "www.colorado.edu",
+        "/today/2024/05/08/council-discusses-climate-plan-energy-plant-april-meeting",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "google"
+      ],
+      "positions": [
+        2
+      ],
+      "score": 0.5,
+      "category": "general",
+      "markdown_content": "The Campus Sustainability Executive Council convened Tuesday, April 9, to discuss the following topics:\n\n## Climate Action Plan next steps\n**Discussion: **The council discussed the state of the Climate Action Plan (CAP) and the intention to release a final version during the campus leadership panel at the Campus Sustainability Summit. Vice Chancellor for Infrastructure and Sustainability Chris Ewing presented the [10 main feedback themes (PDF)](https://www.colorado.edu/sustainability/sites/default/files/attached-files/cap_feedback_incorporation.pdf) that the CAP steering committee extracted from the more than 600 comments that were received during the open comment period.\n**Decision:** The [updated CAP was announced](https://www.colorado.edu/today/2024/04/25/final-climate-action-plan-released) during the Campus Sustainability Summit. This is a living document that will be revised, added to and improved upon over time.\n## West District Energy Plant update\n**Discussion:** A faculty, staff and student shared governance group that includes members from the Boulder Faculty Assembly, faculty from the College of Engineering and Applied Science and the law school, and a graduate student from the law school submitted a report recommending alternatives to the [planned West District Energy Plant upgrades](https://www.colorado.edu/today/2023/11/08/correction-regent-approved-energy-plant-upgrades-reduce-nitrogen-oxides-help-meet-new-air) following a deeper review of the project.\n**Next steps: **The alternative plan is being assessed to determine next steps related to the project.\n*This is part of a series that will cover CU Boulder Sustainability Executive Council meeting agendas, discussions and decisions. The Sustainability Executive Council brings together decision-makers and leaders from across campus to drive action and accountability to achieve carbon neutrality, goals outlined in the chancellor\u2019s Call to Climate Action and the implementation of the campus Climate Action Plan. *"
+    },
+    {
+      "url": "https://www.weather.gov/bou/blog?date=2024-05-8",
+      "title": "NWS Denver/Boulder Blog",
+      "content": "9 hours ago \u2014 NWS Denver/Boulder Blog \u00b7 Hourly Forecasts \u00b7 Activity Planner \u00b7 User Defined Area Forecast \u00b7 Fire Weather \u00b7 Winter Weather \u00b7 Forecast Discussion \u00b7 Experimental Heat ...",
+      "img_src": null,
+      "engine": "google",
+      "parsed_url": [
+        "https",
+        "www.weather.gov",
+        "/bou/blog",
+        "",
+        "date=2024-05-8",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "google"
+      ],
+      "positions": [
+        3
+      ],
+      "score": 0.3333333333333333,
+      "category": "general",
+      "markdown_content": "NWS\nAll NOAA\n\nPrivacy Policy\n\nDenver/Boulder, CO\n\nWeather Forecast Office\n\n\nFound 1 for date range \"2024-05-08 to 2024-05-09\". Clear Search\n\nHAZARDS\nCurrent Hazards\nEnhanced Decision Support\nSPC Outlooks\n\nFORECASTS\nForecast Discussion\nFire Weather\nAviation\nText Products\n\nCURRENT CONDITIONS\nCurrent Observations\n\nPAST WEATHER RECORDS\nOn this day in Wx History\nLocal Climate Plots\nWeather Records\n\nWEATHER SAFETY\nSkyWarn\nNOAA Wx Radio\n\nOFFICE ACTIVITIES\nHistorical Observation Sites\nCooperative Program\n\nUS Dept of Commerce\nNational Oceanic and Atmospheric Administration\nNational Weather Service\nDenver/Boulder, CO325 BroadwayBoulder, CO 80305-3328303-494-3210 for a recording call 303-494-4221Comments? Questions? Please Contact Us.\n"
+    },
+    {
+      "url": "https://nccasc.colorado.edu/",
+      "title": "North Central Climate Adaptation Science Center: welcome",
+      "content": "13 hours ago \u2014 The North Central Climate Adaptation Science Center is a partnership between the US Geological Survey, the University of Colorado Boulder and five consortium ...",
+      "img_src": null,
+      "engine": "google",
+      "parsed_url": [
+        "https",
+        "nccasc.colorado.edu",
+        "/",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "google"
+      ],
+      "positions": [
+        4
+      ],
+      "score": 0.25,
+      "category": "general",
+      "markdown_content": "**The North Central Climate Adaptation Science Center is a partnership between the US Geological Survey, the University of Colorado Boulder and five consortium partners. The NC CASC fosters innovative and applied research in support of tribal, federal, state, and local natural resource management and decision-making. The North Central center is one of nine regional climate centers in the national CASC network created to help meet the changing needs of land and resource managers across the country. It serves Colorado, Wyoming, Montana, North Dakota, South Dakota, Kansas and Nebraska. **\n# welcome\n#### Traditional Ecological Knowledge\nThere is an increasing demand to integrate Traditional Ecological Knowledge (TEK) with Western science for climate change adaptation. However, the challenge lies in how climate, ecological, and social scientists can collaborate equitably with Tribal communities to achieve this."
+    },
+    {
+      "url": "https://www.cbsnews.com/colorado/news/colorado-river-might-recover-two-decade-drought-thanks-precipitation/",
+      "title": "Colorado River might recover from two-decade drought ...",
+      "content": "15 hours ago \u2014 A new study coming from researchers at CU Boulder, reveals that precipitation, not temperature, will keep the Colorado River fuller than previous research ...",
+      "img_src": null,
+      "engine": "google",
+      "parsed_url": [
+        "https",
+        "www.cbsnews.com",
+        "/colorado/news/colorado-river-might-recover-two-decade-drought-thanks-precipitation/",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "google"
+      ],
+      "positions": [
+        5
+      ],
+      "score": 0.2,
+      "category": "general",
+      "markdown_content": "# Colorado River might recover from two-decade drought thanks to precipitation\nThe American Southwest and its drinking water may not be in as bad of shape as originally thought. A new study coming from researchers at CU Boulder, reveals that *precipitation*, not temperature, will keep the Colorado River fuller than previous research told us.\n\nThe Journal of Climate published the study Tuesday as a guide for policymakers, water managers, states and tribes to figure out how to monitor the river until 2050. New guidelines are going to replace regulations from 2007, which are set to expire at the end of 2026.\n\nComprehensive climate model analysis from CIRES, an institute of the University of Colorado Boulder, forecasting precipitation for the next 25 years, shows a 70% chance of increased precipitation compared with the last two decades, which brought the Colorado River to a devastating drought.\n\n\"The temperature is warming, but that's not the full story -- you add precipitation and you get a fuller picture,\" says Balaji Rajagopalan, co-author of the study.\n\nResearchers studied Lee's Ferry flows, which are the dividing point of the Colorado's upper and lower basins, and where many tourists typically launch boats into the Grand Canyon.\n\n\"We find it is more likely than not that Lee Ferry flows will be greater during 2026-2050 than since 2000 as a consequence of a more favorable precipitation cycle,\" says Martin Hoerling, the paper's lead author. \"This will compensate the negative effects of more warming in the near term. There's roughly a 4% chance that Lee Ferry flows could decline another 20% in the next quarter century compared to the last 20 years.\"\n\nColorado River headwaters originate as snow in Colorado and Wyoming mountains above 10,000 feet and supplies water to 40 million people in seven states and parts of Mexico.\n\nScientists have regarded 15 million acre feet of water as a key figure in measuring Colorado River flows. They've garnered that the river has had extreme wet and dry periods throughout the last century starting in 1895. Since the 2000 megadrought, the river has produced around 12.5 million acre feet each year. Arizona, California and Nevada have agreed to save three million acre feet ahead of the 2026 deadline.\n"
+    },
+    {
+      "url": "https://www.timeanddate.com/weather/usa/boulder/hourly",
+      "title": "Hourly forecast for Boulder, Colorado, USA",
+      "content": "13 hours ago \u2014 Forecast for the coming week for Boulder, shown in an hour-by-hour graph ... Hour-by-Hour Forecast for Boulder, Colorado, USA ... TodayHourly14 DaysPastClimate.",
+      "img_src": null,
+      "engine": "google",
+      "parsed_url": [
+        "https",
+        "www.timeanddate.com",
+        "/weather/usa/boulder/hourly",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "google"
+      ],
+      "positions": [
+        6
+      ],
+      "score": 0.16666666666666666,
+      "category": "general",
+      "markdown_content": "Currently: 73 \u00b0F. Light rain. Broken clouds. (Weather station: Broomfield / Jeffco, USA).\n\n[See more current weather](/weather/usa/boulder)## Hour-by-hour Forecast in Boulder \u2014 Graph\n## Detailed Hourly Forecast \u2014 Next 24 hours\nScroll right to see more\n\nConditions | Comfort | Precipitation |\n---|---|---|\nTime | Temp | Weather | Feels Like | Wind | Humidity | Chance | Amount |\n---|---|---|---|---|---|---|---|\n4:00 pmTue, May 14\n\n| 74 \u00b0F | Passing showers. Mostly cloudy. | 76 \u00b0F | 14 mph | \u2191 | 26% | 33% | 0.01\" (rain) |\n---|---|---|---|---|---|---|---|---|\n5:00 pm | 72 \u00b0F | Passing showers. Cloudy. | 76 \u00b0F | 11 mph | \u2191 | 27% | 42% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n6:00 pm | 69 \u00b0F | Passing showers. Overcast. | 69 \u00b0F | 9 mph | \u2191 | 30% | 32% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n7:00 pm | 68 \u00b0F | Passing showers. Overcast. | 68 \u00b0F | 8 mph | \u2191 | 32% | 27% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n8:00 pm | 65 \u00b0F | Passing showers. Overcast. | 65 \u00b0F | 8 mph | \u2191 | 36% | 22% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n9:00 pm | 63 \u00b0F | Overcast. | 63 \u00b0F | 8 mph | \u2191 | 41% | 10% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n10:00 pm | 59 \u00b0F | Drizzle. Overcast. | 58 \u00b0F | 7 mph | \u2191 | 51% | 24% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n11:00 pm | 57 \u00b0F | Drizzle. Overcast. | 55 \u00b0F | 7 mph | \u2191 | 59% | 32% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n12:00 amWed, May 15\n\n| 55 \u00b0F | Drizzle. Overcast. | 53 \u00b0F | 7 mph | \u2191 | 66% | 37% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n1:00 am | 53 \u00b0F | Drizzle. Overcast. | 52 \u00b0F | 6 mph | \u2191 | 69% | 36% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n2:00 am | 52 \u00b0F | Drizzle. Overcast. | 50 \u00b0F | 5 mph | \u2191 | 73% | 34% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n3:00 am | 50 \u00b0F | Drizzle. Overcast. | 49 \u00b0F | 4 mph | \u2191 | 77% | 24% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n4:00 am | 49 \u00b0F | Drizzle. Overcast. | 47 \u00b0F | 4 mph | \u2191 | 80% | 17% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n5:00 am | 47 \u00b0F | Drizzle. Overcast. | 46 \u00b0F | 5 mph | \u2191 | 83% | 16% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n6:00 am | 47 \u00b0F | Drizzle. Overcast. | 45 \u00b0F | 5 mph | \u2191 | 85% | 18% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n7:00 am | 48 \u00b0F | Sprinkles. Broken clouds. | 48 \u00b0F | 2 mph | \u2191 | 82% | 19% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n8:00 am | 52 \u00b0F | Sprinkles. Scattered clouds. | 52 \u00b0F | 1 mph | \u2191 | 72% | 16% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n9:00 am | 56 \u00b0F | Sunny. | 57 \u00b0F | 3 mph | \u2191 | 63% | 7% | - |\n---|---|---|---|---|---|---|---|---|\n10:00 am | 60 \u00b0F | Mostly sunny. | 60 \u00b0F | 5 mph | \u2191 | 56% | 0% | - |\n---|---|---|---|---|---|---|---|---|\n11:00 am | 62 \u00b0F | Sprinkles. Broken clouds. | 62 \u00b0F | 6 mph | \u2191 | 52% | 20% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n12:00 pm | 63 \u00b0F | Drizzle. Cloudy. | 63 \u00b0F | 7 mph | \u2191 | 49% | 25% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n1:00 pm | 64 \u00b0F | Sprinkles. Broken clouds. | 64 \u00b0F | 6 mph | \u2191 | 49% | 28% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n2:00 pm | 63 \u00b0F | Sprinkles. Mostly cloudy. | 63 \u00b0F | 4 mph | \u2191 | 50% | 31% | 0.00\" (rain) |\n---|---|---|---|---|---|---|---|---|\n3:00 pm | 62 \u00b0F | Sprinkles. Mostly cloudy. | 62 \u00b0F | 3 mph | \u2191 | 53% | 33% | 0.01\" (rain) |\n---|---|---|---|---|---|---|---|---|"
+    },
+    {
+      "url": "https://www.weatherbug.com/weather-forecast/hourly/boulder-co-80301/?hour=2024051205",
+      "title": "Local and National Hourly Weather Forecasts",
+      "content": "15 hours ago \u2014 Hour by hour weather updates and local hourly weather forecasts for Boulder, Colorado including, temperature, precipitation, dew point, humidity and wind.",
+      "img_src": null,
+      "engine": "google",
+      "parsed_url": [
+        "https",
+        "www.weatherbug.com",
+        "/weather-forecast/hourly/boulder-co-80301/",
+        "",
+        "hour=2024051205",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "google"
+      ],
+      "positions": [
+        7
+      ],
+      "score": 0.14285714285714285,
+      "category": "general",
+      "markdown_content": "Tuesday3pm70% Chance of Light Rain74\u00b0Precip 70%3pm Tue74\u00b0Feels like 74\u00b070% Chance of Light Rain\nHumidity21%\n-\nWindWNW 9\n-\nDew Point32\u00b0\n-\n-\n-\n4pm70% Chance Rain Showers73\u00b0Precip 70%4pm Tue73\u00b0Feels like 73\u00b070% Chance Rain Showers\nHumidity22%\n-\nWindWNW 9\n-\nDew Point32\u00b0\n-\n-\n-\n5pm70% Chance Rain Showers72\u00b0Precip 70%5pm Tue72\u00b0Feels like 72\u00b070% Chance Rain Showers\nHumidity23%\n-\nWindWNW 9\n-\nDew Point33\u00b0\n-\n-\n-\n6pmPartly Cloudy70\u00b0Precip 10%6pm Tue70\u00b0Feels like 70\u00b0Partly Cloudy\nHumidity26%\n-\nWindWNW 8\n-\nDew Point34\u00b0\n-\n-\n-\n7pmMostly Cloudy68\u00b0Precip 10%7pm Tue68\u00b0Feels like 68\u00b0Mostly Cloudy\nHumidity30%\n-\nWindW 7\n-\nDew Point35\u00b0\n-\n-\n-\n8pmMostly Cloudy64\u00b0Precip 10%8pm Tue64\u00b0Feels like 64\u00b0Mostly Cloudy\nHumidity36%\n-\nWindW 7\n-\nDew Point37\u00b0\n-\n-\n-\n8:09p9pmMostly Cloudy60\u00b0Precip 10%9pm Tue60\u00b0Feels like 60\u00b0Mostly Cloudy\nHumidity45%\n-\nWindWNW 7\n-\nDew Point39\u00b0\n-\n-\n-\n10pmMostly Cloudy57\u00b0Precip 20%10pm Tue57\u00b0Feels like 57\u00b0Mostly Cloudy\nHumidity53%\n-\nWindWNW 7\n-\nDew Point40\u00b0\n-\n-\n-\n11pmMostly Cloudy56\u00b0Precip 20%11pm Tue56\u00b0Feels like 56\u00b0Mostly Cloudy\nHumidity57%\n-\nWindNW 6\n-\nDew Point41\u00b0\n-\n-\n-\nWednesday12am30% Chance Rain Showers55\u00b0Precip 30%12am Wed55\u00b0Feels like 55\u00b030% Chance Rain Showers\nHumidity60%\n-\nWindNNW 6\n-\nDew Point42\u00b0\n-\n-\n-\n1am30% Chance Rain Showers55\u00b0Precip 30%1am Wed55\u00b0Feels like 55\u00b030% Chance Rain Showers\nHumidity62%\n-\nWindN 5\n-\nDew Point42\u00b0\n-\n-\n-\n2am30% Chance Rain Showers54\u00b0Precip 30%2am Wed54\u00b0Feels like 54\u00b030% Chance Rain Showers\nHumidity66%\n-\nWindNNW 4\n-\nDew Point43\u00b0\n-\n-\n-"
+    },
+    {
+      "url": "https://www.fortlewis.edu/fort-lewis-college-news/news-detail/four-corners-climate-summit-building-community-to-grow-climate-adaptation-in-the-western-slope",
+      "title": "Four Corners Climate Summit: Building community to grow ...",
+      "content": "11 hours ago \u2014 More than 400 people attended the inaugural Summit, aimed at fostering awareness and unity around regional climate interests and building resilience to climate ...",
+      "img_src": null,
+      "engine": "google",
+      "parsed_url": [
+        "https",
+        "www.fortlewis.edu",
+        "/fort-lewis-college-news/news-detail/four-corners-climate-summit-building-community-to-grow-climate-adaptation-in-the-western-slope",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "google"
+      ],
+      "positions": [
+        8
+      ],
+      "score": 0.125,
+      "category": "general",
+      "markdown_content": "307\n\n\n## Four Corners Climate Summit: Building community to grow climate adaptation in the Western Slope\n### More than 400 people attended the inaugural Summit, aimed at fostering awareness and unity around regional climate interests and building resilience to climate change.\nDURANGO, Colo.\u2014 Sitting in a circle outside the President\u2019s Office at Fort Lewis College, renowned environmental writer Terry Tempest-Williams and a handful of students discussed writing, art, activism, and the intersectionality of all three.\n\n\u201cI can tell you I was changed,\u201d Tempest-Williams would later tell more than 400 people during her keynote speech at the inaugural Four Corners Climate Summit.\n\nThe intimate meeting preceded the day-long summit, which included presentations by the authors of the Fifth National Climate Assessment, artists, and local environment and sustainability advocates.\n\n\u201cThe fact that traditional knowledge is being integrated and used with Western science [at FLC], the fact that there\u2019s now greater representation of Native people in all aspects of leadership... it was something so much deeper than hope,\u201d she said. \u201cIf we focus on the changes and the possibilities we see, then I believe we are on the right path.\u201d\n\n**Tracking challenges to build resilience**\n\nAttendees gathered at the Student Union Ballroom for the main event, packed with expert panels, presentations by local organizations, and art expressing the impact of climate changes.\n\nIn the morning, presentations were led by scientists and authors of the [Fifth National Climate Assessment](https://nca2023.globalchange.gov/), discussing the impacts of climate change on human health, wildfires, agriculture, and drought.\n\nArt also played a significant role in the Summit, with the Art x Climate Gallery showcasing the impact of climate change through artistic expression.\n\nIn addition, outside the Ballroom, attendees were greeted by a large art piece depicting a river. The project came from Keri Brandt Off's Animacy and Kinship class. Off is a sociology professor at FLC.\n\n\u201cWe collectively decided that we wanted to create an artistic display of the animacy of all elements of life, including rivers, mountains, animals, soil, and water, and that we wanted to do it in the spirit of kinship and solidarity.\u201d\n\nStudents found materials and brought their sewing machines, glue, and scissors to work on the project.\n\n\u201cFor two weeks, we sat on the floor and tried to create this project that represented how we felt about the animacy of water, the life of water, and the value of water to all beings. It was partly inspired by the Rights of Rivers gathering in October in the fall. And so, it was in honor of the Rights of Rivers. It was just this exciting collective project where we decided to decenter traditional academic practice to think about new ideas and ways of relating together to create knowledge and beauty.\u201d\n\n**Four Corners in action**\n\nFollowing a lunch provided with support from the USDA Southwest Climate Hub, Tempest-Williams talked about her meeting with the six FLC students and how impressed she had been with them and shared stories of community resilience, citing examples such as efforts to address the declining levels of the Great Salt Lake.\n\n\u201cToday, the story of colonialism is being transformed into a story of restoration and integration, where crisis is becoming a consensus to change,\u201d she said. \u201cTogether, our collective works can change the weather system... the political weather, the spiritual weather, and become pragmatic visionaries like I saw today with the students here at Fort Lewis.\u201d\n\nThe FLC students who had met with her in the morning were delighted.\n\n\u201cThis experience with Terry\u2026 it was absolutely incredible,\u201d said senior Brooke Laughter, a [Tribal Water Media Fellow](https://www.fourcornerswater.org/tribal-water-media) who talked about how through her film \u201c[They Call Me Water](https://www.fourcornerswater.org/portals/18/assets/media/2023-twmf/brooke_laughter_they-call-me-water.mov),\u201d she wanted to highlight the Indigenous perspective of considering water as a living being. Laughter graduated Saturday with a B.S. in Environmental Science.\n\n\n\u201cIt really invigorated me and my understanding that there are many forms of activism and that every little piece helps. That's very exciting. It's changed my view of my form of activism, my art.\u201d\n\n\u201cIt was really magical,\u201d added Tanner Besse, who graduated Cum Laude on Saturday with a B.A. in Environmental Conservation Management, a minor in Sociology and Human Services, and a Regenerative Food Certificate. \u201cShe put a lot of things that I was thinking into words. Her courageous conversation resonated with me; if we trust ourselves with the future, that's a powerful tool. Seeing someone so wise as Terry taking time with a bunch of 20-year-olds and showing how hopeful she is in us just fuels that part of me that wants to cause change and create change that helps more people.\u2019\n\n\nThe final portion of the public event was held at the Center of Southwest Studies\u2019 exhibit \u201cColoradans and our Shared Environment in Times of Challenge and Change,\u201d which featured talks by exhibit artists Holly Barnard, PhD (CU Boulder), and Jocelyn Catterson (Colorado Art Science Environment fellow).\n\nSarah Johnson, of Basalt, Colorado, works in climate change education in the Rocky Mountain region. She said the event was an excellent opportunity to hear about the latest scientific work on climate change and teach us more about the work being done in the Four Corners region.\n\n\n\u201cThe State of Colorado is bigger than the I-25 corridor or the Front Range. There are so many examples of excellent relationships with the land and so many examples of people making a difference,\u201d she said. \"The different presenters affirmed the importance of storytelling. If this were a science issue, it would have been solved years ago, but it is a people issue. Hearing that in a practical, applied way was very affirming.\u201d\n\n\nProvost Mario Martinez said the call for action is also evident for the community and FLC.\n\n\u201cThe purpose of today is to build awareness, to help you see the things that we do, but also the things that we can do together in partnership,\u201d he said, \u201cWe've heard from powerful voices today. Voices of data, pictures, and graphics. Questions from those in attendance. Voices of poetry and writing from Terry~~i~~. Voices of song, voices of experience. Voices of our professors, staff, community members, and students. This is deep, deep work and things that we care about.\u201d\n\nThe Summit is a collaboration between the FLC Provost Office, the FLC Foundation, the USDA Southwest Climate Hub, Department of Energy-Office of Legacy Management, and various donors.\n\n[Visit the Four Corners Climate Summit's page to learn more.](https://www.fortlewis.edu/climate-summit)\n\n[Donate to the Green Fund.](https://host.nxt.blackbaud.com/donor-form/?svcid=tcs&formId=22ae67e8-cfbe-441c-98b9-cd9b44e2086a&envid=p-321oQ5LY9kWPz41omOC2kg&zone=usa&utm_source=newsletter&utm_medium=email&utm_content=Donate%20to%20the%20Green%20Fund&utm_campaign=Thank%20you%20to%20FCCS%20Attendees)\n\n"
+    },
+    {
+      "url": "https://coloradosun.com/2024/05/08/temperature-20240508/",
+      "title": "The health and climate bills you need to know about",
+      "content": "13 hours ago \u2014 The health and climate bills you need to know about. All the bills, amendments and debates that shaped the legislature's work on health and the environment.",
+      "img_src": null,
+      "engine": "google",
+      "parsed_url": [
+        "https",
+        "coloradosun.com",
+        "/2024/05/08/temperature-20240508/",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "google"
+      ],
+      "positions": [
+        9
+      ],
+      "score": 0.1111111111111111,
+      "category": "general",
+      "markdown_content": "Hey there, Colorado, and welcome to another edition of The Temperature, where this week we are in legislative overdrive.\n\nThey say all good things must come to an end, but the same is also true for bad things. Oh, no, I don\u2019t mean the legislative session here. I was talking about your Colorado Rockies\u2019 truly remarkable feat of ignominy: In its first 31 games of the season, the Rockies trailed at some point in each game. Never been done before in Major League Baseball.\n\nThat streak [ended last week](https://www.cbssports.com/mlb/news/rockies-end-historic-streak-colorado-gets-first-wire-to-wire-win-after-trailing-in-each-of-its-first-31-games/), and the Rockies celebrated by losing their next three games, including two shutouts, and yet are still, somehow, not the worst team in baseball. No matter how bad you think it is, it could always get worse.\n\nAnd that brings us back to the state legislature, which today is closing out its 2024 legislative session \u2014 705 bills in 120 days and who knows how many hours of sleep lost. But at least there\u2019s no talk of a special session!\n\nThere was a ton that happened during those 120 days, and we have the highlights on health, climate and environmental issues below. But for even more legislative recapping, be sure to watch tomorrow for The Sun\u2019s annual list of 101 bills to know about, assembled by our masterful \u2014 and very tired \u2014 politics team.\n\nAnd with that, they say things can\u2019t end unless they begin (they don\u2019t really, but we\u2019re saying it now), so let\u2019s get to the news.\n\n### TEMP CHECK\n#### HEALTH\n## No major new programs, but lots of tinkering to the health care system\n**74**\nThe number of bills categorized as related to health care that the state legislature considered this year\n\nUnlike in recent years during the Polis administration, this legislative session saw no big health policy overhauls. No quasi-public option insurance programs. No plans to import prescription drugs from other countries.\n\nBut what the session lacked in magnitude for health bills, it made up for in quantity. Lawmakers debated 74 bills related to health care, according to the legislature\u2019s website, making health the second-hottest subject for bills behind the catch-all \u201cstate government\u201d heading. There were also 34 bills related to public health, according to the website, though some bills got counted in both categories.\n\nHere\u2019s what happened with three bills we kept an especially close eye on. All of these have cleared both chambers and are on their way to the governor\u2019s desk.\n\n[ HOUSE BILL 1380:](https://leg.colorado.gov/bills/hb24-1380) This bill would require owners of debt to put their names on lawsuits filed against people who owe them money. The bill follows\n[reporting by The Colorado Sun and 9News](https://coloradosun.com/2024/02/19/uchealth-debt-collectors/)that showed\n**UCHealth**sues thousands of patients per year but doesn\u2019t put its name on the suits, instead allowing its debt collectors to be the named plaintiff, effectively concealing the health system\u2019s involvement from the public. As The Sun and 9News have since learned, the practice is common \u2014 both among hospitals in Colorado and other entities suing people for debts.\nA [tweak in its first committee hearing](https://coloradosun.com/2024/04/12/uchealth-medical-debt-lawsuits-bill/), to allow debt collectors to also be listed as plaintiffs, cleared the bill\u2019s path for passage. Along the way, though, it lost a provision that would have prohibited plaintiffs from asking a judge to issue a warrant for debtors who are nonresponsive to legal proceedings.\n\n[ SENATE BILL 203:](https://leg.colorado.gov/bills/sb24-203) This bill emerged from the death of another bill,\n[Senate Bill 60](https://leg.colorado.gov/bills/sb24-060), that would have exempted so-called orphan drugs \u2014 drugs used to treat rare diseases \u2014 from review by the state\u2019s price-capping\n**Prescription Drug Affordability Board**. The concern with Senate Bill 60 was that pharmaceutical companies have increasingly sought orphan designations for niche uses of drugs that primarily treat more common diseases \u2014 meaning that roughly two-thirds of the drugs eligible for a PDAB review have at least one orphan designation.\nPatients with rare diseases and their families [are incredibly worried](https://coloradosun.com/2024/04/30/colorado-prescription-drug-affordability-board-concerns/) that the PDAB could unintentionally make their drugs unavailable in Colorado. While many of these patients wanted to see Senate Bill 60 move forward with amendments, that didn\u2019t happen. Instead, lawmakers passed Senate Bill 203, which requires the PDAB to consult with the state\u2019s **Rare Disease Advisory Council** when reviewing a drug.\n\n[ HOUSE BILL 1136:](https://leg.colorado.gov/bills/hb24-1136) Coloradans broadly agree\n[that too much social media use is bad for kids](https://coloradosun.com/2024/02/08/social-media-youth-mental-health/). So this bill tries to do something about that.\nThe bill requires social media companies to display pop-ups to users under the age of 18 either when they are on social media between the hours of 10 p.m. and 6 a.m. or when they have spent a total of one hour on the social media platform during a 24-hour period. The pop-ups will have information about how social media use impacts the physical and mental health of youth.\n\nThe bill didn\u2019t see many big changes during its trip through the legislature, but the text is a masterwork of small lobbyist edits. The pop-ups were originally described as \u201cwarnings.\u201d That became \u201cnotifications.\u201d The list of what doesn\u2019t constitute a social media platform regulated by the bill stretches across three pages and includes email services, online shopping sites, streaming platforms, teleconferencing services, gaming sites and others.\n\nThe bill also instructs the state to create an online resource bank of research about the health impacts of social media.\n\n**10 MORE HEALTH BILLS THAT PASSED:**\n**AND 5 THAT DIDN\u2019T:**\n#### MORE HEALTH NEWS\n#### CLIMATE\n## Big compromises on the environment, some big losses, and some lil\u2019 chestnuts return\nWe here at the **Environment Home Office** are a bit fatigued by late night Avalanche overtime and hours of Nederland [discussing (and repealing!) \u201crights of nature.\u201d](https://coloradosun.com/2024/05/07/nederland-rights-of-nature-new-dam-reservoir/#:~:text=Town%20of%20Nederland%20leaders%20loved,to%20build%20its%20own%20dam.) So we\u2019re going by subject, falling far short of John\u2019s comprehensive list, but hitting some high notes from the **2024 legislature**.\n\n**Air pollution:** Advocates for powerful new restrictions on Colorado\u2019s oil and gas industry and any other emitters of ozone-causing gases may look back on the 2024 session and feel pretty good. But maybe not. It\u2019s hard to tell. There were so many moving parts to the clean air debates and backroom negotiations, and so many details added into complex bills, that it may take months to see how effective the new measures will be.\nWhat we do know: In exchange for agreeing to another truce on fall ballot measures from either oil and gas trade groups or their opponents, the Democratic-led chambers passed twin bills increasing enforcement of oil and gas emissions and creating a new mass transit and wildlife-supporting fee from oil and gas production. [Senate Bills 229](https://leg.colorado.gov/sites/default/files/documents/2024A/bills/2024a_229_01.pdf) and[ 230](https://leg.colorado.gov/bills/sb24-230) were the packaged deal. More about the transit aspect just below.\n\nTo make the deals, though, environmental advocates watched some cherished ideas fall away to another year, or perhaps never. Some wanted a total ban on new drilling permits by 2030; others wanted at least a summer \u201cpause\u201d on drilling activity to cut down on toxic ozone. Many sought a beefed up permitting and punitive fine process in state regulatory agencies.\n\nNonprofits took heart from different signals of success. **Western Resource Advocates** \u201ccelebrated\u201d the new oil and gas fees, without commenting on the overall dealmaking. \u201cThe good news is that more funding for existing programs can ensure that Colorado\u2019s distinctive landscapes and diverse wildlife weather the worst effects of climate change,\u201d said **Jon Goldin-Dubois, WRA\u2019s president. \u201c**SB24-230 is an important step \u2013 it will partially mitigate oil and gas production\u2019s harms and allow the state to conserve and protect more important natural habitat and wildlife.\u201d\n\n**Transit: **Passenger trains and more frequent bus service were big winners in 2024, in large part because of the air pollution compromises mentioned above. Senate Bill 230, the second half of the big compromise package, raises $175 million a year by the new production fee, and distributes most of it to state and local authorities to build more and better public transit. A smaller share of the new money goes to bolstering open space and wildlife.\nIn a typical response from environment-minded groups, **Southwest Energy Efficiency Project** executive director and Air Quality Control Commissioner **Elise Jones** said the bill \u201cunleashes unprecedented financial support for expanding bus and rail service to better serve Coloradans across the state. This bill is good news for climate stability, air quality, affordability, and mobility.\n\n**PFAS \u201cforever chemicals\u201d:** The ubiquitous, highly contaminating family of waterproofing chemicals will see a new round of restrictions in Colorado, though sponsors of a bill aimed at closing gaps in previous regulations had to make some concessions on timing and exemptions. More cookware and other common consumer goods on Colorado store shelves will have to be PFAS-free in coming years as[ Senate Bill 81](https://leg.colorado.gov/bills/sb24-081) heads to the governor\u2019s desk.\nCo-sponsor **Lisa Cutter**, a Democratic senator from Littleton, called it another big step in controlling PFAS toxins. \u201cWe got phase-out (of PFAS) in several important categories,\u201d said Cutter, who has been fighting products with unnecessary PFAS additives for years.\n\n**Recycling:** Very much a glass half full/empty proposition this year. State regulators and the biggest recycling nonprofits celebrated the **Joint Budget Committee** pushing forward next steps for the [Producer Responsibility fee](https://coloradosun.com/2024/03/13/colorado-recycling-expansion-costs-critics/). The largest producers of consumer packaging, like **Pepsi**, **Coca-Cola**, **Molson Coors**, etc., will charge themselves a fee that the state will distribute to local governments to expand curbside recycling across Colorado. Smaller businesses continue to attack the complex law, saying it will raise consumer prices and not add much to Colorado\u2019s poor waste diversion rates.\n**Pesticides:** Those wanting to rein in excessive pesticide use took a big loss, as a renewed push to allow tighter local regulation of the chemicals failed again when [House Bill 1178](https://leg.colorado.gov/bills/hb24-1178) hit business opposition. Towns like Vail wanted to go beyond state regulations in controlling how pesticides are applied, but applicators, restaurants and other businesses apparently argued successfully they could not deal with dozens of local regulations.\n**Suncor:** Legislation does not customarily single out businesses by name, but since Suncor is the only major Colorado oil refinery, a bill hiring a new refinery monitor has only one target. Neighbors of the big polluter in north Denver and south Adams County have long wanted the state to either close or strictly regulate Suncor in Commerce City. They\u2019ve demanded permit rejections and far bigger fines, among other sanctions.\n[House Bill 1338 ](https://leg.colorado.gov/bills/hb24-1338)is what they could get this time around: \u201ca petroleum refinery regulation expert to examine whether a specific petroleum refinery rule should be adopted by the commission and examine other regulatory or nonregulatory measures performed.\u201d There\u2019s also a new rapid response team for complaints of violations, and required state studies for \u201ccumulative impact analyses\u201d for the most pollution-impacted communities.\n\u201cIt\u2019s clear that one of the biggest winners of our legislative session was our environment,\u201d said Democratic Rep. **Manny Rutinel**, Adams County. \u201cThe session was full of difficult negotiations with industry groups, but overall, I was happy with the deals we were able to strike because of the powerful voices of advocates across Colorado who have continued to demand a cleaner and safer environment.\u201d\n\n**Wolverines:** It may be a few years yet, but yes, wolverines that are exceedingly rare in the lower 48 these days will be on their way back to Colorado, a century after they were essentially eradicated from the Rocky Mountains.[ Senate Bill 171](https://leg.colorado.gov/bills/sb24-171) also aims at making wolverine reintroduction far less controversial than the ongoing battles over gray wolves, with the bill supported by state wildlife officials, ski areas, sporting groups and bipartisan legislators. Colorado wildlife researchers will now come up with a reintroduction plan and fashion it to meet federal Endangered Species Act requirements.\n\u201cWolverines are part of Colorado\u2019s natural heritage, and the widespread support wolverine reintroduction has garnered demonstrates how much Coloradoans unite behind wildlife,\u201d said Stefan Ekernas, director of Colorado field conservation at Denver Zoo.\n\n**Waste Tires:** Maybe not the biggest issue, but used-tire mountains have been [an all-time Booth obsession](https://coloradosun.com/2021/01/19/colorado-tire-pile-fire-recycling-solar-oil/). Clearly it\u2019s not just me \u2014 Colorado has one of the worst tire mountain problems in the nation. Debates over raising waste tire fees in order to finally rid us of our embarrassing tire monofills recur at the legislature every few years. Colorado\u2019s current waste tire fee of 55 cents, which barely pays for inspecting and administering waste tire rules, was set to sunset at the end of the year.\n[Senate Bill 123](https://leg.colorado.gov/sites/default/files/documents/2024A/bills/fn/2024a_sb123_r2.pdf) reauthorizes the whole tire recovery and recycling program, creates a new enterprise fund to spend higher fees, and allows state bureaucrats to raise the fee up to $2.50 per tire to create more grants for reusing them. Each time Colorado reauthorizes and raises the fee, the state reports more success in emptying out those ugly and fire-prone monofills. More about that later in a future edition.\nStick with us in coming weeks as we continue to sort through a flurry of last minute bills and compromise revisions on key environmental issues. And if you notice an important one that was given a thumbs up or quietly killed, that we\u2019ve overlooked, please let us know. The legislators themselves are occasionally surprised at news of what they actually did.\n\n#### MORE CLIMATE NEWS\n### CHART OF THE WEEK\nA few days ago, I received [a question via social media](https://twitter.com/johningold/status/1785315678473371699) about the **Colorado Family Planning Initiative** and its sustained impacts.\n\nThe program, which started in 2009 with the help of grant funding, provided free or low-cost birth control to women, especially intrauterine devices, or IUDs. As my colleague **Jennifer Brown** [has reported previously](https://www.denverpost.com/2017/11/30/colorado-teen-pregnancy-abortion-rates-drop-free-low-cost-iud/), the program led to a dramatic drop in teen pregnancies and abortions from 2009 to 2016, when the grant funding ended.\n\nThe chart above shows that teen abortion numbers have continued to remain well below mid-2000s levels. In 2005, Colorado saw 780 abortions in teens ages 17 and younger. By 2016, that number dropped to 256, though it has increased since then.\n\nLooking at the data another way, in 2005, abortions among teens 17 and younger made up nearly 7% of the state\u2019s total abortions. Last year, the proportion was below 3%.\n\nColorado\u2019s number of teen abortions went up significantly in 2022, when the **U.S. Supreme Court\u2019**s decision in Dobbs v. Jackson Women\u2019s Health Organization opened the door for state abortion bans to take effect and [increased the number of out-of-state patients](https://coloradosun.com/2023/07/27/colorado-abortions-surge-texas-patients/) traveling to Colorado for an abortion. Last year saw more than 4,000 abortions in Colorado for out-of-state residents of all ages, a slight increase over the previous year.\n\nThe **Colorado Department of Public Health and Environment** is working to calculate abortion rates for Colorado residents for 2023, in order to see how trends have changed (or haven\u2019t) separate from the out-of-state influx and a growing population. Those figures should be available this summer.\n\nIncidentally, this question came to me via a bit of incomplete information circulating on social media \u2014 the idea that Republicans in the Colorado state Senate [killed the family planning program](https://www.vox.com/2015/5/7/8565949/colorado-iuds-republicans) in 2016.\n\nBut [the program never went away](https://coloradosun.com/2019/10/21/colorado-abortion-rates-keep-declining-free-iuds-and-easier-access-to-the-pill-are-the-reason/). After the Senate blocked funding, the state [found more private money](https://kffhealthnews.org/news/private-money-saves-colorado-iud-program-as-fight-continues-for-public-funding/) to sustain it for a year. The next year, public funding for the program [received bipartisan support](https://www.durangoherald.com/article/20160407/NEWS01/160409714/0/FRONTPAGE/Teen-IUD-funding-survives-Senate-vote/).\n\nSo this is just a reminder to be careful out there with online information. Real-life narratives often aren\u2019t as tidy as they appear on social media.\n\nYou can learn more about the family planning program [on its website](https://cdphe.colorado.gov/fpp).\n\n### HEAT MAP\n#### CLIMATE\n#### HEALTH\nHey, nice to see you down here at the end of the newsletter! You\u2019re that much closer to the end of the legislative session. Hang in there just a little bit longer.\n\nThanks for reading. Your support of local journalism is one thing we hope never ends.\n\nTil next week.\n\n*\u2014 John & Michael*\n#### Corrections & Clarifications\nNotice something wrong? The Colorado Sun has an ethical responsibility to [fix all factual errors](https://coloradosun.com/corrections/). Request a correction by emailing [corrections@coloradosun.com](mailto:corrections@coloradosun.com).\n"
+    },
+    {
+      "title": "National Weather Service",
+      "content": "NOAA National Weather Service. Current conditions at Elbert Mountain - Monument Pass (KMNH) Lat: 39.22\u00b0NLon: 104.64\u00b0WElev: 7042ft.",
+      "url": "https://forecast.weather.gov/MapClick.php?lat=39.26746&lon=-104.89774",
+      "engine": "duckduckgo",
+      "parsed_url": [
+        "https",
+        "forecast.weather.gov",
+        "/MapClick.php",
+        "",
+        "lat=39.26746&lon=-104.89774",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "duckduckgo"
+      ],
+      "positions": [
+        1
+      ],
+      "score": 1.0,
+      "category": "general",
+      "markdown_content": "### Hazardous Weather Conditions\n**Current conditions at**\n## Elbert Mountain - Monument Pass (KMNH)\n**Lat:**39.22\u00b0N\n**Lon:**104.64\u00b0W\n**Elev:**7042ft.\nPartly Cloudy\n\n66\u00b0F\n\n19\u00b0C\n\nHumidity |\n32% |\nWind Speed |\nN 6 mph |\nBarometer |\n29.96 in |\nDewpoint |\n36\u00b0F (2\u00b0C) |\nVisibility |\n10.00 mi |\nLast update |\n14 May 3:15 pm MDT |\n**Extended Forecast for**\n## 5 Miles E Perry Park CO\nThis Afternoon\n\nHigh: 71 \u00b0F\n\nChance\n\nT-storms\nTonight\n\nLow: 42 \u00b0F\n\nChance\n\nT-storms then\nSlight Chance\nT-storms\nWednesday\n\nHigh: 60 \u00b0F\n\nChance\n\nShowers then\nShowers\nWednesday Night\n\nLow: 41 \u00b0F\n\nShowers\n\nLikely then\nSlight Chance\nT-storms\nThursday\n\nHigh: 65 \u00b0F\n\nMostly Sunny\n\nthen Chance\nShowers\nThursday Night\n\nLow: 43 \u00b0F\n\nMostly Clear\n\nFriday\n\nHigh: 75 \u00b0F\n\nSunny then\n\nSlight Chance\nT-storms\nFriday Night\n\nLow: 49 \u00b0F\n\nMostly Clear\n\nSaturday\n\nHigh: 75 \u00b0F\n\nSunny then\n\nSlight Chance\nT-storms and\nBreezy\n## Detailed Forecast\n**This Afternoon**\nA 50 percent chance of showers and thunderstorms. Partly sunny, with a high near 71. Northwest wind 10 to 13 mph, with gusts as high as 20 mph.\n\n**Tonight**\nA 50 percent chance of showers and thunderstorms, mainly before midnight. Mostly cloudy, with a low around 42. North northeast wind 5 to 9 mph becoming south southwest in the evening.\n\n**Wednesday**\nA chance of showers and thunderstorms, then showers and possibly a thunderstorm after noon. High near 60. West northwest wind 5 to 10 mph becoming north northeast in the morning. Winds could gust as high as 16 mph. Chance of precipitation is 80%.\n\n**Wednesday Night**\nShowers likely and possibly a thunderstorm before midnight, then a slight chance of showers and thunderstorms between midnight and 3am, then a slight chance of showers after 3am. Cloudy, then gradually becoming partly cloudy, with a low around 41. North northeast wind 5 to 10 mph becoming west southwest after midnight. Winds could gust as high as 17 mph. Chance of precipitation is 60%.\n\n**Thursday**\nA 30 percent chance of showers and thunderstorms after noon. Mostly sunny, with a high near 65. South southwest wind 6 to 10 mph becoming north northeast in the afternoon. Winds could gust as high as 15 mph.\n\n**Thursday Night**\nMostly clear, with a low around 43.\n\n**Friday**\nA 10 percent chance of showers and thunderstorms after noon. Sunny, with a high near 75.\n\n**Friday Night**\nMostly clear, with a low around 49.\n\n**Saturday**\nA slight chance of showers and thunderstorms after noon. Mostly sunny, with a high near 75. Breezy.\n\n**Saturday Night**\nA slight chance of showers and thunderstorms before midnight. Partly cloudy, with a low around 46.\n\n**Sunday**\nA slight chance of showers and thunderstorms. Mostly sunny, with a high near 72. Breezy.\n\n**Sunday Night**\nA slight chance of showers and thunderstorms. Partly cloudy, with a low around 46.\n\n**Monday**\nA chance of showers and thunderstorms. Mostly sunny, with a high near 73. Breezy.\n\n**Monday Night**\nA chance of showers and thunderstorms. Partly cloudy, with a low around 45. Breezy.\n\n**Tuesday**\nA chance of showers and thunderstorms. Mostly sunny, with a high near 69. Breezy.\n\n## Additional Forecasts and Information\n[Zone Area Forecast for Elbert/Central and East Douglas Counties Above 6000 Feet, CO](MapClick.php?zoneid=COZ041)\nClick Map For Forecast\n\n## ABOUT THIS FORECAST\nPoint Forecast:\n\n5 Miles E Perry Park CO\n39.27\u00b0N 104.89\u00b0W (Elev. 7192 ft)\n\n39.27\u00b0N 104.89\u00b0W (Elev. 7192 ft)\n\n2:48 pm MDT May 14, 2024\n\n3pm MDT May 14, 2024-6pm MDT May 21, 2024\n"
+    },
+    {
+      "title": "Boulder, CO Weather History | Weather Underground",
+      "content": "Current Weather for Popular Cities . San Francisco, CA 66 \u00b0 F Clear; Manhattan, NY 68 \u00b0 F Clear; Schiller Park, IL (60176) warning 60 \u00b0 F Cloudy; Boston, MA 54 \u00b0 F Fog; Houston, TX warning 78 ...",
+      "url": "https://www.wunderground.com/history/daily/us/co/boulder/KCOBOULD858/date/2024-5-9",
+      "engine": "duckduckgo",
+      "parsed_url": [
+        "https",
+        "www.wunderground.com",
+        "/history/daily/us/co/boulder/KCOBOULD858/date/2024-5-9",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "duckduckgo"
+      ],
+      "positions": [
+        2
+      ],
+      "score": 0.5,
+      "category": "general",
+      "markdown_content": "Thank you for reporting this station. We will review the data in question.\n\n\nYou are about to report this weather station for bad data. Please select the information that is incorrect.\n\nSee more\n\n(Reset Map)\n\nNo PWS\n\nReset Map, or Add PWS.\n"
+    },
+    {
+      "title": "358 Arapahoe Ave Unit A, Boulder, CO 80302 - Redfin",
+      "content": "For Sale: 3 beds, 4.5 baths \u2219 2979 sq. ft. \u2219 358 Arapahoe Ave Unit A, Boulder, CO 80302 \u2219 $3,875,000 \u2219 MLS# 1009059 \u2219 Coming Soon: Elegantly poised and gracefully designed, the residences at 358 Ar...",
+      "url": "https://www.redfin.com/CO/Boulder/358-Arapahoe-Ave-80302/unit-A/home/190726834",
+      "engine": "duckduckgo",
+      "parsed_url": [
+        "https",
+        "www.redfin.com",
+        "/CO/Boulder/358-Arapahoe-Ave-80302/unit-A/home/190726834",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "duckduckgo"
+      ],
+      "positions": [
+        3
+      ],
+      "score": 0.3333333333333333,
+      "category": "general",
+      "markdown_content": null
+    },
+    {
+      "title": "32894 Upper Boulder Rd, Arrowbear, CA 92382 - Redfin",
+      "content": "For Sale: 3 beds, 2 baths \u2219 1656 sq. ft. \u2219 32894 Upper Boulder Rd, Arrowbear, CA 92382 \u2219 $399,000 \u2219 MLS# EV24092625 \u2219 Welcome to your picturesque retreat in the charming community of Arrowbear. ... About climate risks. Most homes have some risk of natural disasters, and may be impacted by climate change due to rising temperatures and ...",
+      "url": "https://www.redfin.com/CA/Running-Springs/32894-Upper-Boulder-Rd-92382/home/3553611",
+      "engine": "duckduckgo",
+      "parsed_url": [
+        "https",
+        "www.redfin.com",
+        "/CA/Running-Springs/32894-Upper-Boulder-Rd-92382/home/3553611",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "duckduckgo"
+      ],
+      "positions": [
+        4
+      ],
+      "score": 0.25,
+      "category": "general",
+      "markdown_content": null
+    },
+    {
+      "title": "234 Dorrance Rd, BOULDER CREEK, CA 95006 - Redfin",
+      "content": "For Sale: 3 beds, 2 baths \u2219 1394 sq. ft. \u2219 234 Dorrance Rd, BOULDER CREEK, CA 95006 \u2219 $675,000 \u2219 MLS# ML81964607 \u2219 This 3+ acre horse property truly checks every box. ... About climate risks. Most homes have some risk of natural disasters, and may be impacted by climate change due to rising temperatures and sea levels. Flood Factor.",
+      "url": "https://www.redfin.com/CA/Boulder-Creek/234-Dorrance-Rd-95006/home/2395876",
+      "engine": "duckduckgo",
+      "parsed_url": [
+        "https",
+        "www.redfin.com",
+        "/CA/Boulder-Creek/234-Dorrance-Rd-95006/home/2395876",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "duckduckgo"
+      ],
+      "positions": [
+        5
+      ],
+      "score": 0.2,
+      "category": "general",
+      "markdown_content": null
+    },
+    {
+      "title": "2104 Boulder Ct, Gastonia, NC 28054 | MLS# 4124958 | Redfin",
+      "content": "For Sale: 3 beds, 2.5 baths \u2219 1442 sq. ft. \u2219 2104 Boulder Ct, Gastonia, NC 28054 \u2219 $296,000 \u2219 MLS# 4124958 \u2219 Welcome to this stunning property with a natural color palette that creates a sense of t...",
+      "url": "https://www.redfin.com/NC/Gastonia/2104-Boulder-Ct-28054/home/144070329",
+      "engine": "duckduckgo",
+      "parsed_url": [
+        "https",
+        "www.redfin.com",
+        "/NC/Gastonia/2104-Boulder-Ct-28054/home/144070329",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "duckduckgo"
+      ],
+      "positions": [
+        6
+      ],
+      "score": 0.16666666666666666,
+      "category": "general",
+      "markdown_content": null
+    },
+    {
+      "title": "3793 Preserve Dr NE, Belmont, MI 49306 | MLS# 24022228 | Redfin",
+      "content": "For Sale: 4 beds, 3 baths \u2219 2800 sq. ft. \u2219 3793 Preserve Dr NE, Belmont, MI 49306 \u2219 $560,000 \u2219 MLS# 24022228 \u2219 WELCOME HOME to luxury without the maintenance! This stunning, move-in ready, stand al...",
+      "url": "https://www.redfin.com/MI/Belmont/3793-Preserve-Dr-NE-49306/home/96715767",
+      "engine": "duckduckgo",
+      "parsed_url": [
+        "https",
+        "www.redfin.com",
+        "/MI/Belmont/3793-Preserve-Dr-NE-49306/home/96715767",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "duckduckgo"
+      ],
+      "positions": [
+        7
+      ],
+      "score": 0.14285714285714285,
+      "category": "general",
+      "markdown_content": null
+    },
+    {
+      "title": "2331 Bouldercliff Way SE, Atlanta, GA 30316 | MLS# 7334666 - Redfin",
+      "content": "About climate risks. Most homes have some risk of natural disasters, and may be impacted by climate change due to rising temperatures and sea levels. ... 2419 Boulder Rd SE, Atlanta, GA 30316. $1/sq ft. 7 years older. 2419 Boulder Rd SE, Atlanta, GA 30316. SOLD JAN 25, 2024. $400,000 Sold Price. 4 beds. 2 baths.",
+      "url": "https://www.redfin.com/GA/Atlanta/2331-Bouldercliff-Way-SE-30316/home/23855061",
+      "engine": "duckduckgo",
+      "parsed_url": [
+        "https",
+        "www.redfin.com",
+        "/GA/Atlanta/2331-Bouldercliff-Way-SE-30316/home/23855061",
+        "",
+        "",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "duckduckgo"
+      ],
+      "positions": [
+        8
+      ],
+      "score": 0.125,
+      "category": "general",
+      "markdown_content": null
+    },
+    {
+      "url": "https://www.weatherbug.com/weather-forecast/hourly/boulder-co-80301/?hour=2024051305",
+      "title": "Local and National Hourly Weather Forecasts",
+      "content": "15 hours ago \u2014 Hour by hour weather updates and local hourly weather forecasts for Boulder, Colorado including, temperature, precipitation, dew point, humidity and wind.",
+      "img_src": null,
+      "engine": "google",
+      "parsed_url": [
+        "https",
+        "www.weatherbug.com",
+        "/weather-forecast/hourly/boulder-co-80301/",
+        "",
+        "hour=2024051305",
+        ""
+      ],
+      "template": "default.html",
+      "engines": [
+        "google"
+      ],
+      "positions": [
+        10
+      ],
+      "score": 0.1,
+      "category": "general",
+      "markdown_content": "Tuesday3pm70% Chance of Light Rain74\u00b0Precip 70%3pm Tue74\u00b0Feels like 74\u00b070% Chance of Light Rain\nHumidity21%\n-\nWindWNW 9\n-\nDew Point32\u00b0\n-\n-\n-\n4pm70% Chance Rain Showers73\u00b0Precip 70%4pm Tue73\u00b0Feels like 73\u00b070% Chance Rain Showers\nHumidity22%\n-\nWindWNW 9\n-\nDew Point32\u00b0\n-\n-\n-\n5pm70% Chance Rain Showers72\u00b0Precip 70%5pm Tue72\u00b0Feels like 72\u00b070% Chance Rain Showers\nHumidity23%\n-\nWindWNW 9\n-\nDew Point33\u00b0\n-\n-\n-\n6pmPartly Cloudy70\u00b0Precip 10%6pm Tue70\u00b0Feels like 70\u00b0Partly Cloudy\nHumidity26%\n-\nWindWNW 8\n-\nDew Point34\u00b0\n-\n-\n-\n7pmMostly Cloudy68\u00b0Precip 10%7pm Tue68\u00b0Feels like 68\u00b0Mostly Cloudy\nHumidity30%\n-\nWindW 7\n-\nDew Point35\u00b0\n-\n-\n-\n8pmMostly Cloudy64\u00b0Precip 10%8pm Tue64\u00b0Feels like 64\u00b0Mostly Cloudy\nHumidity36%\n-\nWindW 7\n-\nDew Point37\u00b0\n-\n-\n-\n8:09p9pmMostly Cloudy60\u00b0Precip 10%9pm Tue60\u00b0Feels like 60\u00b0Mostly Cloudy\nHumidity45%\n-\nWindWNW 7\n-\nDew Point39\u00b0\n-\n-\n-\n10pmMostly Cloudy57\u00b0Precip 20%10pm Tue57\u00b0Feels like 57\u00b0Mostly Cloudy\nHumidity53%\n-\nWindWNW 7\n-\nDew Point40\u00b0\n-\n-\n-\n11pmMostly Cloudy56\u00b0Precip 20%11pm Tue56\u00b0Feels like 56\u00b0Mostly Cloudy\nHumidity57%\n-\nWindNW 6\n-\nDew Point41\u00b0\n-\n-\n-\nWednesday12am30% Chance Rain Showers55\u00b0Precip 30%12am Wed55\u00b0Feels like 55\u00b030% Chance Rain Showers\nHumidity60%\n-\nWindNNW 6\n-\nDew Point42\u00b0\n-\n-\n-\n1am30% Chance Rain Showers55\u00b0Precip 30%1am Wed55\u00b0Feels like 55\u00b030% Chance Rain Showers\nHumidity62%\n-\nWindN 5\n-\nDew Point42\u00b0\n-\n-\n-\n2am30% Chance Rain Showers54\u00b0Precip 30%2am Wed54\u00b0Feels like 54\u00b030% Chance Rain Showers\nHumidity66%\n-\nWindNNW 4\n-\nDew Point43\u00b0\n-\n-\n-"
+    }
+  ],
+  "answers": [],
+  "corrections": [],
+  "infoboxes": [],
+  "suggestions": [
+    "Climate boulder map",
+    "nws boulder",
+    "denver weather",
+    "Climate boulder tomorrow",
+    "Climate boulder forecast",
+    "Climate boulder today",
+    "weather underground boulder",
+    "Climate boulder hourly"
+  ],
+  "unresponsive_engines": []
+}
