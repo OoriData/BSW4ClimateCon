@@ -6,3 +6,5 @@ sentence_transformers
 asyncpg
 pgvector
 fastapi
+python-dotenv
+mailchimp_marketing
