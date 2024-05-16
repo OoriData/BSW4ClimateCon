@@ -13,10 +13,10 @@ Code structure:
 
 ```sh
 pip install -Ur requirements.txt
-./run_daily.py
+./main/run_daily.py
 ```
 
-`run_daily.py` will:
+`run_daily/main.py` will:
 
 * pull news for the past day
 * run LLM-based assessments, summarization, credibility scoring & storage of best candidates for next action e-mail

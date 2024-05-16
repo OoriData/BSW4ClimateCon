@@ -14,7 +14,7 @@ from sentence_transformers import SentenceTransformer  # noqa: E402
 
 E_MODEL = SentenceTransformer('all-MiniLM-L6-v2')  # Load the embedding model
 
-SERPS_PATH = Path('./working')
+SERPS_PATH = Path('./workspace')
 
 # LLMs endpoints
 SUMMARIZATION_LLM_URL = 'https://localhost:8080'

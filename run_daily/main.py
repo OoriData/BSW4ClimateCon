@@ -86,7 +86,7 @@ async def add_content_as_markdown(client, result):
 
 async def store_sxng_news_search(results):
     today = date.today()
-    fname = SERPS_PATH / Path('SERPS-' + today.isoformat())
+    fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + 'json')
     with open(fname, 'wb') as fp:
         json.dump(fp, results)
 
@@ -105,6 +105,10 @@ async def async_main(sterms):
     done, _ = await asyncio.wait(
         tasks, return_when=asyncio.FIRST_COMPLETED)
     store_sxng_news_search(searx_task.result)
+
+    # If we sent an e-mail delete files in the working space
+    # for f in SERPS_PATH.glob('*.json'):
+    #     f.unlink()
 
 
 async def async_test(content):
