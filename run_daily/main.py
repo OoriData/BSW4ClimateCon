@@ -101,15 +101,17 @@ async def async_main(sterms):
     # url_task_group = asyncio.gather(*[
     #     asyncio.create_task(do_sxng_news_search(sterms))])
 
-    # searx_task = asyncio.create_task(do_sxng_news_search(sterms))
-    # indicator_task = asyncio.create_task(indicate_progress())
-    # tasks = [indicator_task, searx_task]
-    # done, _ = await asyncio.wait(
-    #     tasks, return_when=asyncio.FIRST_COMPLETED)
+    searx_task = asyncio.create_task(do_sxng_news_search(sterms))
+    indicator_task = asyncio.create_task(indicate_progress())
+    tasks = [indicator_task, searx_task]
+    done, _ = await asyncio.wait(
+        tasks, return_when=asyncio.FIRST_COMPLETED)
 
-    # await store_sxng_news_search(searx_task.result)
+    await store_sxng_news_search(searx_task.result)
 
     # Here we call the article summarizer (in process_from_md.py)
+    searxng_results = json.load('workspace/KJSDFGHKLJSHDFHJKLFSHJKLKLHJSDFHJKLFKLHJSLKJHDSFJKLHFKLJSD')
+    process_from_md.main(searxng_results)
 
     first_search_result = json.load('workspace/daily_news/2024-05-16/news_1.json')
 
