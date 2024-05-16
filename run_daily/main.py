@@ -104,8 +104,13 @@ async def async_main(sterms):
     tasks = [indicator_task, searx_task]
     done, _ = await asyncio.wait(
         tasks, return_when=asyncio.FIRST_COMPLETED)
-    store_sxng_news_search(searx_task.result)
+    await store_sxng_news_search(searx_task.result)
 
+    # Here we call the article summarizer (in process_from_md.py)
+
+    # Here we check whether it's a configured e-mail send day & run the e-mail builder if so
+    # 
+    
     # If we sent an e-mail delete files in the working space
     # for f in SERPS_PATH.glob('*.json'):
     #     f.unlink()

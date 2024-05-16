@@ -16,6 +16,8 @@ E_MODEL = SentenceTransformer('all-MiniLM-L6-v2')  # Load the embedding model
 
 SERPS_PATH = Path('./workspace')
 
+DAYS_TO_RUN = []
+
 # LLMs endpoints
 SUMMARIZATION_LLM_URL = 'https://localhost:8080'
 ACTIONGEN_LLM_URL = 'https://localhost:8081'
