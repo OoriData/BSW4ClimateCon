@@ -19,8 +19,19 @@ import click
 
 from config import *
 
+<<<<<<< Updated upstream
 g_summarization_llm = openai_api(base_url=SUMMARIZATION_LLM_URL)
 g_actiongen_llm = openai_api(base_url=ACTIONGEN_LLM_URL)
+=======
+
+app = FastAPI()
+
+@app.post("/")
+async def search_result_to_DB(file: UploadFile):
+    searxng_JSON = json.load(file.file)
+    await main(searxng_JSON)
+    return 'success'
+>>>>>>> Stashed changes
 
 
 def MD_extract(searxng_JSON):

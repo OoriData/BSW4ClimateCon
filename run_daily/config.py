@@ -16,7 +16,8 @@ E_MODEL = SentenceTransformer('all-MiniLM-L6-v2')  # Load the embedding model
 
 SERPS_PATH = Path('./workspace')
 
-DAYS_TO_RUN = []
+#python date.weekday() 1 = Tuesdsay, 3 = Thursday, 5 = Saturday
+DAYS_TO_RUN = [1,3,5]
 
 # LLMs endpoints
 SUMMARIZATION_LLM_URL = 'http://acholonu:8000'
