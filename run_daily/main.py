@@ -16,12 +16,17 @@ For AWS Lambda entry point, we'll probbaly set up a function parallel to `async_
 import sys
 import json
 import asyncio
+from pathlib import Path
 
 import click
 import httpx
 from trafilatura import extract
 
-import process_from_md  # Requires same directory import
+import process_from_md as process_from_md  # Requires same directory import
+
+from datetime import date
+
+from config import SERPS_PATH
 
 # SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'  # Public instances seem all broken. Luckily, easy to self-host
 SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'
@@ -64,6 +69,8 @@ async def do_sxng_news_search(terms):
         for result in results_list:
             add_content_as_markdown(client, result)
 
+        return results_obj
+
 
 async def add_content_as_markdown(client, result):
     '''
@@ -77,18 +84,27 @@ async def add_content_as_markdown(client, result):
     result['markdown_content'] = md_content
 
 
+async def store_sxng_news_search(results):
+    today = date.today()
+    fname = SERPS_PATH / Path('SERPS-' + today.isoformat())
+    with open(fname, 'wb') as fp:
+        json.dump(fp, results)
+
 
 async def async_main(sterms):
     '''
     Entry point (for cmdline, for now)
     Takes search engine results & launches the main task to pull & process news
     '''
-    url_task_group = asyncio.gather(*[
-        asyncio.create_task(do_sxng_news_search(sterms))])
+    # Just one URL for now, so KISS
+    # url_task_group = asyncio.gather(*[
+    #     asyncio.create_task(do_sxng_news_search(sterms))])
+    searx_task = asyncio.create_task(do_sxng_news_search(sterms))
     indicator_task = asyncio.create_task(indicate_progress())
-    tasks = [indicator_task, url_task_group]
+    tasks = [indicator_task, searx_task]
     done, _ = await asyncio.wait(
         tasks, return_when=asyncio.FIRST_COMPLETED)
+    store_sxng_news_search(searx_task.result)
 
 
 async def async_test(content):
