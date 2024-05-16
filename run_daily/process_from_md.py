@@ -23,6 +23,7 @@ g_summarization_llm = openai_api(base_url=SUMMARIZATION_LLM_URL)
 g_scoring_llm = openai_api(base_url=SCORING_LLM_URL)
 g_actiongen_llm = openai_api(base_url=ACTIONGEN_LLM_URL)
 
+
 def MD_extract(searxng_JSON):
     '''
     Takes in json from searchXNG(?) and extract the URL/Source, Title of article, and content of the page
