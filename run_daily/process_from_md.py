@@ -88,9 +88,9 @@ def generate_action_items(batch):
     '''
     for item in batch:
         print(f'Generating action items for news item {item['title']}...')
-        call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
+        call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
-        item['score'] = g_scoring_llm.call(
+        item['action_items'] = g_actiongen_llm.call(
             prompt = call_prompt,
             max_tokens=2047
         ).first_choice_text.strip()
@@ -128,6 +128,8 @@ async def async_main(searxng_JSON):
     news_batch = summarize_news(news_batch)
 
     news_batch = score_news(news_batch)
+
+    news_batch = generate_action_items(news_batch)
     
     print('\nUploading stories to database...')
     write_news_to_dated_folder(news_batch)
