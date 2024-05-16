@@ -87,7 +87,7 @@ async def add_content_as_markdown(client, result):
 
 async def store_sxng_news_search(results):
     today = date.today()
-    fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + 'json')
+    fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + '.json')
     with open(fname, 'wb') as fp:
         json.dump(fp, results)
 
@@ -101,22 +101,27 @@ async def async_main(sterms):
     # url_task_group = asyncio.gather(*[
     #     asyncio.create_task(do_sxng_news_search(sterms))])
 
-    searx_task = asyncio.create_task(do_sxng_news_search(sterms))
-    indicator_task = asyncio.create_task(indicate_progress())
-    tasks = [indicator_task, searx_task]
-    done, _ = await asyncio.wait(
-        tasks, return_when=asyncio.FIRST_COMPLETED)
+    # searx_task = asyncio.create_task(do_sxng_news_search(sterms))
+    # indicator_task = asyncio.create_task(indicate_progress())
+    # tasks = [indicator_task, searx_task]
+    # done, _ = await asyncio.wait(
+    #     tasks, return_when=asyncio.FIRST_COMPLETED)
 
-    await store_sxng_news_search(searx_task.result)
+    # await store_sxng_news_search(searx_task.result)
 
     # Here we call the article summarizer (in process_from_md.py)
-    searxng_results = json.load('workspace/KJSDFGHKLJSHDFHJKLFSHJKLKLHJSDFHJKLFKLHJSLKJHDSFJKLHFKLJSD')
-    process_from_md.main(searxng_results)
+    today = date.today()
+    fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + '.json')
+    with open(fname, 'rb') as fp:
+        searxng_results = json.load(fp)
+    await process_from_md.async_main(searxng_results)
 
-    first_search_result = json.load('workspace/daily_news/2024-05-16/news_1.json')
+    with open('workspace/daily_news/2024-05-16/news_1.json', 'rb') as fp:
+        first_search_result = json.load(fp)
+    print(first_search_result)
 
     summary = first_search_result['summary']
-    action_items = first_search_result['action_item']
+    action_items = first_search_result['action_items']
     url = first_search_result['url']
     # Here we check whether it's a configured e-mail send day & run the e-mail builder if so
     today = date.today()
