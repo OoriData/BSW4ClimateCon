@@ -3,6 +3,7 @@ env.sh
 .DS_Store
 scratch
 .vscode
+workspace
 
 # Ignored while making tooling decisions
 noxfile.py
