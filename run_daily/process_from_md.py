@@ -9,7 +9,6 @@ import json
 import asyncio
 
 import click
-from ogbujipt.embedding.pgvector import DataDB  # XXX: THIS IMPLEMENTATION OF OGBUJIPT REQUIRES BEING ON 0.9.1 OR HIGHER
 from fastapi import FastAPI, UploadFile # File, 
 
 from config import *
@@ -24,22 +23,10 @@ async def search_result_to_DB(file: UploadFile):
     return 'success'
 
 
-async def ensure_db():
+async def vdb_add_with_dupe_check():
     '''
-    Ensure the news table exists
-    '''
-    newsDB = await DataDB.from_conn_params(  # connect to PG
-        embedding_model=E_MODEL, 
-        table_name=PGV_DB_TABLENAME,
-        db_name=PGV_DB_NAME,
-        host=PGV_DB_HOST,
-        port=PGV_DB_PORT,
-        user=PGV_DB_USER,
-        password=PGV_DB_PASSWORD
-    )
 
-    await newsDB.create_table()  # Create a new table (if doesn't exist)
-    return newsDB
+    '''
 
 
 def MD_extract(searxng_JSON):

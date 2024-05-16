@@ -1,19 +1,22 @@
 import asyncio
 
-from ogbujipt import word_loom
-from ogbujipt.embedding.pgvector import DataDB
-# XXX: We probably want to use the chat API
+# XXX: We probably want to use the chat API rather than raw completion
 from ogbujipt.llm_wrapper import openai_api
 
-from config import *
-
-
-with open('prompts.toml', mode='rb') as fp:
-    g_prompts = word_loom.load(fp)
+from config import PROMPT, SUMMARIZATION_LLM_URL, ACTIONGEN_LLM_URL, ensure_db, ensure_language_item
 
 
 g_summarization_llm = openai_api(base_url=SUMMARIZATION_LLM_URL)
 g_actiongen_llm = openai_api(base_url=ACTIONGEN_LLM_URL)
+
+async def init():
+    sample_actions = PROMPT['sample_actions']
+    for line in str(sample_actions).splitlines():
+        line = line.strip()
+        if line:
+            # We process it line-by line, but the metadata is fixed
+            line_lang_item = sample_actions.clone(line)
+            await ensure_language_item(line_lang_item)
 
 
 # TODO: Need to change this to be searching by recency rather than nearest neighbor. probably needs a more specialized table style than DataDB
@@ -77,5 +80,10 @@ def LLM_action_plan(news_summary, action_prompt):
     return action_plan
 
 
+async def async_main():
+    await ensure_db()
+    await init()
+
+
 if __name__ == '__main__':
-    asyncio.run(summarize_article())
+    asyncio.run(async_main())
