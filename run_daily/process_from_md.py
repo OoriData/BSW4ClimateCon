@@ -128,7 +128,7 @@ async def async_main(searxng_JSON):
 
     news_batch = summarize_news(news_batch)
 
-    news_batch = score_news(news_batch)
+    # news_batch = score_news(news_batch)
 
     news_batch = generate_action_items(news_batch)
     
