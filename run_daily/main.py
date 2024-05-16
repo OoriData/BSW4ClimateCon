@@ -26,8 +26,8 @@ import process_from_md as process_from_md  # Requires same directory import
 
 from datetime import date
 
-from config import SERPS_PATH
-from config import DAYS_TO_RUN
+from config import SERPS_PATH, DAYS_TO_RUN
+from send_campaign_email import create_campaign
 
 # SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'  # Public instances seem all broken. Luckily, easy to self-host
 SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'
@@ -100,19 +100,23 @@ async def async_main(sterms):
     # Just one URL for now, so KISS
     # url_task_group = asyncio.gather(*[
     #     asyncio.create_task(do_sxng_news_search(sterms))])
-    searx_task = asyncio.create_task(do_sxng_news_search(sterms))
-    indicator_task = asyncio.create_task(indicate_progress())
-    tasks = [indicator_task, searx_task]
-    done, _ = await asyncio.wait(
-        tasks, return_when=asyncio.FIRST_COMPLETED)
-    await store_sxng_news_search(searx_task.result)
+
+    # searx_task = asyncio.create_task(do_sxng_news_search(sterms))
+    # indicator_task = asyncio.create_task(indicate_progress())
+    # tasks = [indicator_task, searx_task]
+    # done, _ = await asyncio.wait(
+    #     tasks, return_when=asyncio.FIRST_COMPLETED)
+
+    # await store_sxng_news_search(searx_task.result)
 
     # Here we call the article summarizer (in process_from_md.py)
 
+    summary = 'Great summary'
+    action_items = 'Action items'
     # Here we check whether it's a configured e-mail send day & run the e-mail builder if so
-    # today = date.today()
-    # if DAYS_TO_RUN.in(today.weekday())
-    #      run email builder
+    today = date.today()
+    if today.weekday() in DAYS_TO_RUN:
+         create_campaign(summary, action_items)
     
     # If we sent an e-mail delete files in the working space
     # for f in SERPS_PATH.glob('*.json'):

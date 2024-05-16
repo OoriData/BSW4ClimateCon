@@ -1,4 +1,3 @@
-import json
 from dotenv import load_dotenv
 import os
 import mailchimp_marketing as MailchimpMarketing
@@ -14,32 +13,34 @@ MAILCHIMP_AUDIENCE_ID = os.getenv("MAILCHIMP_AUDIENCE_ID")
 client = MailchimpMarketing.Client()
 client.set_config({"api_key": MAILCHIMP_API_KEY, "server": MAILCHIMP_API_SERVER})
 
-# Create a new campaign
-try:
-    response = client.campaigns.create(
-        {
-            "type": "regular",
-            "recipients": {"list_id": MAILCHIMP_AUDIENCE_ID},
-            "settings": {
-                "subject_line": "Your 10 minute climate digest",
-                "from_name": "10MinClimate",
-                "reply_to": "info@10minclimate.org",
-            },
-        }
-    )
-    campaign_id = response["id"]
 
-    # Set campaign data (email body)
-    file_path = "../email_template.html"
+def create_campaign(summary, action_items):
+    try:
+        response = client.campaigns.create(
+            {
+                "type": "regular",
+                "recipients": {"list_id": MAILCHIMP_AUDIENCE_ID},
+                "settings": {
+                    "subject_line": "Your 10 minute climate digest",
+                    "from_name": "10MinClimate",
+                    "reply_to": "info@10minclimate.org",
+                },
+            }
+        )
+        campaign_id = response["id"]
 
-    with open(file_path, "r", encoding="utf-8") as file:
-        html_content = file.read()
+        # Set campaign data (email body)
+        file_path = "email_template.html"
 
-    client.campaigns.set_content(campaign_id, body={"html": html_content})
+        with open(file_path, "r", encoding="utf-8") as file:
+            html_content = file.read()
+            html_content = html_content.format(summary=summary, action_items=action_items)
 
-    # Send the campaign
-    client.campaigns.send(campaign_id)
-    print("Campaign sent successfully!")
+        client.campaigns.set_content(campaign_id, body={"html": html_content})
 
-except ApiClientError as error:
-    print("Error creating/sending campaign:", error.text)
+        # Send the campaign
+        client.campaigns.send(campaign_id)
+        print("Campaign sent successfully!")
+
+    except ApiClientError as error:
+        print("Error creating/sending campaign:", error.text)
