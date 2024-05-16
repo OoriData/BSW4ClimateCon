@@ -14,7 +14,7 @@ client = MailchimpMarketing.Client()
 client.set_config({"api_key": MAILCHIMP_API_KEY, "server": MAILCHIMP_API_SERVER})
 
 
-def create_campaign(summary, action_items):
+def create_campaign(url, summary, action_items):
     try:
         response = client.campaigns.create(
             {
@@ -34,7 +34,7 @@ def create_campaign(summary, action_items):
 
         with open(file_path, "r", encoding="utf-8") as file:
             html_content = file.read()
-            html_content = html_content.format(summary=summary, action_items=action_items)
+            html_content = html_content.format(url=url, summary=summary, action_items=action_items)
 
         client.campaigns.set_content(campaign_id, body={"html": html_content})
 

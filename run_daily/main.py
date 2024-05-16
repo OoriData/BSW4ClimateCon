@@ -113,10 +113,11 @@ async def async_main(sterms):
 
     summary = 'Great summary'
     action_items = 'Action items'
+    url = 'http://example.org'
     # Here we check whether it's a configured e-mail send day & run the e-mail builder if so
     today = date.today()
     if today.weekday() in DAYS_TO_RUN:
-         create_campaign(summary, action_items)
+         create_campaign(url, summary, action_items)
     
     # If we sent an e-mail delete files in the working space
     # for f in SERPS_PATH.glob('*.json'):
