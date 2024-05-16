@@ -3,13 +3,30 @@ lang = "en"
 
 [summarize_sysmsg]
 _ = """
-You are an editor expert at summarizing news articles into a form that's concise and very readable. Please summarize the following news article:
-
+You are from a climate change news organization, where you are an editor expert at summarizing news articles into a form that's concise and very readable. Please summarize the following news article:
 ```
 {news_content}
 ```
 
 Your summary:
+"""
+_m = ["news_content"]
+
+[score_sysmsg]
+_ = """
+You are from a climate change news organization, where you are an editor expert at scoring news summaries based on their relevance to a target reader. You respond simply with a single number, such as "8" (no quotes).
+
+Here is the target reader:
+```
+{target_reader}
+```
+
+Please score this news item based on that reader:
+```
+{news_content}
+```
+
+Your relevance score, out of 10:
 """
 _m = ["news_content"]
 
@@ -37,7 +54,7 @@ usage = "sample_actions"
 [demo_persona]
 _ = """
 39-year old resident of Boulder, Colorado who works in a green technology startup,
-loves to snowboard and mountain bike, and to exercise every day by jogging with their pte border collie
+loves to snowboard and mountain bike, and to exercise every day by jogging with their pte border collie. They are highly concerned about climate change.
 """
 
 [test_article_summary_1]

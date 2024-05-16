@@ -19,7 +19,7 @@ SERPS_PATH = Path('./workspace')
 DAYS_TO_RUN = []
 
 # LLMs endpoints
-SUMMARIZATION_LLM_URL = 'https://localhost:8080'
+SUMMARIZATION_LLM_URL = 'http://acholonu:8000'
 ACTIONGEN_LLM_URL = 'https://localhost:8081'
 
 # Prompts & other natural language

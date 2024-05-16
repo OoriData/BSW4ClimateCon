@@ -45,13 +45,13 @@ def MD_extract(searxng_JSON):
     return refined_data
 
 
-# FIXME: Needs to be rethought
-def summarize_article(batch):
+# FIXME: Needs to be rethought (async requests?)
+def summarize_news(batch):
     '''
-    Assemble the news and article titles into a readable string for the LLM to read
+    get summary of the news item from LLM
     '''
     for item in batch:
-        print(f'processing news item {item['title']}...')
+        print(f'Summarizing news item {item['title']}...')
         call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item['content'])
 
         item['summary'] = g_summarization_llm.call(
@@ -59,7 +59,25 @@ def summarize_article(batch):
             max_tokens=2047
         ).first_choice_text.strip()
 
-        print(f'processed news item {item['title']}!')
+        print(f'Summarized news item {item['title']}!')
+
+    return batch
+
+# FIXME: Needs to be rethought (async requests?)
+def score_news(batch):
+    '''
+    have an LLM score the item
+    '''
+    for item in batch:
+        print(f'Scoring news item {item['title']}...')
+        call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
+
+        item['score'] = g_summarization_llm.call(
+            prompt = call_prompt,
+            max_tokens=4
+        ).first_choice_text.strip()
+
+        print(f'Scored news item {item['title']} as {item['score']}/10!')
 
     return batch
 
@@ -73,22 +91,13 @@ def write_news_to_dated_folder(news_batch):
 
     # Write each news item to a JSON file
     for i, item in enumerate(news_batch, start=1):
-        news_item = {
-            'summary': item['summary'],
-            'url': item['url'],
-            'title': item['title'],
-            'search_engine': item['search_engine'],
-            'search_score': item['search_score'],
-            'search_query': item['search_query']
-        }
-
         # Construct the filename
         filename = f"news_{i}.json"
         file_path = os.path.join(folder_path, filename)
 
         # Write the news item to the JSON file
         with open(file_path, 'w') as json_file:
-            json.dump(news_item, json_file, indent=4)
+            json.dump(item, json_file, indent=4)
 
     print(f"News items written to folder: {folder_path}")
 
@@ -100,7 +109,9 @@ async def async_main(searxng_JSON):
     news_batch = MD_extract(searxng_JSON)
     print(f'Got {len(news_batch)} stories!')
 
-    news_batch = summarize_article(news_batch)
+    news_batch = summarize_news(news_batch)
+
+    news_batch = score_news(news_batch)
     
     print('\nUploading stories to database...')
     write_news_to_dated_folder(news_batch)
