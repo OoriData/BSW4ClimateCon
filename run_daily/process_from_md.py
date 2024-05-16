@@ -52,8 +52,8 @@ def summarize_news(batch):
     get summary of the news item from LLM
     '''
     for item in batch:
-        print(f'Summarizing news item {item['title']}...')
-        call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item['content'])
+        print(f'Summarizing news item {item["title"]}...')
+        call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item["content"])
 
         item['summary'] = g_summarization_llm.call(
             prompt = call_prompt,
@@ -69,7 +69,7 @@ def score_news(batch):
     have an LLM score the item
     '''
     for item in batch:
-        print(f'Scoring news item {item['title']}...')
+        print(f'Scoring news item {item["title"]}...')
         call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
         item['score'] = g_scoring_llm.call(
@@ -77,7 +77,7 @@ def score_news(batch):
             max_tokens=4
         ).first_choice_text.strip()
 
-        print(f'Scored {item['score']}/10!')
+        print(f'Scored {item["score"]}/10!')
 
     return batch
 
@@ -88,7 +88,7 @@ def generate_action_items(batch):
     have an LLM generate action items for the news items
     '''
     for item in batch:
-        print(f'Generating action items for news item {item['title']}...')
+        print(f'Generating action items for news item {item["title"]}...')
         call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
         item['action_items'] = g_actiongen_llm.call(
