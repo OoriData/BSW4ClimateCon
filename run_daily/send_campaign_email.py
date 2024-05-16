@@ -1,3 +1,4 @@
+import json
 from dotenv import load_dotenv
 import os
 import mailchimp_marketing as MailchimpMarketing
@@ -29,11 +30,12 @@ try:
     campaign_id = response["id"]
 
     # Set campaign data (email body)
-    content_data = {
-        "html": "<p>The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin in 30 seconds. Line up at the start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.</p>"
-    }
+    file_path = "../email_template.html"
 
-    client.campaigns.set_content(campaign_id, body=content_data)
+    with open(file_path, "r", encoding="utf-8") as file:
+        html_content = file.read()
+
+    client.campaigns.set_content(campaign_id, body={"html": html_content})
 
     # Send the campaign
     client.campaigns.send(campaign_id)
