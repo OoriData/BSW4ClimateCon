@@ -13,26 +13,15 @@ from datetime import datetime
 # XXX: We probably want to use the chat API rather than raw completion
 from ogbujipt.llm_wrapper import openai_api
 
-from config import PROMPT, SUMMARIZATION_LLM_URL, ACTIONGEN_LLM_URL, ensure_db, ensure_language_item
+from config import PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL
 
 import click
 
 from config import *
 
-<<<<<<< Updated upstream
 g_summarization_llm = openai_api(base_url=SUMMARIZATION_LLM_URL)
+g_scoring_llm = openai_api(base_url=SCORING_LLM_URL)
 g_actiongen_llm = openai_api(base_url=ACTIONGEN_LLM_URL)
-=======
-
-app = FastAPI()
-
-@app.post("/")
-async def search_result_to_DB(file: UploadFile):
-    searxng_JSON = json.load(file.file)
-    await main(searxng_JSON)
-    return 'success'
->>>>>>> Stashed changes
-
 
 def MD_extract(searxng_JSON):
     '''
@@ -70,9 +59,8 @@ def summarize_news(batch):
             max_tokens=2047
         ).first_choice_text.strip()
 
-        print(f'Summarized news item {item['title']}!')
-
     return batch
+
 
 # FIXME: Needs to be rethought (async requests?)
 def score_news(batch):
@@ -83,12 +71,29 @@ def score_news(batch):
         print(f'Scoring news item {item['title']}...')
         call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
-        item['score'] = g_summarization_llm.call(
+        item['score'] = g_scoring_llm.call(
             prompt = call_prompt,
             max_tokens=4
         ).first_choice_text.strip()
 
-        print(f'Scored news item {item['title']} as {item['score']}/10!')
+        print(f'Scored {item['score']}/10!')
+
+    return batch
+
+
+# FIXME: Needs to be rethought (async requests?)
+def generate_action_items(batch):
+    '''
+    have an LLM generate action items for the news items
+    '''
+    for item in batch:
+        print(f'Generating action items for news item {item['title']}...')
+        call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
+
+        item['score'] = g_scoring_llm.call(
+            prompt = call_prompt,
+            max_tokens=2047
+        ).first_choice_text.strip()
 
     return batch
 
