@@ -57,7 +57,8 @@ def summarize_news(batch):
 
         item['summary'] = g_summarization_llm.call(
             prompt = call_prompt,
-            max_tokens=2047
+            max_tokens=2047,
+            stop='###'
         ).first_choice_text.strip()
 
     return batch
@@ -74,7 +75,8 @@ def score_news(batch):
 
         item['score'] = g_scoring_llm.call(
             prompt = call_prompt,
-            max_tokens=4
+            max_tokens=4,
+            stop='###'
         ).first_choice_text.strip()
 
         print(f'Scored {item["score"]}/10!')
@@ -93,7 +95,8 @@ def generate_action_items(batch):
 
         item['action_items'] = g_actiongen_llm.call(
             prompt = call_prompt,
-            max_tokens=2047
+            max_tokens=2047,
+            stop='###'
         ).first_choice_text.strip()
 
     return batch
@@ -135,6 +138,9 @@ async def async_main(searxng_JSON):
     print('\nUploading stories to database...')
     write_news_to_dated_folder(news_batch)
     print('Uploaded!')
+
+    print('\nSUMMARY:', news_batch[0]['summary'])
+    print('\nACTION ITEMS:', news_batch[0]['action_items'])
 
     print('\nDone!')
 

@@ -8,7 +8,7 @@ You are from a climate change news organization, where you are an editor expert 
 {news_content}
 ```
 
-Your summary:
+Your summary for the user. When you're finished with the summary, write "###":
 """
 _m = ["news_content"]
 
@@ -44,6 +44,9 @@ And here's the user that you are generating actions for:
 ```
 
 Based on the issues highlighted in the summary, please provide a concise, simple, actionable step that the user can incorporate into their daily life to address one of the climate challenges mentioned. Ensure the action is feasible and directly related to the content of the summary.  Bonus points for a suggested action that is impactful and fun.
+
+USE MARKDOWN FORMATTING WITH ASTERISKS FOR BULLET POINTS. WHEN YOU ARE FINISHED WITH THE ACTIONABLE STEPS, WRITE "###".
+Action Items:
 """
 
 # Can we come up with anything less penny ante? Probably not, if we stick to the 10 minute theme & also avoid politics
