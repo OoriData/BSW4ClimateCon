@@ -5,3 +5,4 @@ ogbujipt
 sentence_transformers
 asyncpg
 pgvector
+fastapi

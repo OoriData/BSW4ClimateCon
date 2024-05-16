@@ -21,7 +21,7 @@ import click
 import httpx
 from trafilatura import extract
 
-import process_from_md  # Requires same directory import
+import process_from_md as process_from_md  # Requires same directory import
 
 # SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'  # Public instances seem all broken. Luckily, easy to self-host
 SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'

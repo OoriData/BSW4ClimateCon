@@ -1,20 +1,18 @@
+'''
+For example:
+
+```sh
+./run_daily/main.py --process-file=sample_serps_plus_content.json
+```
+'''
 import json
 import asyncio
 
-from sentence_transformers import SentenceTransformer
+import click
 from ogbujipt.embedding.pgvector import DataDB  # XXX: THIS IMPLEMENTATION OF OGBUJIPT REQUIRES BEING ON 0.9.1 OR HIGHER
+from fastapi import FastAPI, UploadFile # File, 
 
-from fastapi import FastAPI, File, UploadFile
-
-# setup embedding model
-E_MODEL = SentenceTransformer('all-MiniLM-L6-v2')  # Load the embedding model
-
-# setup PG connection
-DB_NAME = 'PGv'
-HOST = 'localhost'
-PORT = 5432
-USER = 'oori'
-PASSWORD = 'example'
+from config import *
 
 
 app = FastAPI()
@@ -22,10 +20,26 @@ app = FastAPI()
 @app.post("/")
 async def search_result_to_DB(file: UploadFile):
     searxng_JSON = json.load(file.file)
-
     await main(searxng_JSON)
-
     return 'success'
+
+
+async def ensure_db():
+    '''
+    Ensure the news table exists
+    '''
+    newsDB = await DataDB.from_conn_params(  # connect to PG
+        embedding_model=E_MODEL, 
+        table_name=PGV_DB_TABLENAME,
+        db_name=PGV_DB_NAME,
+        host=PGV_DB_HOST,
+        port=PGV_DB_PORT,
+        user=PGV_DB_USER,
+        password=PGV_DB_PASSWORD
+    )
+
+    await newsDB.create_table()  # Create a new table (if doesn't exist)
+    return newsDB
 
 
 def MD_extract(searxng_JSON):
@@ -48,25 +62,7 @@ def MD_extract(searxng_JSON):
         refined_data.append(extracted_item)
 
     return refined_data
-
-
-async def build_DB():
-    '''
-    Check if news table exists, if not create one
-    '''
-    newsDB = await DataDB.from_conn_params(  # connect to PG
-        embedding_model=E_MODEL, 
-        table_name='climate_news',
-        db_name=DB_NAME,
-        host=HOST,
-        port=int(PORT),
-        user=USER,
-        password=PASSWORD
-    )
-
-    await newsDB.create_table()  # Create a new table (if doesn't exist)
-
-    return newsDB
+ 
 
 async def DB_upload(newsDB, news_batch):
     '''
@@ -85,11 +81,10 @@ async def DB_upload(newsDB, news_batch):
         ) for item in news_batch)
 
     await newsDB.insert_many(prepped_news)  # Insert the item into the table
-
     return newsDB
 
 
-async def main(searxng_JSON):
+async def async_main(searxng_JSON):
     print('\nProcessing searxng results to Database:')
 
     print('\nProcessing searxng results JSON...')
@@ -97,7 +92,7 @@ async def main(searxng_JSON):
     print(f'Got {len(news_batch)} stories!')
 
     print('\nChecking if news table exists in database, if not creating one...')
-    newsDB = await build_DB()
+    newsDB = await ensure_db()
     print('Database ready!')
     
     print('\nUploading stories to database...')
@@ -107,11 +102,12 @@ async def main(searxng_JSON):
     print('\nDone!')
 
 
-if __name__ == '__main__':
-    # Open the JSON file in read mode
-    with open('sample_serps_plus_content.json', 'r') as file:
-        # Load the JSON data from the file
-        searxng_JSON = json.load(file)
+@click.command()
+@click.option('--process-file', type=click.File('rb'))
+def main(process_file):
+    searxng_postprocessed = json.load(process_file)
+    asyncio.run(async_main(searxng_postprocessed))
 
-    # Run the main function asynchronously
-    asyncio.run(main(searxng_JSON))
+
+if __name__ == '__main__':
+    main()

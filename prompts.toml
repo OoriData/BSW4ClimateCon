@@ -1,0 +1,40 @@
+# Word loom format. Top level lang is default for this file
+lang = "en"
+
+[summarize_sysmsg]
+_ = """
+You are an editor expert at summarizing news articles into a form that's concise and very readable. Please summarize the following news article:
+
+```
+{news_content}
+```
+
+Your summary:
+"""
+_m = ["news_content"]
+
+# FIXME: Haven't wordsmithed the below
+[action_plan_prompt]
+_ = """
+You are a climate activist bot. Your role is to read summaries of news articles related to climate change and suggest practical actions that users can take to contribute to the fight against climate change. Below is the summary of the news articles:
+
+```
+{news_summary} 
+```
+
+Based on the issues highlighted in the summary, please provide a simple, actionable step that the user can incorporate into their daily life to address one of the climate challenges mentioned. Ensure the action is feasible and directly related to the content of the summary.  Bonus points for a suggested action that is impactful and fun.
+"""
+
+[test_article_summary_1]
+_ = """
+Exploring the Impact of AI in Healthcare
+Artificial Intelligence (AI) is revolutionizing the healthcare industry, offering promising solutions for various challenges. From diagnostic assistance to personalized treatment plans, AI has the potential to enhance patient care and streamline processes.
+Source: https://example.com/article1
+"""
+
+[test_article_summary_2]
+_ = """
+Article 2/2: The Role of Blockchain in Supply Chain Management
+Blockchain technology is reshaping supply chain management by providing transparency, traceability, and security throughout the entire process. With blockchain, businesses can ensure authenticity and efficiency in their supply chains, leading to improved operations and customer satisfaction.
+Source: https://example.com/article2
+"""
