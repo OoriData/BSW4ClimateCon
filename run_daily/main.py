@@ -111,9 +111,11 @@ async def async_main(sterms):
 
     # Here we call the article summarizer (in process_from_md.py)
 
-    summary = 'Great summary'
-    action_items = 'Action items'
-    url = 'http://example.org'
+    first_search_result = json.load('workspace/daily_news/2024-05-16/news_1.json')
+
+    summary = first_search_result['summary']
+    action_items = first_search_result['action_item']
+    url = first_search_result['url']
     # Here we check whether it's a configured e-mail send day & run the e-mail builder if so
     today = date.today()
     if today.weekday() in DAYS_TO_RUN:
