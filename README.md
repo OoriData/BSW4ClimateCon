@@ -1,20 +1,119 @@
-# BSW4ClimateCon
+# 10minclimate.com
 
-BSW for ClimateCon! We wanted to sprint up from scratch a tool to send a regular (thrice weekly) inspo e-mail to interested users, ideally with some level of community-building features. The automated e-mail would focus on one digestible contemporary climate news item and 3 simple actions the reader can take with that news item in mind. ClimateCon! in Boulder May 31st is a great opportunity to get a lot of interested eyes on such a project, and to demonstrate a positive bias to climate action.
+At the [Boulder Startup Week](https://boulderstartupweek.com/) Builder's Room Uche Ogbuji ([Oori Data](https://oori.dev)) had a simple idea: build a simple tool to regularly grab and select climate-related news, and bring these to a subscriber's attention alongside a few relevant action items—so it's not just downer after downer, but a way to feel involved and conscious. Before he knew it, he had a team of 9 folks interested in pitching in, over the course of a 20 hour sprint. We shipped a prototype, came in 2nd place, and 10minclimate.com was born. One inspiration for the project is [ClimateCon!](https://climatecon.world/), a conference in Boulder, a few weeks after BSW (31 May 2024).
 
-[Boulder Startup Week](https://boulderstartupweek.com/)
+The project continues, and we hope it will continue to be of use to busy people who care about the climate, and need an affirmative way to keep engaged.
+
+Sprint prticipants:
+
+ * Micah Dew
+ * Zachariah Malik
+ * Troy Namath
+ * Osi Ogbuji
+ * Uche Ogbuji
+ * Aidan Reese
+ * Garrett Roberts
+ * Elaine Yang
+ * Sung Yi
+
+## So what does it do, again?
+
+10minclimate.com sends a regular (thrice weekly) e-mail to subscribers (e-mail only at present). This automated e-mail focuses on one digestible, contemporary climate news item, which it summarizes and presents along with three simple actions the reader can take with that news item in mind.
+
+<!--
+demonstrate a positive bias to climate action.
+
+, ideally with some level of community-building features. 
+
+a tree of hashtag#LLM processing
+
 [Boulder Startup Week Builder's Room event, 2024](https://boulderstartupweek2024.sched.com/event/1cEl1/builders-room-kickoff)
-[ClimateCon!](https://climatecon.world/)
-
 
 Code structure:
 
 * For this BSW Builder sprint it will just be all-in-one run-daily command (presumed via cron)
 
+-->
+
+# Implementation
+
+There are several key components for the project. You can tweak how these are all used in `run_daily/config.py`
+
+Prerequisites:
+
+## Python
+
+Python 3.11 or more recent, preferably in a virtual environment
+
+## SearXNG
+
+Running [SearXNG](https://github.com/searxng/searxng) instance. You can just use the Docker container. To run this locally:
+
+```sh
+export SEARXNG_PORT=8888
+docker run --rm \
+    -d -p ${SEARXNG_PORT}:8080 \
+    -v "${PWD}/searxng:/etc/searxng" \
+    -e "BASE_URL=http://localhost:$SEARXNG_PORT/" \
+    -e "INSTANCE_NAME=ten-min-climate-engine" \
+    searxng/searxng
+```
+
+Note: We want to have soem sort of APi key, but doesn't seem there is any built-in approach (`SEARXNG_SECRET` is something different). We might have to use a reverse proxy with HTTP auth.
+
+This gets SearXNG runing on port 8888. Feel free to adjust as necessary in the 10minclimate.com config.
+
+You do need to edit `searxng/settings.yml` relative to where you launched the docker comtainer, making sure `server.limiter` is set to false and `- json` is included in `search.formats`.
+
+You can then just restart the continer (use `docker ps` to get the ID, `docker stop [ID]` and then repeat the `docker run` command above).
+
+<!-- Not needed at present
+One trick for generating a secret key:
+
+```sh
+python -c "from uuid import uuid1; print(str(uuid1()))"
+```
+-->
+
+## Running on a shared server
+
+For production SearXNG will need to run on a shared server. Make sure that server has Docker installed, set it as the context. Create `/etc/searxng` on the remote server and ensure it's writable by the docker daemon.
+
+```sh
+sudo chgrp docker /etc/searxng
+sudo chmod g+ws /etc/searxng
+```
+
+Then launch with the following setup, where `/etc/searxng` is mounted
+
+```sh
+export SEARXNG_PORT=8888
+docker run --rm \
+    -d -p ${SEARXNG_PORT}:8080 \
+    -v "/etc/searxng:/etc/searxng" \
+    -e "BASE_URL=http://localhost:$SEARXNG_PORT/" \
+    -e "INSTANCE_NAME=oorihive-engine" \
+    searxng/searxng
+```
+
+
+# LLM endpoint(s)
+
+Uses [llama.cpp remotely hosted](https://github.com/ggerganov/llama.cpp/blob/master/examples/server/README.md) for LLM processing.
+
+Set up an endpoint, and update config.py
+
+
+# 3rd-party python libraries
+
+From your virtual environment:
+
 ```sh
 pip install -Ur requirements.txt
 ./main/run_daily.py
 ```
+
+# Running the daily command
 
 `run_daily/main.py` will:
 
@@ -49,6 +148,8 @@ Support code & processes:
 * Data flow & other engineering diagrams
 * Implement e-mail batch send process
 * Combine separate program files such as `process_from_md.py` into `run_daily.py` (using )
+
+* Continue to think about managing/securing SearXNG (as well as PGVector & llama.cpp). [Security-minded "Searx Installation and Discussion" article](https://grahamhelton.com/blog/searx/).
 
 # Dev setup
 

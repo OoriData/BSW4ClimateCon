@@ -1,13 +1,8 @@
-from dotenv import load_dotenv
-import os
 import mailchimp_marketing as MailchimpMarketing
 from mailchimp_marketing.api_client import ApiClientError
 
-load_dotenv()
+from config import EMAIL_TEMPLATE, MAILCHIMP_API_KEY, MAILCHIMP_API_SERVER, MAILCHIMP_AUDIENCE_ID
 
-MAILCHIMP_API_KEY = os.getenv("MAILCHIMP_API_KEY")
-MAILCHIMP_API_SERVER = os.getenv("MAILCHIMP_API_SERVER")
-MAILCHIMP_AUDIENCE_ID = os.getenv("MAILCHIMP_AUDIENCE_ID")
 
 # Set up Mailchimp API client
 client = MailchimpMarketing.Client()
@@ -29,12 +24,7 @@ def create_campaign(url, summary, action_items):
         )
         campaign_id = response["id"]
 
-        # Set campaign data (email body)
-        file_path = "email_template.html"
-
-        with open(file_path, "r", encoding="utf-8") as file:
-            html_content = file.read()
-            html_content = html_content.format(url=url, summary=summary, action_items=action_items)
+        html_content = EMAIL_TEMPLATE.format(url=url, summary=summary, action_items=action_items)
 
         client.campaigns.set_content(campaign_id, body={"html": html_content})
 

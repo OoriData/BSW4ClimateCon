@@ -10,8 +10,7 @@ import json
 import asyncio
 from datetime import datetime
 
-# XXX: We probably want to use the chat API rather than raw completion
-from ogbujipt.llm_wrapper import openai_api
+from ogbujipt.llm_wrapper import prompt_to_chat, llama_cpp_http_chat
 
 from config import PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL
 
@@ -19,9 +18,9 @@ import click
 
 from config import *
 
-g_summarization_llm = openai_api(base_url=SUMMARIZATION_LLM_URL)
-g_scoring_llm = openai_api(base_url=SCORING_LLM_URL)
-g_actiongen_llm = openai_api(base_url=ACTIONGEN_LLM_URL)
+g_summarization_llm = llama_cpp_http_chat(base_url=SUMMARIZATION_LLM_URL)
+g_scoring_llm = llama_cpp_http_chat(base_url=SCORING_LLM_URL)
+g_actiongen_llm = llama_cpp_http_chat(base_url=ACTIONGEN_LLM_URL)
 
 
 def MD_extract(searxng_JSON):
@@ -55,8 +54,7 @@ def summarize_news(batch):
         print(f'Summarizing news item {item["title"]}...')
         call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item["content"])
 
-        item['summary'] = g_summarization_llm.call(
-            prompt = call_prompt,
+        item['summary'] = g_summarization_llm(prompt_to_chat(call_prompt),
             max_tokens=2047,
             stop='###'
         ).first_choice_text.strip()
@@ -73,8 +71,7 @@ def score_news(batch):
         print(f'Scoring news item {item["title"]}...')
         call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
-        item['score'] = g_scoring_llm.call(
-            prompt = call_prompt,
+        item['score'] = g_scoring_llm(prompt_to_chat(call_prompt),
             max_tokens=4,
             stop='###'
         ).first_choice_text.strip()
@@ -93,8 +90,7 @@ def generate_action_items(batch):
         print(f'Generating action items for news item {item["title"]}...')
         call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
-        item['action_items'] = g_actiongen_llm.call(
-            prompt = call_prompt,
+        item['action_items'] = g_actiongen_llm(prompt_to_chat(call_prompt),
             max_tokens=2047,
             stop='###'
         ).first_choice_text.strip()
