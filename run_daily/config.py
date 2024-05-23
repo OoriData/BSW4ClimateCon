@@ -20,9 +20,9 @@ SERPS_PATH = Path('./workspace')
 DAYS_TO_RUN = [1,3,5]
 
 # LLMs endpoints
-SUMMARIZATION_LLM_URL = 'http://acholonu:9000'
-SCORING_LLM_URL = 'http://acholonu:9000'
-ACTIONGEN_LLM_URL = 'http://acholonu:9000'
+SUMMARIZATION_LLM_URL = 'http://acholonu:8001'
+SCORING_LLM_URL = 'http://acholonu:8001'
+ACTIONGEN_LLM_URL = 'http://acholonu:8001'
 
 # Prompts & other natural language
 with open('prompts.toml', mode='rb') as fp:
