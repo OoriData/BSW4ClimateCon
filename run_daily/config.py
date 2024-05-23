@@ -19,6 +19,10 @@ SERPS_PATH = Path('./workspace')
 #python date.weekday() 1 = Tuesdsay, 3 = Thursday, 5 = Saturday
 DAYS_TO_RUN = [1,3,5]
 
+# SearXNG config
+SEARXNG_ENDPOINT = 'http://sofola:8888/search'
+LIMIT = 3  # number of results to process
+
 # LLMs endpoints
 SUMMARIZATION_LLM_URL = 'http://acholonu:8001'
 SCORING_LLM_URL = 'http://acholonu:8001'
