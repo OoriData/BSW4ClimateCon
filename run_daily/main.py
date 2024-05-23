@@ -75,7 +75,7 @@ async def do_sxng_news_search(terms):
 
 async def add_content_as_markdown(client, result):
     '''
-    Loads the HTML from the content of the result HTML, converts it to Markdown & adds it back to the results structure
+    Load HTML from the content of the result HTML, converts it to Markdown & adds it back to the results structure
     '''
     resp = await client.get(result['url'])
     md_content = extract(resp.content,

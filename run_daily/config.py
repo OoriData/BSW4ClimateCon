@@ -20,9 +20,9 @@ SERPS_PATH = Path('./workspace')
 DAYS_TO_RUN = [1,3,5]
 
 # LLMs endpoints
-SUMMARIZATION_LLM_URL = 'http://acholonu:8000'
-SCORING_LLM_URL = 'http://acholonu:8000'
-ACTIONGEN_LLM_URL = 'http://acholonu:8000'
+SUMMARIZATION_LLM_URL = 'http://acholonu:9000'
+SCORING_LLM_URL = 'http://acholonu:9000'
+ACTIONGEN_LLM_URL = 'http://acholonu:9000'
 
 # Prompts & other natural language
 with open('prompts.toml', mode='rb') as fp:
@@ -73,3 +73,54 @@ async def ensure_language_item(litem):
     print('➕', end='', flush=True)
     await VDB.insert(content=litem_str, metadata=litem.meta)
     return True
+
+
+MAILCHIMP_API_KEY = os.getenv("MAILCHIMP_API_KEY")
+MAILCHIMP_API_SERVER = os.getenv("MAILCHIMP_API_SERVER")
+MAILCHIMP_AUDIENCE_ID = os.getenv("MAILCHIMP_AUDIENCE_ID")
+
+
+EMAIL_TEMPLATE = '''<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{ font-family: Arial, sans-serif; }}
+        .header {{ text-align: center; padding: 10px; background-color: #F4F4F4; }}
+        .header img {{ max-width: 150px; }}
+        .content {{ padding: 20px; }}
+        .section {{ margin-bottom: 20px; }}
+        .section h2 {{ font-size: 20px; color: #333; }}
+        .cta-button {{ display: inline-block; padding: 10px 20px; color: #fff; background-color: #007BFF; text-decoration: none; border-radius: 5px; }}
+        .footer {{ text-align: center; padding: 10px; background-color: #F4F4F4; font-size: 12px; }}
+        .footer a {{ color: #007BFF; text-decoration: none; }}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://10minclimate.org/api/logo" alt="Company Logo">
+        <h1>Monthly Climate Action Newsletter</h1>
+        <p>May 2024</p>
+    </div>
+    <div class="content">
+        <div class="section">
+            <h2>Welcome!</h2>
+            <!-- <p>Dear [recipient],</p> -->
+            <p>Welcome to our email update. Here's a quick overview of what’s happening in climate action since last time.</p>
+        </div>
+        <div class="section">
+            <h2>Latest News</h2>
+            <p>This is a summary of the latest news {summary}. <a href="{url}">Read More</a></p>
+        </div>
+        <div class="section">
+            <h2>Action</h2>
+            <p>This is what you can do to help.</p>
+        </div>
+        {action_items}
+    <div class="footer">
+        <p>Contact us at: <a href="mailto:info@10minclimate.org">info@10minclimate.org</a></p>
+        <p><a href="unsubscribe-link">Unsubscribe</a></p>
+        <p>&copy; 10 minute climate. All rights reserved.</p>
+    </div>
+</body>
+</html>
+'''
