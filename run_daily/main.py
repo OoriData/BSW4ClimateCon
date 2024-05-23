@@ -27,7 +27,7 @@ import process_from_md as process_from_md  # Requires same directory import
 from datetime import date
 
 from config import SERPS_PATH, DAYS_TO_RUN
-from send_campaign_email import create_campaign
+# from send_campaign_email import create_campaign
 
 # SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'  # Public instances seem all broken. Luckily, easy to self-host
 SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'
@@ -123,10 +123,30 @@ async def async_main(sterms):
     summary = first_search_result['summary']
     action_items = first_search_result['action_items']
     url = first_search_result['url']
+
     # Here we check whether it's a configured e-mail send day & run the e-mail builder if so
-    today = date.today()
-    if today.weekday() in DAYS_TO_RUN:
-         create_campaign(url, summary, action_items)
+    # today = date.today()
+    # if today.weekday() in DAYS_TO_RUN:
+    #     create_campaign(url, summary, action_items)
+
+    file_path = "email_template.html"
+    with open(file_path, "r", encoding="utf-8") as file:
+        html_content = file.read()
+        html_content = html_content.format(url=url, summary=summary, action_items=action_items)
+    
+    import webbrowser
+    import tempfile
+
+    def display_html_string(html_string):
+        # Create a temporary HTML file
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.html') as temp_file:
+            temp_file.write(html_string)
+            temp_file_path = temp_file.name
+        
+        # Open the temporary HTML file in the default web browser
+        webbrowser.open_new_tab('file://' + temp_file_path)
+
+    display_html_string(html_content)
     
     # If we sent an e-mail delete files in the working space
     # for f in SERPS_PATH.glob('*.json'):
