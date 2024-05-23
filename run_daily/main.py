@@ -118,7 +118,6 @@ async def async_main(sterms):
 
     with open('workspace/daily_news/2024-05-16/news_1.json', 'rb') as fp:
         first_search_result = json.load(fp)
-    print(first_search_result)
 
     summary = first_search_result['summary']
     action_items = first_search_result['action_items']

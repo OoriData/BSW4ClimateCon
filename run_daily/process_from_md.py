@@ -46,7 +46,7 @@ def MD_extract(searxng_JSON):
 
 
 # FIXME: Needs to be rethought (async requests?)
-def summarize_news(batch):
+async def summarize_news(batch):
     '''
     get summary of the news item from LLM
     '''
@@ -54,16 +54,17 @@ def summarize_news(batch):
         print(f'Summarizing news item {item["title"]}...')
         call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item["content"])
 
-        item['summary'] = g_summarization_llm(prompt_to_chat(call_prompt),
+        response = await g_summarization_llm(prompt_to_chat(call_prompt),
             max_tokens=2047,
             stop='###'
-        ).first_choice_text.strip()
+        )
+        item['summary'] = response.first_choice_text.strip()
 
     return batch
 
 
 # FIXME: Needs to be rethought (async requests?)
-def score_news(batch):
+async def score_news(batch):
     '''
     have an LLM score the item
     '''
@@ -71,10 +72,11 @@ def score_news(batch):
         print(f'Scoring news item {item["title"]}...')
         call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
-        item['score'] = g_scoring_llm(prompt_to_chat(call_prompt),
+        response = await g_scoring_llm(prompt_to_chat(call_prompt),
             max_tokens=4,
             stop='###'
-        ).first_choice_text.strip()
+        )
+        item['score'] = response.first_choice_text.strip()
 
         print(f'Scored {item["score"]}/10!')
 
@@ -82,7 +84,7 @@ def score_news(batch):
 
 
 # FIXME: Needs to be rethought (async requests?)
-def generate_action_items(batch):
+async def generate_action_items(batch):
     '''
     have an LLM generate action items for the news items
     '''
@@ -90,10 +92,11 @@ def generate_action_items(batch):
         print(f'Generating action items for news item {item["title"]}...')
         call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
-        item['action_items'] = g_actiongen_llm(prompt_to_chat(call_prompt),
+        response = await g_actiongen_llm(prompt_to_chat(call_prompt),
             max_tokens=2047,
             stop='###'
-        ).first_choice_text.strip()
+        )
+        item['action_items'] = response.first_choice_text.strip()
 
     return batch
 
@@ -125,11 +128,11 @@ async def async_main(searxng_JSON):
     news_batch = MD_extract(searxng_JSON)
     print(f'Got {len(news_batch)} stories!')
 
-    news_batch = summarize_news(news_batch)
+    news_batch = await summarize_news(news_batch)
 
     # news_batch = score_news(news_batch)
 
-    news_batch = generate_action_items(news_batch)
+    news_batch = await generate_action_items(news_batch)
     
     print('\nUploading stories to database...')
     write_news_to_dated_folder(news_batch)
