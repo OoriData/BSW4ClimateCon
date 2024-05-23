@@ -26,11 +26,10 @@ import process_from_md as process_from_md  # Requires same directory import
 
 from datetime import date
 
-from config import SERPS_PATH, DAYS_TO_RUN
+from config import SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT
 # from send_campaign_email import create_campaign
 
 # SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'  # Public instances seem all broken. Luckily, easy to self-host
-SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'
 DEFAULT_DOTS_SPACING = 0.2  # Number of seconds between each dot printed to console
 
 
@@ -47,16 +46,21 @@ async def do_sxng_news_search(terms):
     # https://docs.searxng.org/dev/search_api.html
     # curl "http://localhost:8888/search?q=solarpunk&categories=\!news&time_range=day&format=json"
     # curl -O "http://localhost:8888/search?q=climate+boulder&categories=\!news&time_range=week&format=json"
-    qparams = {'q': terms,
-               'categories': '!news',
-               'time_range': 'week',
-               'format': 'json'}
+    qparams = {
+        'q': terms,
+        'categories': '!news',
+        'time_range': 'week',
+        'format': 'json'
+    }
     # async with httpx.AsyncClient(verify=False) as client:
     async with httpx.AsyncClient() as client:
         resp = await client.get(SEARXNG_ENDPOINT, params=qparams)
         # html = resp.content.decode(resp.encoding or 'utf-8')
-        results_obj = resp.json
-        results_list = results_obj['results']
+        results_obj = resp.json()
+        if LIMIT:
+            results_list = results_obj['results'] = results_obj['results'][:LIMIT]
+        else:
+            results_list = results_obj['results']
         # Note: top-level `number_of_results` always seems to be 0
         results_count = len(results_list)
         print(results_count, 'result(s)', file=sys.stderr)
@@ -68,7 +72,7 @@ async def do_sxng_news_search(terms):
 
         # FIXME: Use asyncio.gather (or async for) properly here
         for result in results_list:
-            add_content_as_markdown(client, result)
+            await add_content_as_markdown(client, result)
 
         return results_obj
 
@@ -78,18 +82,21 @@ async def add_content_as_markdown(client, result):
     Load HTML from the content of the result HTML, converts it to Markdown & adds it back to the results structure
     '''
     resp = await client.get(result['url'])
+    print('URL', result['url'])
     md_content = extract(resp.content,
                             output_format='markdown',
                             include_links=True,
                             include_comments=False)
     result['markdown_content'] = md_content
+    print('MARKDOWN', result['markdown_content'])
 
 
 async def store_sxng_news_search(results):
     today = date.today()
     fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + '.json')
-    with open(fname, 'wb') as fp:
-        json.dump(fp, results)
+    SERPS_PATH.mkdir(parents=True, exist_ok=True)
+    with open(fname, 'w') as fp:
+        json.dump(results, fp)
 
 
 async def async_main(sterms):
@@ -101,13 +108,13 @@ async def async_main(sterms):
     # url_task_group = asyncio.gather(*[
     #     asyncio.create_task(do_sxng_news_search(sterms))])
 
-    # searx_task = asyncio.create_task(do_sxng_news_search(sterms))
-    # indicator_task = asyncio.create_task(indicate_progress())
-    # tasks = [indicator_task, searx_task]
-    # done, _ = await asyncio.wait(
-    #     tasks, return_when=asyncio.FIRST_COMPLETED)
+    searx_task = asyncio.create_task(do_sxng_news_search(sterms))
+    indicator_task = asyncio.create_task(indicate_progress())
+    tasks = [indicator_task, searx_task]
+    done, _ = await asyncio.wait(
+        tasks, return_when=asyncio.FIRST_COMPLETED)
 
-    # await store_sxng_news_search(searx_task.result)
+    await store_sxng_news_search(searx_task.result())
 
     # Here we call the article summarizer (in process_from_md.py)
     today = date.today()
@@ -116,7 +123,9 @@ async def async_main(sterms):
         searxng_results = json.load(fp)
     await process_from_md.async_main(searxng_results)
 
-    with open('workspace/daily_news/2024-05-16/news_1.json', 'rb') as fp:
+    today_folder = SERPS_PATH / 'daily_news' / today.isoformat()
+    today_folder.mkdir(parents=True, exist_ok=True)
+    with open(today_folder / 'news_1.json', 'rb') as fp:
         first_search_result = json.load(fp)
 
     summary = first_search_result['summary']

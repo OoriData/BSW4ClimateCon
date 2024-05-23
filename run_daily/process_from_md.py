@@ -41,6 +41,8 @@ def MD_extract(searxng_JSON):
             'search_query': search_query
         }
         refined_data.append(extracted_item)
+        if not extracted_item['content']:
+            print(f'WARNING: No content for {extracted_item["title"]}')
 
     return refined_data
 
@@ -52,11 +54,11 @@ async def summarize_news(batch):
     '''
     for item in batch:
         print(f'Summarizing news item {item["title"]}...')
-        call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item["content"])
+        call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item['content'])
+        print(call_prompt)
 
         response = await g_summarization_llm(prompt_to_chat(call_prompt),
-            max_tokens=2047,
-            stop='###'
+            max_tokens=2047
         )
         item['summary'] = response.first_choice_text.strip()
 
@@ -73,8 +75,7 @@ async def score_news(batch):
         call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
         response = await g_scoring_llm(prompt_to_chat(call_prompt),
-            max_tokens=4,
-            stop='###'
+            max_tokens=4
         )
         item['score'] = response.first_choice_text.strip()
 
