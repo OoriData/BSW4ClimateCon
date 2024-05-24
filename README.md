@@ -110,7 +110,7 @@ From your virtual environment:
 
 ```sh
 pip install -Ur requirements.txt
-./main/run_daily.py
+./run_daily/main.py --dry-run
 ```
 
 # Running the daily command

@@ -9,14 +9,13 @@ import os
 import json
 import asyncio
 from datetime import datetime
+from pathlib import Path
 
 from ogbujipt.llm_wrapper import prompt_to_chat, llama_cpp_http_chat
 
-from config import PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL
+from config import PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH
 
 import click
-
-from config import *
 
 g_summarization_llm = llama_cpp_http_chat(base_url=SUMMARIZATION_LLM_URL)
 g_scoring_llm = llama_cpp_http_chat(base_url=SCORING_LLM_URL)
@@ -58,6 +57,7 @@ async def summarize_news(batch):
         print(call_prompt)
 
         response = await g_summarization_llm(prompt_to_chat(call_prompt),
+            timeout=LLM_TIMEOUT,
             max_tokens=2047
         )
         item['summary'] = response.first_choice_text.strip()
@@ -75,6 +75,7 @@ async def score_news(batch):
         call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
         response = await g_scoring_llm(prompt_to_chat(call_prompt),
+            timeout=LLM_TIMEOUT,
             max_tokens=4
         )
         item['score'] = response.first_choice_text.strip()
@@ -94,6 +95,7 @@ async def generate_action_items(batch):
         call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
         response = await g_actiongen_llm(prompt_to_chat(call_prompt),
+            timeout=LLM_TIMEOUT,
             max_tokens=2047,
             stop='###'
         )

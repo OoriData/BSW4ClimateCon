@@ -26,8 +26,8 @@ import process_from_md as process_from_md  # Requires same directory import
 
 from datetime import date
 
-from config import SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT
-# from send_campaign_email import create_campaign
+from config import SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS
+from send_campaign_email import create_campaign, test_campaign
 
 # SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'  # Public instances seem all broken. Luckily, easy to self-host
 DEFAULT_DOTS_SPACING = 0.2  # Number of seconds between each dot printed to console
@@ -53,6 +53,7 @@ async def do_sxng_news_search(terms):
         'format': 'json'
     }
     # async with httpx.AsyncClient(verify=False) as client:
+    print('Running search for:', terms)
     async with httpx.AsyncClient() as client:
         resp = await client.get(SEARXNG_ENDPOINT, params=qparams)
         # html = resp.content.decode(resp.encoding or 'utf-8')
@@ -91,30 +92,39 @@ async def add_content_as_markdown(client, result):
     print('MARKDOWN', result['markdown_content'])
 
 
-async def store_sxng_news_search(results):
+async def store_sxng_news_search(result_set):
     today = date.today()
     fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + '.json')
+
+    print('Storing search results in', fname)
+    import pprint; pprint.pprint(result_set)
+
     SERPS_PATH.mkdir(parents=True, exist_ok=True)
     with open(fname, 'w') as fp:
-        json.dump(results, fp)
+        json.dump(result_set, fp)
 
 
-async def async_main(sterms):
+async def async_main(sterms, dryrun):
     '''
     Entry point (for cmdline, for now)
     Takes search engine results & launches the main task to pull & process news
     '''
-    # Just one URL for now, so KISS
-    # url_task_group = asyncio.gather(*[
-    #     asyncio.create_task(do_sxng_news_search(sterms))])
+    if sterms is None:
+        search_sets = SEARCH_SETS
+    else:
+        search_sets = [sterms]
 
-    searx_task = asyncio.create_task(do_sxng_news_search(sterms))
+    search_tasks = asyncio.gather(*[
+        asyncio.create_task(do_sxng_news_search(sterm)) for sterm in search_sets])
+
+    # searx_task = asyncio.create_task(do_sxng_news_search(sterms))
     indicator_task = asyncio.create_task(indicate_progress())
-    tasks = [indicator_task, searx_task]
+    tasks = [indicator_task, search_tasks]
     done, _ = await asyncio.wait(
         tasks, return_when=asyncio.FIRST_COMPLETED)
 
-    await store_sxng_news_search(searx_task.result())
+    for result_set in search_tasks.result():
+        await store_sxng_news_search(result_set)
 
     # Here we call the article summarizer (in process_from_md.py)
     today = date.today()
@@ -133,29 +143,12 @@ async def async_main(sterms):
     url = first_search_result['url']
 
     # Here we check whether it's a configured e-mail send day & run the e-mail builder if so
-    # today = date.today()
-    # if today.weekday() in DAYS_TO_RUN:
-    #     create_campaign(url, summary, action_items)
+    today = date.today()
+    if dryrun:
+        test_campaign(url, summary, action_items)
+    elif today.weekday() in DAYS_TO_RUN:
+        create_campaign(url, summary, action_items)
 
-    file_path = "email_template.html"
-    with open(file_path, "r", encoding="utf-8") as file:
-        html_content = file.read()
-        html_content = html_content.format(url=url, summary=summary, action_items=action_items)
-    
-    import webbrowser
-    import tempfile
-
-    def display_html_string(html_string):
-        # Create a temporary HTML file
-        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.html') as temp_file:
-            temp_file.write(html_string)
-            temp_file_path = temp_file.name
-        
-        # Open the temporary HTML file in the default web browser
-        webbrowser.open_new_tab('file://' + temp_file_path)
-
-    display_html_string(html_content)
-    
     # If we sent an e-mail delete files in the working space
     # for f in SERPS_PATH.glob('*.json'):
     #     f.unlink()
@@ -183,12 +176,15 @@ async def async_test(content):
 # @click.option('--limit', default=4, type=int,
 #               help='Maximum number of chunks matched against the posed question to use as context for the LLM')
 @click.option('--testfile', type=click.File('rb'))
-@click.argument('sterms')
-def main(sterms, testfile):
+@click.option('--dry-run', is_flag=True, default=False,
+              help='Don\'t actually send e-mail blast, but always generate & pop-up HTML output.')
+@click.argument('sterms', required=False)
+def main(sterms, testfile, dry_run):
+    # print('Args:', (sterms, testfile, dry_run))
     if testfile:
         asyncio.run(async_test(testfile))
     else:
-        asyncio.run(async_main(sterms))
+        asyncio.run(async_main(sterms, dry_run))
 
 
 if __name__ == '__main__':

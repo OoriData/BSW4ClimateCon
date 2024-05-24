@@ -14,19 +14,25 @@ from sentence_transformers import SentenceTransformer  # noqa: E402
 
 E_MODEL = SentenceTransformer('all-MiniLM-L6-v2')  # Load the embedding model
 
+SEARCH_SETS = [
+    'climate boulder',
+]
+
 SERPS_PATH = Path('./workspace')
 
 #python date.weekday() 1 = Tuesdsay, 3 = Thursday, 5 = Saturday
 DAYS_TO_RUN = [1,3,5]
 
 # SearXNG config
-SEARXNG_ENDPOINT = 'http://sofola:8888/search'
+SEARXNG_ENDPOINT =  os.getenv('SEARXNG_ENDPOINT', 'http://localhost:8888/search')
 LIMIT = 3  # number of results to process
 
 # LLMs endpoints
-SUMMARIZATION_LLM_URL = 'http://acholonu:8001'
-SCORING_LLM_URL = 'http://acholonu:8001'
-ACTIONGEN_LLM_URL = 'http://acholonu:8001'
+SUMMARIZATION_LLM_URL =  os.getenv('SUMMARIZATION_LLM_URL', 'http://localhost:8000')
+SCORING_LLM_URL =  os.getenv('SCORING_LLM_URL', 'http://localhost:8000')
+ACTIONGEN_LLM_URL =  os.getenv('ACTIONGEN_LLM_URL', 'http://localhost:8000')
+
+LLM_TIMEOUT = 90.0
 
 # Prompts & other natural language
 with open('prompts.toml', mode='rb') as fp:

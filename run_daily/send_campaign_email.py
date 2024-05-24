@@ -1,3 +1,5 @@
+import webbrowser
+import tempfile
 import mailchimp_marketing as MailchimpMarketing
 from mailchimp_marketing.api_client import ApiClientError
 
@@ -34,3 +36,19 @@ def create_campaign(url, summary, action_items):
 
     except ApiClientError as error:
         print("Error creating/sending campaign:", error.text)
+
+
+def display_html_string(html_string):
+    # Create a temporary HTML file
+    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.html') as temp_file:
+        temp_file.write(html_string)
+        temp_file_path = temp_file.name
+    
+    # Open the temporary HTML file in the default web browser
+    webbrowser.open_new_tab('file://' + temp_file_path)
+
+
+def test_campaign(url, summary, action_items):
+    html_content = EMAIL_TEMPLATE.format(url=url, summary=summary, action_items=action_items)
+    display_html_string(html_content)
+    
