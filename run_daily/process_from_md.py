@@ -12,6 +12,7 @@ from datetime import datetime
 from pathlib import Path
 
 from ogbujipt.llm_wrapper import prompt_to_chat, llama_cpp_http_chat
+from utiloori.ansi_color import ansi_color
 
 from config import PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH
 
@@ -41,7 +42,7 @@ def MD_extract(searxng_JSON):
         }
         refined_data.append(extracted_item)
         if not extracted_item['content']:
-            print(f'WARNING: No content for {extracted_item["title"]}')
+            print(ansi_color(f'WARNING: No content for {extracted_item["title"]}', 'red'))
 
     return refined_data
 
@@ -52,9 +53,8 @@ async def summarize_news(batch):
     get summary of the news item from LLM
     '''
     for item in batch:
-        print(f'Summarizing news item {item["title"]}...')
+        print(ansi_color(f'\nSummarizing news item {item["title"]}...', 'yellow'))
         call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item['content'])
-        print(call_prompt)
 
         response = await g_summarization_llm(prompt_to_chat(call_prompt),
             timeout=LLM_TIMEOUT,
@@ -71,12 +71,11 @@ async def score_news(batch):
     have an LLM score the item
     '''
     for item in batch:
-        print(f'Scoring news item {item["title"]}...')
+        print(ansi_color(f'\nScoring news item {item["title"]}...', 'yellow'))
         call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
         response = await g_scoring_llm(prompt_to_chat(call_prompt),
-            timeout=LLM_TIMEOUT,
-            max_tokens=4
+            timeout=LLM_TIMEOUT
         )
         item['score'] = response.first_choice_text.strip()
 
@@ -91,13 +90,12 @@ async def generate_action_items(batch):
     have an LLM generate action items for the news items
     '''
     for item in batch:
-        print(f'Generating action items for news item {item["title"]}...')
+        print(ansi_color(f'\nGenerating action items for news item {item["title"]}...', 'yellow'))
         call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
         response = await g_actiongen_llm(prompt_to_chat(call_prompt),
             timeout=LLM_TIMEOUT,
-            max_tokens=2047,
-            stop='###'
+            max_tokens=2047
         )
         item['action_items'] = response.first_choice_text.strip()
 
@@ -121,15 +119,15 @@ def write_news_to_dated_folder(news_batch):
         with open(file_path, 'w') as json_file:
             json.dump(item, json_file, indent=4)
 
-    print(f"News items written to folder: {folder_path}")
+    print(ansi_color(f'News items written to folder: {folder_path}', 'yellow'))
 
 
 async def async_main(searxng_JSON):
-    print('\nProcessing searxng results to Database:')
+    print(ansi_color('\nProcessing searxng results to Database:', 'yellow'))
 
-    print('\nProcessing searxng results JSON...')
+    print(ansi_color('Processing searxng results JSON...', 'yellow'))
     news_batch = MD_extract(searxng_JSON)
-    print(f'Got {len(news_batch)} stories!')
+    print(ansi_color(f'Got {len(news_batch)} stories!', 'yellow'))
 
     news_batch = await summarize_news(news_batch)
 
@@ -137,14 +135,14 @@ async def async_main(searxng_JSON):
 
     news_batch = await generate_action_items(news_batch)
     
-    print('\nUploading stories to database...')
+    print(ansi_color('\nUploading stories to database...', 'yellow'))
     write_news_to_dated_folder(news_batch)
-    print('Uploaded!')
+    print(ansi_color('Uploaded!', 'yellow'))
 
-    print('\nSUMMARY:', news_batch[0]['summary'])
-    print('\nACTION ITEMS:', news_batch[0]['action_items'])
+    # print(ansi_color(f'\nSUMMARY: {news_batch[0]["summary"]}', 'yellow'))
+    # print(ansi_color(f'\nACTION ITEMS: {news_batch[0]["action_items"]}', 'yellow'))
 
-    print('\nDone!')
+    print(ansi_color('\nDone!', 'yellow'))
 
 
 @click.command()

@@ -8,3 +8,4 @@ pgvector
 fastapi
 python-dotenv
 mailchimp_marketing
+utiloori

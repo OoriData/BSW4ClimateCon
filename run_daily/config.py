@@ -6,13 +6,15 @@
 import os
 import sys
 from pathlib import Path
+
 from ogbujipt import word_loom
 from ogbujipt.embedding.pgvector import DataDB
+from utiloori.ansi_color import ansi_color
 
-print('Importing SentenceTransformer; can be slow!', file=sys.stderr)
 from sentence_transformers import SentenceTransformer  # noqa: E402
+print(ansi_color('Importing SentenceTransformer; can be slow!', 'purple'), file=sys.stderr)
 
-E_MODEL = SentenceTransformer('all-MiniLM-L6-v2')  # Load the embedding model
+E_MODEL = SentenceTransformer('all-mpnet-base-v2')  # Load the embedding model
 
 SEARCH_SETS = [
     'climate boulder',
@@ -39,12 +41,12 @@ with open('prompts.toml', mode='rb') as fp:
     PROMPT = word_loom.load(fp)
 
 # PGVector connection
-PGV_DB_NAME = 'PGv'
-PGV_DB_HOST = 'localhost'
-PGV_DB_PORT = 5432
-PGV_DB_USER = 'oori'
-# Just let a Traceback let the user know they're missing config, for now
+PGV_DB_NAME = os.environ['CLIMATE_ACTION_DB_NAME']
+PGV_DB_HOST = os.environ['CLIMATE_ACTION_DB_HOST']
+PGV_DB_PORT = int(os.environ['CLIMATE_ACTION_DB_PORT'])
+PGV_DB_USER = os.environ['CLIMATE_ACTION_DB_USER']
 PGV_DB_PASSWORD = os.environ['CLIMATE_ACTION_DB_PASSWORD']
+# Just let a Traceback let the user know they're missing config, for now
 
 PGV_DB_TABLENAME = 'climate_news'
 
@@ -115,17 +117,24 @@ EMAIL_TEMPLATE = '''<!DOCTYPE html>
         <div class="section">
             <h2>Welcome!</h2>
             <!-- <p>Dear [recipient],</p> -->
-            <p>Welcome to our email update. Here's a quick overview of what’s happening in climate action since last time.</p>
+            <p>Welcome to your email update. Here's a quick overview of what’s happening in climate action since last time.</p>
         </div>
         <div class="section">
             <h2>Latest News</h2>
-            <p>This is a summary of the latest news {summary}. <a href="{url}">Read More</a></p>
+            <p>
+                This is a summary of the latest news:<br>
+                {summary}<br>
+                <a href="{url}">Read More</a>
+            </p>
         </div>
         <div class="section">
             <h2>Action</h2>
-            <p>This is what you can do to help.</p>
+            <p>
+                This is what you can do to help:<br>
+                {action_items}
+            </p>
         </div>
-        {action_items}
+        
     <div class="footer">
         <p>Contact us at: <a href="mailto:info@10minclimate.org">info@10minclimate.org</a></p>
         <p><a href="unsubscribe-link">Unsubscribe</a></p>

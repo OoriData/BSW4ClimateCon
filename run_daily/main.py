@@ -18,6 +18,7 @@ import json
 import asyncio
 from pathlib import Path
 
+from utiloori.ansi_color import ansi_color
 import click
 import httpx
 from trafilatura import extract
@@ -53,7 +54,7 @@ async def do_sxng_news_search(terms):
         'format': 'json'
     }
     # async with httpx.AsyncClient(verify=False) as client:
-    print('Running search for:', terms)
+    print(ansi_color(f'\nRunning search for: "{terms}"', 'blue'))
     async with httpx.AsyncClient() as client:
         resp = await client.get(SEARXNG_ENDPOINT, params=qparams)
         # html = resp.content.decode(resp.encoding or 'utf-8')
@@ -64,7 +65,7 @@ async def do_sxng_news_search(terms):
             results_list = results_obj['results']
         # Note: top-level `number_of_results` always seems to be 0
         results_count = len(results_list)
-        print(results_count, 'result(s)', file=sys.stderr)
+        print(ansi_color(f'\n{results_count} result(s) scraped', 'blue'), file=sys.stderr)
         # answers = results_obj['answers']
         # corrections = results_obj['corrections']
         # infoboxes = results_obj['infoboxes']
@@ -83,21 +84,19 @@ async def add_content_as_markdown(client, result):
     Load HTML from the content of the result HTML, converts it to Markdown & adds it back to the results structure
     '''
     resp = await client.get(result['url'])
-    print('URL', result['url'])
+    print(ansi_color(f'\n Got URL: {result['url']}', 'blue'))
     md_content = extract(resp.content,
                             output_format='markdown',
                             include_links=True,
                             include_comments=False)
     result['markdown_content'] = md_content
-    # print('MARKDOWN', result['markdown_content'])
 
 
 async def store_sxng_news_search(result_set):
     today = date.today()
     fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + '.json')
 
-    print('Storing search results in', fname)
-    # import pprint; pprint.pprint(result_set)
+    print(ansi_color(f'\nStoring search results in {fname}', 'cyan'))
 
     SERPS_PATH.mkdir(parents=True, exist_ok=True)
     with open(fname, 'w') as fp:
@@ -163,12 +162,10 @@ async def async_test(content):
         results_list = results_obj['results']
         # Note: top-level `number_of_results` always seems to be 0
         results_count = len(results_list)
-        print(results_count, 'result(s)', file=sys.stderr)
+        print(ansi_color(f'\n{results_count} result(s) scraped', 'blue'), file=sys.stderr)
         # FIXME: Use asyncio.gather (or async for) properly here
         for result in results_list:
-            # print(result)
             await add_content_as_markdown(client, result)
-    # print(json.dumps(results_obj, indent=2))
 
 
 @click.command()

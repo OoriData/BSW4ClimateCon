@@ -5,16 +5,15 @@ At the [Boulder Startup Week](https://boulderstartupweek.com/) Builder's Room Uc
 The project continues, and we hope it will continue to be of use to busy people who care about the climate, and need an affirmative way to keep engaged.
 
 Sprint prticipants:
-
- * Micah Dew
- * Zachariah Malik
- * Troy Namath
- * Osi Ogbuji
- * Uche Ogbuji
- * Aidan Reese
- * Garrett Roberts
- * Elaine Yang
- * Sung Yi
+ - [Micah Dew](https://github.com/micahtdew) ([LinkedIn](https://www.linkedin.com/in/micahdew/))
+ - [Zachariah Malik](https://github.com/ZaMalik123) ([LinkedIn](https://www.linkedin.com/in/zachariah-malik-74a13a190/))
+ - Troy Namath ([LinkedIn](https://www.linkedin.com/in/troynamath/))
+ - [Osi Ogbuji](https://github.com/choccccy) ([LinkedIn](https://www.linkedin.com/in/osi-ogbuji/))
+ - [Uche Ogbuji](https://github.com/uogbuji) ([LinkedIn](https://www.linkedin.com/in/ucheogbuji/))
+ - [Aidan Reese](https://github.com/Aidan-Reese) ([LinkedIn](https://www.linkedin.com/in/aidan-c-reese/))
+ - [Garrett Roberts](https://github.com/garrettmroberts) ([LinkedIn](https://www.linkedin.com/in/garrettmroberts/))
+ - Elaine Yang ([LinkedIn](https://www.linkedin.com/in/elaine-yang-988a641/))
+ - Sung Yi ([LinkedIn](https://www.linkedin.com/in/sung-carambito/))
 
 ## So what does it do, again?
 
@@ -39,13 +38,19 @@ Code structure:
 
 There are several key components for the project. You can tweak how these are all used in `run_daily/config.py`
 
-Prerequisites:
+## Prerequisites:
 
-## Python
+### Python
 
 Python 3.11 or more recent, preferably in a virtual environment
 
-## SearXNG
+example setup:
+```sh
+python3.11 -m venv $HOME/.local/venv/bsw
+pip install -Ur requirements.txt
+```
+
+### SearXNG
 
 Running [SearXNG](https://github.com/searxng/searxng) instance. You can just use the Docker container. To run this locally:
 
@@ -75,7 +80,7 @@ python -c "from uuid import uuid1; print(str(uuid1()))"
 ```
 -->
 
-## Running on a shared server
+### Running on a shared server
 
 For production SearXNG will need to run on a shared server. Make sure that server has Docker installed, set it as the context. Create `/etc/searxng` on the remote server and ensure it's writable by the docker daemon.
 
@@ -97,20 +102,19 @@ docker run --rm \
 ```
 
 
-# LLM endpoint(s)
+### LLM endpoint(s)
 
 Uses [llama.cpp remotely hosted](https://github.com/ggerganov/llama.cpp/blob/master/examples/server/README.md) for LLM processing.
 
-Set up an endpoint, and update config.py
+Set up an endpoint, and update your environment
 
 
-# 3rd-party python libraries
+### 3rd-party python libraries
 
 From your virtual environment:
 
 ```sh
 pip install -Ur requirements.txt
-./run_daily/main.py --dry-run
 ```
 
 # Running the daily command
@@ -128,10 +132,35 @@ Support code & processes:
 * Gathering e-mail addresses. For now simple Google form
 * Stretch: Online archive of past action e-mails
 
+## Testing
+### Set environment variables:
+```
+set -o allexport && source .env && set +o allexport
+```
+(this can be however you prefer to set up your environment)
+### Test command:
+```
+run_daily/main.py --dry-run "boulder climate change news"
+```
 
-## TODO
+### example `.env`
+```
+SEARXNG_ENDPOINT = "http://localhost:8888/search"
 
-### Product
+SUMMARIZATION_LLM_URL = "http://localhost:8000"
+SCORING_LLM_URL = "http://localhost:8000"
+ACTIONGEN_LLM_URL = "http://localhost:8000"
+
+CLIMATE_ACTION_DB_NAME = "climateDB"
+CLIMATE_ACTION_DB_HOST = "localhost"
+CLIMATE_ACTION_DB_PORT = "1234"
+CLIMATE_ACTION_DB_USER = "user"
+CLIMATE_ACTION_DB_PASSWORD = "password"
+```
+
+# TODO
+
+## Product
 
 * Establish "Boulderite in their 30s-40s" user/actor persona prompt
 * Complete e-mail sender/action inspirer prompt
@@ -139,7 +168,7 @@ Support code & processes:
 * Outline process for credibility checking?
 * ???
 
-### Dev
+## Dev
 
 * Complete pull process for e-mail addresses from Google Form
 * Complete data pipeline
@@ -151,15 +180,7 @@ Support code & processes:
 
 * Continue to think about managing/securing SearXNG (as well as PGVector & llama.cpp). [Security-minded "Searx Installation and Discussion" article](https://grahamhelton.com/blog/searx/).
 
-# Dev setup
-
-```sh
-python3.11 -m venv $HOME/.local/venv/bsw
-pip install -Ur requirements.txt 
-
-```
-
-# WHITEBOARD notes from Kickoff day (Tuesday)
+# WHITEBOARD notes from Kickoff day (May 14)
 
 ## Problem:
 **keeping up with climate news is overwhelming and demoralizing**
