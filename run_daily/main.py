@@ -134,7 +134,7 @@ async def async_main(sterms, dryrun):
 
     today_folder = SERPS_PATH / 'daily_news' / today.isoformat()
     today_folder.mkdir(parents=True, exist_ok=True)
-    with open(today_folder / 'news_1.json', 'rb') as fp:
+    with open(today_folder / 'news_1.json', 'rb') as fp:  # TODO: need to actually consider multiple stories for the user, not just #1
         first_search_result = json.load(fp)
 
     summary = first_search_result['summary']
