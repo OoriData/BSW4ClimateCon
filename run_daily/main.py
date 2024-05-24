@@ -89,7 +89,7 @@ async def add_content_as_markdown(client, result):
                             include_links=True,
                             include_comments=False)
     result['markdown_content'] = md_content
-    print('MARKDOWN', result['markdown_content'])
+    # print('MARKDOWN', result['markdown_content'])
 
 
 async def store_sxng_news_search(result_set):
@@ -97,7 +97,7 @@ async def store_sxng_news_search(result_set):
     fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + '.json')
 
     print('Storing search results in', fname)
-    import pprint; pprint.pprint(result_set)
+    # import pprint; pprint.pprint(result_set)
 
     SERPS_PATH.mkdir(parents=True, exist_ok=True)
     with open(fname, 'w') as fp:
@@ -168,7 +168,7 @@ async def async_test(content):
         for result in results_list:
             # print(result)
             await add_content_as_markdown(client, result)
-    print(json.dumps(results_obj, indent=2))
+    # print(json.dumps(results_obj, indent=2))
 
 
 @click.command()
