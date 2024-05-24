@@ -9,14 +9,13 @@ import os
 import json
 import asyncio
 from datetime import datetime
+from pathlib import Path
 
 from ogbujipt.llm_wrapper import prompt_to_chat, llama_cpp_http_chat
 
-from config import PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL
+from config import PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH
 
 import click
-
-from config import *
 
 g_summarization_llm = llama_cpp_http_chat(base_url=SUMMARIZATION_LLM_URL)
 g_scoring_llm = llama_cpp_http_chat(base_url=SCORING_LLM_URL)
@@ -41,29 +40,33 @@ def MD_extract(searxng_JSON):
             'search_query': search_query
         }
         refined_data.append(extracted_item)
+        if not extracted_item['content']:
+            print(f'WARNING: No content for {extracted_item["title"]}')
 
     return refined_data
 
 
 # FIXME: Needs to be rethought (async requests?)
-def summarize_news(batch):
+async def summarize_news(batch):
     '''
     get summary of the news item from LLM
     '''
     for item in batch:
         print(f'Summarizing news item {item["title"]}...')
-        call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item["content"])
+        call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item['content'])
+        print(call_prompt)
 
-        item['summary'] = g_summarization_llm(prompt_to_chat(call_prompt),
-            max_tokens=2047,
-            stop='###'
-        ).first_choice_text.strip()
+        response = await g_summarization_llm(prompt_to_chat(call_prompt),
+            timeout=LLM_TIMEOUT,
+            max_tokens=2047
+        )
+        item['summary'] = response.first_choice_text.strip()
 
     return batch
 
 
 # FIXME: Needs to be rethought (async requests?)
-def score_news(batch):
+async def score_news(batch):
     '''
     have an LLM score the item
     '''
@@ -71,10 +74,11 @@ def score_news(batch):
         print(f'Scoring news item {item["title"]}...')
         call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
-        item['score'] = g_scoring_llm(prompt_to_chat(call_prompt),
-            max_tokens=4,
-            stop='###'
-        ).first_choice_text.strip()
+        response = await g_scoring_llm(prompt_to_chat(call_prompt),
+            timeout=LLM_TIMEOUT,
+            max_tokens=4
+        )
+        item['score'] = response.first_choice_text.strip()
 
         print(f'Scored {item["score"]}/10!')
 
@@ -82,7 +86,7 @@ def score_news(batch):
 
 
 # FIXME: Needs to be rethought (async requests?)
-def generate_action_items(batch):
+async def generate_action_items(batch):
     '''
     have an LLM generate action items for the news items
     '''
@@ -90,10 +94,12 @@ def generate_action_items(batch):
         print(f'Generating action items for news item {item["title"]}...')
         call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
-        item['action_items'] = g_actiongen_llm(prompt_to_chat(call_prompt),
+        response = await g_actiongen_llm(prompt_to_chat(call_prompt),
+            timeout=LLM_TIMEOUT,
             max_tokens=2047,
             stop='###'
-        ).first_choice_text.strip()
+        )
+        item['action_items'] = response.first_choice_text.strip()
 
     return batch
 
@@ -125,11 +131,11 @@ async def async_main(searxng_JSON):
     news_batch = MD_extract(searxng_JSON)
     print(f'Got {len(news_batch)} stories!')
 
-    news_batch = summarize_news(news_batch)
+    news_batch = await summarize_news(news_batch)
 
     # news_batch = score_news(news_batch)
 
-    news_batch = generate_action_items(news_batch)
+    news_batch = await generate_action_items(news_batch)
     
     print('\nUploading stories to database...')
     write_news_to_dated_folder(news_batch)
