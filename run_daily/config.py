@@ -110,7 +110,7 @@ EMAIL_TEMPLATE = '''<!DOCTYPE html>
 <body>
     <div class="header">
         <img src="https://10minclimate.org/api/logo" alt="Company Logo">
-        <h1>Monthly Climate Action Newsletter</h1>
+        <h1>Climate Action Newsletter</h1>
         <p>May 2024</p>
     </div>
     <div class="content">
@@ -121,18 +121,14 @@ EMAIL_TEMPLATE = '''<!DOCTYPE html>
         </div>
         <div class="section">
             <h2>Latest News</h2>
-            <p>
-                This is a summary of the latest news:<br>
-                {summary}<br>
-                <a href="{url}">Read More</a>
-            </p>
+            <h3>This is a summary of the latest news:</h3>
+            <p>{summary}</p>
+            <p><a href="{url}">Read More</a></p>
         </div>
         <div class="section">
             <h2>Action</h2>
-            <p>
-                This is what you can do to help:<br>
-                {action_items}
-            </p>
+            <h3>This is what you can do to help:</h3>
+            <p>{action_items}</p>
         </div>
         
     <div class="footer">
