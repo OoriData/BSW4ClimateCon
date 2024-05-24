@@ -12,77 +12,80 @@ from ogbujipt.embedding.pgvector import DataDB
 from utiloori.ansi_color import ansi_color
 
 from sentence_transformers import SentenceTransformer  # noqa: E402
-print(ansi_color('Importing SentenceTransformer; can be slow!', 'purple'), file=sys.stderr)
 
-E_MODEL = SentenceTransformer('all-mpnet-base-v2')  # Load the embedding model
+print(
+    ansi_color("Importing SentenceTransformer; can be slow!", "purple"), file=sys.stderr
+)
+
+E_MODEL = SentenceTransformer("all-mpnet-base-v2")  # Load the embedding model
 
 SEARCH_SETS = [
-    'climate boulder',
+    "climate boulder",
 ]
 
-SERPS_PATH = Path('./workspace')
+SERPS_PATH = Path("./workspace")
 
-#python date.weekday() 1 = Tuesdsay, 3 = Thursday, 5 = Saturday
-DAYS_TO_RUN = [1,3,5]
+# python date.weekday() 1 = Tuesdsay, 3 = Thursday, 5 = Saturday
+DAYS_TO_RUN = [1, 3, 5]
 
 # SearXNG config
-SEARXNG_ENDPOINT =  os.getenv('SEARXNG_ENDPOINT', 'http://localhost:8888/search')
+SEARXNG_ENDPOINT = os.getenv("SEARXNG_ENDPOINT", "http://localhost:8888/search")
 LIMIT = 3  # number of results to process
 
 # LLMs endpoints
-SUMMARIZATION_LLM_URL =  os.getenv('SUMMARIZATION_LLM_URL', 'http://localhost:8000')
-SCORING_LLM_URL =  os.getenv('SCORING_LLM_URL', 'http://localhost:8000')
-ACTIONGEN_LLM_URL =  os.getenv('ACTIONGEN_LLM_URL', 'http://localhost:8000')
+SUMMARIZATION_LLM_URL = os.getenv("SUMMARIZATION_LLM_URL", "http://localhost:8000")
+SCORING_LLM_URL = os.getenv("SCORING_LLM_URL", "http://localhost:8000")
+ACTIONGEN_LLM_URL = os.getenv("ACTIONGEN_LLM_URL", "http://localhost:8000")
 
 LLM_TIMEOUT = 90.0
 
 # Prompts & other natural language
-with open('prompts.toml', mode='rb') as fp:
+with open("prompts.toml", mode="rb") as fp:
     PROMPT = word_loom.load(fp)
 
 # PGVector connection
-PGV_DB_NAME = os.environ['CLIMATE_ACTION_DB_NAME']
-PGV_DB_HOST = os.environ['CLIMATE_ACTION_DB_HOST']
-PGV_DB_PORT = int(os.environ['CLIMATE_ACTION_DB_PORT'])
-PGV_DB_USER = os.environ['CLIMATE_ACTION_DB_USER']
-PGV_DB_PASSWORD = os.environ['CLIMATE_ACTION_DB_PASSWORD']
+PGV_DB_NAME = os.environ["CLIMATE_ACTION_DB_NAME"]
+PGV_DB_HOST = os.environ["CLIMATE_ACTION_DB_HOST"]
+PGV_DB_PORT = int(os.environ["CLIMATE_ACTION_DB_PORT"])
+PGV_DB_USER = os.environ["CLIMATE_ACTION_DB_USER"]
+PGV_DB_PASSWORD = os.environ["CLIMATE_ACTION_DB_PASSWORD"]
 # Just let a Traceback let the user know they're missing config, for now
 
-PGV_DB_TABLENAME = 'climate_news'
+PGV_DB_TABLENAME = "climate_news"
 
 
 # Shared vector DB table
 async def ensure_db():
-    '''
+    """
     Ensure the needed DB table exists & has the right initial data
-    '''
+    """
     global VDB
     VDB = await DataDB.from_conn_params(  # connect to PG
-        embedding_model=E_MODEL, 
+        embedding_model=E_MODEL,
         table_name=PGV_DB_TABLENAME,
         db_name=PGV_DB_NAME,
         host=PGV_DB_HOST,
         port=PGV_DB_PORT,
         user=PGV_DB_USER,
-        password=PGV_DB_PASSWORD
+        password=PGV_DB_PASSWORD,
     )
 
     await VDB.create_table()  # Create a new table (if doesn't exist)
 
 
 async def ensure_language_item(litem):
-    '''
+    """
     Given a language item, make sure it's in the DB, but avoid dupes
-    '''
+    """
     # If we find anything with >98% similarity, treat it as a dupe
     litem_str = str(litem)
     matches = list(await VDB.search(litem_str, threshold=0.98))
     if matches:
         # FIXME: Should also check metadata
-        print('✅', end='', flush=True)
+        print("✅", end="", flush=True)
         return False
-    
-    print('➕', end='', flush=True)
+
+    print("➕", end="", flush=True)
     await VDB.insert(content=litem_str, metadata=litem.meta)
     return True
 
@@ -92,7 +95,7 @@ MAILCHIMP_API_SERVER = os.getenv("MAILCHIMP_API_SERVER")
 MAILCHIMP_AUDIENCE_ID = os.getenv("MAILCHIMP_AUDIENCE_ID")
 
 
-EMAIL_TEMPLATE = '''<!DOCTYPE html>
+EMAIL_TEMPLATE = """<!DOCTYPE html>
 <html>
 <head>
     <style>
@@ -109,7 +112,7 @@ EMAIL_TEMPLATE = '''<!DOCTYPE html>
 </head>
 <body>
     <div class="header">
-        <img src="https://10minclimate.org/api/logo" alt="Company Logo">
+        <img src="https://raw.githubusercontent.com/OoriData/BSW4ClimateCon/main/logo.png" alt="Company Logo">
         <h1>Climate Action Newsletter</h1>
         <p>May 2024</p>
     </div>
@@ -138,4 +141,4 @@ EMAIL_TEMPLATE = '''<!DOCTYPE html>
     </div>
 </body>
 </html>
-'''
+"""
