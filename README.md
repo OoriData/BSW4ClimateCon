@@ -123,21 +123,20 @@ pip install -Ur requirements.txt
 
 * pull news for the past day
 * run LLM-based assessments, summarization, credibility scoring & storage of best candidates for next action e-mail
-* check e-mail day criteria (we've discussed action only on Tuesday, Thursday and Saturday for this sprint scoping, obviously to be simulated for the showcase/demo)
+* check e-mail day criteria (as configured, e.g. Tuesday, Thursday and Saturdays)
 * if it's an e-mail day, pull all pending news item candidates & LLM-generate action items
 * Send e-mail to gethered addresses
 
-Support code & processes:
-
-* Gathering e-mail addresses. For now simple Google form
-* Stretch: Online archive of past action e-mails
+Until you're sure you know what you're doing, you probably want to use the dry run feature (see testing section, below)
 
 ## Testing
 ### Set environment variables:
 ```
 set -o allexport && source .env && set +o allexport
 ```
-(this can be however you prefer to set up your environment)
+
+(Or equivalent, base don how you prefer to set up your environment)
+
 ### Test command:
 ```
 run_daily/main.py --dry-run "boulder climate change news"
@@ -145,46 +144,50 @@ run_daily/main.py --dry-run "boulder climate change news"
 
 ### example `.env`
 ```
-SEARXNG_ENDPOINT = "http://localhost:8888/search"
+SEARXNG_ENDPOINT="http://localhost:8888/search"
 
-SUMMARIZATION_LLM_URL = "http://localhost:8000"
-SCORING_LLM_URL = "http://localhost:8000"
-ACTIONGEN_LLM_URL = "http://localhost:8000"
+SUMMARIZATION_LLM_URL="http://localhost:8000"
+SCORING_LLM_URL="http://localhost:8000"
+ACTIONGEN_LLM_URL="http://localhost:8000"
 
-CLIMATE_ACTION_DB_NAME = "climateDB"
-CLIMATE_ACTION_DB_HOST = "localhost"
-CLIMATE_ACTION_DB_PORT = "1234"
-CLIMATE_ACTION_DB_USER = "user"
-CLIMATE_ACTION_DB_PASSWORD = "password"
+CLIMATE_ACTION_DB_NAME="climateDB"
+CLIMATE_ACTION_DB_HOST="localhost"
+CLIMATE_ACTION_DB_PORT="1234"
+CLIMATE_ACTION_DB_USER="user"
+CLIMATE_ACTION_DB_PASSWORD="password"
 
-MAILCHIMP_API_KEY = "key"
-MAILCHIMP_API_SERVER = "localhost"
-MAILCHIMP_AUDIENCE_ID = "12345"
+MAILCHIMP_API_KEY="key"
+MAILCHIMP_API_SERVER="localhost"
+MAILCHIMP_AUDIENCE_ID="12345"
 ```
+
+You can use both `--dry-run` and `--set-date` specify a date to test how the program would operate on a given day.
+
+```
+run_daily/main.py --dry-run --set-date=2024-05-23
+```
+
+# Design notes
+
+* Separates language from code using [Word Loom](https://github.com/OoriData/OgbujiPT/wiki/Word-Loom:-A-format-for-managing-language-for-AI-LLMs-(including-prompts))
+
 
 # TODO
 
 ## Product
 
-* Establish "Boulderite in their 30s-40s" user/actor persona prompt
-* Complete e-mail sender/action inspirer prompt
-* Narrow down focus of daily news search criteria
-* Outline process for credibility checking?
-* ???
+* Personalization, which will be fed into prompting for summarization & suggested actions
+* Credibility checking of news items
 
 ## Dev
 
-* Complete pull process for e-mail addresses from Google Form
-* Complete data pipeline
-* Separate out language using [Word Loom](https://github.com/OoriData/OgbujiPT/wiki/Word-Loom:-A-format-for-managing-language-for-AI-LLMs-(including-prompts))
-* Implement prototype LLM processing tree (via [OgbujiPT](https://github.com/OoriData/OgbujiPT))
 * Data flow & other engineering diagrams
-* Implement e-mail batch send process
-* Combine separate program files such as `process_from_md.py` into `run_daily.py` (using )
+* Proper library setup & modularization (now all spaghetti-thrown into the `run_daily` dir)
+* Online archive of past action e-mails
 
 * Continue to think about managing/securing SearXNG (as well as PGVector & llama.cpp). [Security-minded "Searx Installation and Discussion" article](https://grahamhelton.com/blog/searx/).
 
-# WHITEBOARD notes from Kickoff day (May 14)
+# HISTORY: WHITEBOARD notes from Kickoff day (May 14)
 
 ## Problem:
 **keeping up with climate news is overwhelming and demoralizing**
