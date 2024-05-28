@@ -23,7 +23,7 @@ SEARCH_SETS = [
     "climate change news boulder",
 ]
 
-SERPS_PATH = Path("./workspace")
+SERPS_PATH = Path("/app/workspace")
 
 # python date.weekday() 1 = Tuesdsay, 3 = Thursday, 5 = Saturday
 DAYS_TO_RUN = [1, 3, 5]
@@ -40,7 +40,7 @@ ACTIONGEN_LLM_URL = os.getenv("ACTIONGEN_LLM_URL", "http://localhost:8000")
 LLM_TIMEOUT = 90.0
 
 # Prompts & other natural language
-with open("prompts.toml", mode="rb") as fp:
+with open("/app/prompts.toml", mode="rb") as fp:
     PROMPT = word_loom.load(fp)
 
 # PGVector connection
