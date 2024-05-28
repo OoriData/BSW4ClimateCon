@@ -56,5 +56,6 @@ def display_html_string(html_string):
 def test_campaign(url, summary, action_items):
     print(ansi_color('\nCreating test email...', 'green'))
     html_content = EMAIL_TEMPLATE.format(url=url, summary=summary, action_items=action_items)
-    display_html_string(html_content)
+    print('HTML of e-mail to be sent out', html_content)
+    # display_html_string(html_content)
     

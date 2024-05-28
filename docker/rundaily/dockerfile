@@ -1,0 +1,50 @@
+# SPDX-FileCopyrightText: 2023-present Oori Data <info@oori.dev>
+# SPDX-License-Identifier: UNLICENSED
+# bsw4climatecon/docker/rundaily/dockerfile
+
+# Took advice from https://pythonspeed.com/articles/base-image-python-docker-images/
+# Also, seems to be a known issue with Docker on Apple Silicon Macs.
+# Issues finding gcc unless you specify the architecture for the image
+FROM python:3.11-slim
+
+# Combine commands in one RUN instruction to minimize # of layers in the file system, saving disk space.
+# Also ref: https://github.com/reproducible-containers/buildkit-cache-dance
+ENV DEBIAN_FRONTEND=noninteractive
+RUN \
+  --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  rm -f /etc/apt/apt.conf.d/docker-clean && \
+  echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' >/etc/apt/apt.conf.d/keep-cache && \
+  apt update && \
+  apt upgrade --yes && \
+  apt install --yes build-essential git python3-dev wget cron
+  # wget
+
+# In case Docker is running as root, narrow the attack surface to the host
+# by doing as much as we can as an unprivileged user
+# RUN useradd --create-home tmclimate
+# USER tmclimate
+# WORKDIR /home/tmclimate/code
+WORKDIR /app
+
+# Copy the lang_server/requirements.txt and constraints.txt files to the container
+COPY ./requirements.txt ./requirements.txt
+COPY ./constraints.txt ./constraints.txt
+COPY ./prompts.toml ./prompts.toml
+# variables in /etc/environment are loaded for cron at leats in Ubuntu > 12.04
+COPY ./env.sh /etc/environment
+
+# COPY run_daily /home/tmclimate/code/
+COPY run_daily /app
+# Overwrite config
+COPY config-prod.py /app/config.py
+RUN pip3 install --no-cache-dir -r requirements.txt -c constraints.txt
+COPY crontab /etc/cron.d/crontab
+RUN chmod 0644 /etc/cron.d/crontab
+RUN /usr/bin/crontab /etc/cron.d/crontab
+
+# WORKDIR /home/tmclimate/code/
+
+# load the config file from the path specified in compose file
+# CMD ["cron", "-f"]
+CMD ["bash"]

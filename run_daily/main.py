@@ -178,13 +178,15 @@ async def async_test(content):
 # @click.option('--verbose/--no-verbose', default=False)
 @click.option('--testfile', type=click.File('rb'))
 @click.option('--dry-run', is_flag=True, default=False,
+              help='Don\'t actually send e-mail blast, but always generate & send output to stdout.')
+@click.option('--dry-run-web', is_flag=True, default=False,
               help='Don\'t actually send e-mail blast, but always generate & pop-up HTML output.')
 @click.option('--set-date',
               help='Run as if on the given date (in ISO8601 format). Only use with --dry-run flag.')
 @click.argument('sterms', required=False)
-def main(sterms, testfile, dry_run, set_date):
+def main(sterms, testfile, dry_run, dry_run_web, set_date):
     # print('Args:', (sterms, testfile, dry_run))
-    if set_date: assert dry_run  # noqa: E701
+    if set_date: assert dry_run or dry_run_web  # noqa: E701
     if testfile:
         asyncio.run(async_test(testfile))
     else:

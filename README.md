@@ -167,6 +167,12 @@ You can use both `--dry-run` and `--set-date` specify a date to test how the pro
 run_daily/main.py --dry-run --set-date=2024-05-23
 ```
 
+# Docker setup
+
+```sh
+❯ docker build -t tmclimate-cron -f ./docker/rundaily/dockerfile  
+```
+
 # Design notes
 
 * Separates language from code using [Word Loom](https://github.com/OoriData/OgbujiPT/wiki/Word-Loom:-A-format-for-managing-language-for-AI-LLMs-(including-prompts))
