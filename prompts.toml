@@ -45,6 +45,17 @@ And here's the user that you are generating actions for:
 
 Based on the issues highlighted in the summary, please suggest an activity that addresses one of the climate challenges mentioned. The activity should promote group or family cooperation, fostering community building. Ensure the proposed action is feasible and directly related to the content of the summary. Bonus points for suggesting an activity that is both impactful and enjoyable.
 
+Here is a one shot example:
+###
+If a summary is: "A new report reveals that Colorado's rivers and streams will experience a 5% to 30% decrease in flow over the next 30 years due to climate change. The state has already seen a 2.3-degree increase in average annual temperature since 1980, with projections of an additional 1 to 4 degrees by 2050. This warming will exacerbate issues like toxic ozone pollution, wildfire danger, and wildlife displacement. Agriculture, which uses 80% of Colorado's water, will suffer, impacting the economy and forcing difficult choices for farmers. The outdoor recreation industry, including skiing and rafting, will also be affected. Environmental advocates urge immediate action to combat climate change and criticize the fossil fuel industry's role in exacerbating these issues."
+
+Then some actions could be : 
+
+1.) Go on a weekend activity on bike instead of car to reduce carbon emissions.
+2.) Make a rain water collection barrel to reduce water needed for yard and garden.
+3.) Make a vegitarian meal to avoid the large amount of water needed for animal growth.
+###
+
 Make sure to format this for an email! Use line breaks, etc. This will be sent straight to the user, so format it nicely!
 Action Items:
 """
@@ -64,6 +75,17 @@ And here's the user that you are generating actions for:
 ```
 
 Based on the issues highlighted in the summary, please provide a concise, simple, actionable step that the user can incorporate into their daily life to address one of the climate challenges mentioned. Ensure the action is feasible and directly related to the content of the summary.  Bonus points for a suggested action that is impactful and fun.
+
+Here are some few shot examples:
+###
+If a summary is: "A new report reveals that Colorado's rivers and streams will experience a 5% to 30% decrease in flow over the next 30 years due to climate change. The state has already seen a 2.3-degree increase in average annual temperature since 1980, with projections of an additional 1 to 4 degrees by 2050. This warming will exacerbate issues like toxic ozone pollution, wildfire danger, and wildlife displacement. Agriculture, which uses 80% of Colorado's water, will suffer, impacting the economy and forcing difficult choices for farmers. The outdoor recreation industry, including skiing and rafting, will also be affected. Environmental advocates urge immediate action to combat climate change and criticize the fossil fuel industry's role in exacerbating these issues."
+
+Then some actions could be : 
+
+1.) Install a Low-Flow showerhead or faucet to conserve water.
+2.) Take a 5 minute shorter shower today to conserve water
+3.) Replace lightbulbs with LED lightbulbs to save energy and money.
+###
 
 Make sure to format this for an email! Use line breaks, etc. This will be sent straight to the user, so format it nicely!
 Action Items:
