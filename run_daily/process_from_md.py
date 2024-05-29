@@ -89,9 +89,14 @@ async def generate_action_items(batch):
     '''
     have an LLM generate action items for the news items
     '''
+    if datetime.date.today().weekday() == 5:
+        call_prompt = PROMPT['sat_action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
+    else:
+        call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
+
+
     for item in batch:
         print(ansi_color(f'\nGenerating action items for news item {item["title"]}...', 'yellow'))
-        call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
         response = await g_actiongen_llm(prompt_to_chat(call_prompt),
             timeout=LLM_TIMEOUT,
