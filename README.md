@@ -145,6 +145,7 @@ run_daily/main.py --dry-run "boulder climate change news"
 ### example `.env`
 ```
 SEARXNG_ENDPOINT="http://localhost:8888/search"
+SEARXNG_LIMIT="6"
 
 SUMMARIZATION_LLM_URL="http://localhost:8000"
 SCORING_LLM_URL="http://localhost:8000"
