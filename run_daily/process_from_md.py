@@ -8,7 +8,7 @@ For example:
 import os
 import json
 import asyncio
-from datetime import datetime
+from datetime import datetime, date
 from pathlib import Path
 
 from ogbujipt.llm_wrapper import prompt_to_chat, llama_cpp_http_chat
@@ -89,15 +89,18 @@ async def generate_action_items(batch):
     '''
     have an LLM generate action items for the news items
     '''
-    if datetime.date.today().weekday() == 5:
-        call_prompt = PROMPT['sat_action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
-    else:
-        call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
+    
 
 
     for item in batch:
         print(ansi_color(f'\nGenerating action items for news item {item["title"]}...', 'yellow'))
 
+        if date.today().weekday() == 5:
+            call_prompt = PROMPT['sat_action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
+        else:
+            call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
+
+        
         response = await g_actiongen_llm(prompt_to_chat(call_prompt),
             timeout=LLM_TIMEOUT,
             max_tokens=2047
@@ -133,6 +136,8 @@ async def async_main(searxng_JSON):
     print(ansi_color('Processing searxng results JSON...', 'yellow'))
     news_batch = MD_extract(searxng_JSON)
     print(ansi_color(f'Got {len(news_batch)} stories!', 'yellow'))
+
+    news_batch = [item for item in news_batch if 'wikipedia'.lower() not in item['title'].lower()]
 
     news_batch = await summarize_news(news_batch)
 

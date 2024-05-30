@@ -49,7 +49,7 @@ async def do_sxng_news_search(terms):
     # curl -O "http://localhost:8888/search?q=climate+boulder&categories=\!news&time_range=week&format=json"
     qparams = {
         'q': terms,
-        'categories': '!news',
+        'categories': ['!bin','!gon','!yhn'],
         'time_range': 'day',
         'format': 'json'
     }
