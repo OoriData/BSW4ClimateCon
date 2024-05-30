@@ -27,7 +27,7 @@ DAYS_TO_RUN = [1,3,5]
 
 # SearXNG config
 SEARXNG_ENDPOINT =  os.getenv('SEARXNG_ENDPOINT', 'http://localhost:8888/search')
-LIMIT = 3  # number of results to process
+LIMIT = int(os.getenv('SEARXNG_LIMIT', '3'))  # number of results to process
 
 # LLMs endpoints
 SUMMARIZATION_LLM_URL =  os.getenv('SUMMARIZATION_LLM_URL', 'http://localhost:8000')
