@@ -7,8 +7,7 @@ You are from a climate change news organization, where you are an editor expert 
 ```
 {news_content}
 ```
-
-Your summary for the user:
+Your summary:
 """
 _m = ["news_content"]
 
@@ -56,7 +55,7 @@ Then some actions could be :
 3.) Make a vegitarian meal to avoid the large amount of water needed for animal growth.
 ###
 
-Make sure to format this for an email! Use line breaks, etc. This will be sent straight to the user, so format it nicely!
+Make sure to format this for an email! Use line breaks, etc. This will be sent straight to the user, so format it nicely but do NOT reference the user by name.
 Action Items:
 """
 
@@ -87,7 +86,7 @@ Then some actions could be :
 3.) Replace lightbulbs with LED lightbulbs to save energy and money.
 ###
 
-Make sure to format this for an email! Use line breaks, etc. This will be sent straight to the user, so format it nicely!
+Make sure to format this for an email! Use line breaks, etc. This will be sent straight to the user, so format it nicely but do NOT reference the user by name.
 Action Items:
 """
 
