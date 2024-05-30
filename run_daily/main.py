@@ -50,7 +50,7 @@ async def do_sxng_news_search(terms):
     qparams = {
         'q': terms,
         'categories': '!news',
-        'time_range': 'week',
+        'time_range': 'day',
         'format': 'json'
     }
     # async with httpx.AsyncClient(verify=False) as client:
@@ -83,8 +83,9 @@ async def add_content_as_markdown(client, result):
     '''
     Load HTML from the content of the result HTML, converts it to Markdown & adds it back to the results structure
     '''
-    resp = await client.get(result['url'])
-    print(ansi_color(f'\n Got URL: {result['url']}', 'blue'))
+    url = result['url']
+    resp = await client.get(url)
+    print(ansi_color(f'\n Got URL: {url}', 'blue'))
     md_content = extract(resp.content,
                             output_format='markdown',
                             include_links=True,
@@ -103,7 +104,7 @@ async def store_sxng_news_search(result_set):
         json.dump(result_set, fp)
 
 
-async def async_main(sterms, dryrun):
+async def async_main(sterms, dryrun, set_date):
     '''
     Entry point (for cmdline, for now)
     Takes search engine results & launches the main task to pull & process news
@@ -126,7 +127,7 @@ async def async_main(sterms, dryrun):
         await store_sxng_news_search(result_set)
 
     # Here we call the article summarizer (in process_from_md.py)
-    today = date.today()
+    today = date.today() if set_date is None else date.fromisoformat(set_date)
     fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + '.json')
     with open(fname, 'rb') as fp:
         searxng_results = json.load(fp)
@@ -141,16 +142,21 @@ async def async_main(sterms, dryrun):
     action_items = first_search_result['action_items']
     url = first_search_result['url']
 
-    # Here we check whether it's a configured e-mail send day & run the e-mail builder if so
-    today = date.today()
+    # Is it a configured e-mail send day? Run e-mail blast if so
+    run_email_blast = today.weekday() in DAYS_TO_RUN
+    if run_email_blast:
+        print(ansi_color('Configured to send e-mail on this day', 'yellow'), file=sys.stderr)
+    else:
+        print(ansi_color('Configured to NOT send e-mail on this day', 'yellow'), file=sys.stderr)
     if dryrun:
+        print(ansi_color('Whether or not it\'s a configured day e-mail a dry run will simulate. Look for a browser pop-up.', 'yellow'), file=sys.stderr)
         test_campaign(url, summary, action_items)
-    elif today.weekday() in DAYS_TO_RUN:
+    elif run_email_blast:
+        # FIXME: Should be some sort of success/failure response, or better yet try/except
         create_campaign(url, summary, action_items)
-
-    # If we sent an e-mail delete files in the working space
-    # for f in SERPS_PATH.glob('*.json'):
-    #     f.unlink()
+        # If we sent an e-mail delete files in the working space
+        for f in SERPS_PATH.glob('*.json'):
+            f.unlink()
 
 
 async def async_test(content):
@@ -170,18 +176,21 @@ async def async_test(content):
 
 @click.command()
 # @click.option('--verbose/--no-verbose', default=False)
-# @click.option('--limit', default=4, type=int,
-#               help='Maximum number of chunks matched against the posed question to use as context for the LLM')
 @click.option('--testfile', type=click.File('rb'))
 @click.option('--dry-run', is_flag=True, default=False,
+              help='Don\'t actually send e-mail blast, but always generate & send output to stdout.')
+@click.option('--dry-run-web', is_flag=True, default=False,
               help='Don\'t actually send e-mail blast, but always generate & pop-up HTML output.')
+@click.option('--set-date',
+              help='Run as if on the given date (in ISO8601 format). Only use with --dry-run flag.')
 @click.argument('sterms', required=False)
-def main(sterms, testfile, dry_run):
+def main(sterms, testfile, dry_run, dry_run_web, set_date):
     # print('Args:', (sterms, testfile, dry_run))
+    if set_date: assert dry_run or dry_run_web  # noqa: E701
     if testfile:
         asyncio.run(async_test(testfile))
     else:
-        asyncio.run(async_main(sterms, dry_run))
+        asyncio.run(async_main(sterms, dry_run, set_date))
 
 
 if __name__ == '__main__':

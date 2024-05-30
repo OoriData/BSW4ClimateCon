@@ -1,0 +1,5 @@
+# See: https://crontab.guru/examples.html
+# Run at 8am MT, daily
+0 2 * * * /usr/local/bin/python3 /app/main.py > /proc/1/fd/1 2>/proc/1/fd/2
+# Testing (every 2 mins)
+# */2 * * * * /usr/local/bin/python3 /app/main.py --dry-run > /proc/1/fd/1 2>/proc/1/fd/2
