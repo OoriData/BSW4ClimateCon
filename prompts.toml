@@ -3,7 +3,143 @@ lang = "en"
 
 [summarize_sysmsg]
 _ = """
-You are from a climate change news organization, where you are an editor expert at summarizing news articles into a form that's concise and very readable. Please summarize the following news article:
+You are from a climate change news organization, where you are an editor expert at summarizing news articles into a form that's concise and very readable. 
+
+Here is an example of how a summary should go:
+###
+If the news article is Climate activists at the University of Colorado Boulder say the university’s new plan to decarbonize lacks ambition and transparency, and that CU Boulder is falling behind in climate action.
+
+“I would say CU Boulder has actually failed pretty epically on climate action in the past and has not really been transparent about that failure throughout the process of creating the Climate Action Plan,” geography graduate student Sara Fleming said.
+
+CU Boulder released its new Climate Action Plan on April 25 with goals to achieve a 50% reduction in campus emissions by 2030 and zero emissions no later than 2050. The more than 100-page plan, estimated to cost between $800 million and $1.4 billion, was first created in 2009 and updated this year.
+
+“CU Boulder leadership shares our campus community’s values around decarbonizing as fast as possible,” CU Boulder spokesperson Nicole Mueksch said in an email. “The recently formed Sustainability Executive Council is accountable for campus sustainability actions, progress and needs related to the Chancellor’s Call to Climate Action and the CU Boulder Climate Action Plan in a way that wasn’t as specifically defined for past climate commitments.”
+
+Chuck Kutscher, a fellow at the Renewable and Sustainable Energy Institute at CU Boulder, was part of the steering committee that helped develop the Climate Action Plan until he decided to leave. He’s an engineer who worked for 40 years at the National Renewable Energy Lab in Golden.
+
+“I resigned from the committee because I felt that the plan was not as aggressive as it should be for a university of CU’s stature,” Kutscher said.
+
+One goal of the plan is to achieve a 50% reduction in Scope 1 and 2 emissions by 2030. Scope 1, about 18% of total campus emissions, refers to carbon emissions from natural gas burned to create heat on campus. Scope 2 is energy purchased from Xcel Energy for the electricity on campus, making up about 32% of emissions.
+
+The university aims to achieve a 50% reduction by 2030 for Scope 3 emissions, with an ultimate goal to reach zero emissions by 2050. Scope 3 is indirect emissions resulting from the university’s operations, including purchasing, business travel and employee and student commuting. It makes up about half of CU Boulder’s total emissions.
+
+“I would argue that it doesn’t lay out a sufficient roadmap to actually meet that target, and I’m very worried it will miss the target,” Fleming said.
+
+Brigid Mark, a doctoral student in sociology, was one of the students on the Climate Action Plan steering committee.
+
+“Creating a climate action plan is huge and difficult, and I do have a lot of praise for CU Boulder for undertaking this kind of task,” Mark said. “But as a young person, I do feel like my future is at stake. And so my role as a student member of the steering committee I saw as to try to make sure the Climate Action Plan was bold and ambitious and inclusive and likely to succeed. And so there are a lot of things I feel like could’ve gone better.”
+‘A pretty egregious miss’
+
+One of the problems at the core of the Climate Action Plan is a misrepresentation of data, Fleming said.
+
+CU Boulder had a goal to reduce emissions by 20% between 2005 and 2020. CU Boulder reduced emissions by 15.6% in 2020 and in 2021 reduced emissions by 10.1% from the 2005 baseline. Fleming said CU Boulder frames it as a near miss of the 20% emissions reduction goal, but in 2019, emissions were reduced 6.8% from 2005. Fleming said the 2019 data most accurately represents any emissions reductions since 2005 because the pandemic caused the campus to shut down and use considerably less energy.
+
+“This was a pretty egregious miss of this target,” she said.
+
+Fleming said there’s an inconsistency when CU Boulder uses the 2020 numbers to discuss its progress but uses 2019 emissions data as the baseline from which to reduce emissions in the Climate Action Plan.
+
+“This data is the data they’re using to construct the next steps in the plan, and if we’re not honestly looking back at what the past actions were, how can we have accountability and transparency moving forward?” Fleming said.
+
+Mueksch said CU Boulder recognizes it fell short of the goal, citing the 2020 and 2021 numbers.
+
+“It’s important to note that, during that 2005 to 2020 timeframe, the campus grew by more than 3 million square feet (29%) and the number of days during which heating and cooling were required increased (2% increase in days needed to heat buildings and 19% increase in days needed to cool buildings),” Mueksch said. “The fact that we kept energy consumption relatively level in spite of these factors is a good thing.”
+
+Additionally, Fleming said the 6.8% in emissions reductions were largely driven by Xcel decarbonizing the grid rather than CU Boulder’s actions. If CU Boulder had retained its existing levels of activity, she said, these reductions would have been sufficient to achieve the target. Instead, campus grew and CU Boulder increased energy usage.
+
+“Most of the actions that CU Boulder was doing was counteracting emissions reductions and emissions in fact grew quite considerably from 2005,” Fleming said. “Because they’re not being transparent about that, we lack confidence in how serious  they are about the goals going forward.”
+
+“It sends a scary message that a leading research institution on climate change consistently can’t meet its own climate targets and is selectively choosing data to show to try to justify or minimize its past inaction,” Fleming said.
+
+Mueksch said CU Boulder has noted and applauded the progress that Xcel Energy has made in cleaning its grid.
+
+“Calculating the metric in question is difficult due to a number of factors that have taken place in correlation with Xcel’s emissions factor going down during this period,” Meuksch said. “These factors include campus growth, improved energy efficiency in many of our campus building and varying utilization of the university’s co-generation plant, which produced electricity that was cleaner than electricity purchased from the grid.”
+
+Concerns about transparency and “greenwashing” are also reflected in the more than 600 public comments the steering committee received during its open period for public feedback. The term “greenwashing” means providing false or misleading information about something’s environmental impact.
+
+Mark said most of the feedback asking for major changes in the public comments was ignored, because leaders of the steering committee said they didn’t have time to incorporate the changes.
+
+“The CAP steering committee analyzed all 600 comments from the open comment period, as well as feedback received via the numerous constituent meetings held with campus groups and individuals, including students and various student groups,” Mueksch said. “We were grateful for our campus community’s participation, and we were able to incorporate changes to address many of the major themes.”
+
+CU Boulder posted a document on its Climate Action Plan website about how it incorporated public feedback. The document with all the public comments is also available online.
+
+“I thought it was kind of disingenuous to host a public comment period but then not have time to make any large revisions afterward,” Mark said, adding, “These community members are just trying to make a better plan, they’re not trying to criticize us, they’re trying to provide suggestions on how to be more ambitious.”
+West District Energy Plant
+
+Some public commenters said the plan to decarbonize the main campus heating system is too slow. The main heating system upgrade is slated for 2030 to 2050, an “extremely long timeline” for decarbonizing it, Fleming said. CU Boulder has a heating system which relies on steam created by fossil fuels to heat buildings on campus.
+
+Public commenters also expressed concerns about the $43.1 million the university is investing to upgrade the West District Energy Plant, 1100 18th St., the main steam heating system on campus. According to the Climate Action Plan, CU Boulder will convert the steam system to a low-temperature, hot-water system.
+
+To decarbonize the heating system, CU Boulder will use a phased approach that will “ultimately transition the campus to a higher performance system that will likely use electricity via heat pumps as the primary fuel,” the plan said.
+
+Kutscher said CU Boulder has been reluctant to transition directly to electric heating with heat pumps.
+
+“They have not been willing to move away from the gas-fired district steam system,” he said. “And there’s two new buildings being built, Residence Halls 1 and 2. Those would be to me ideal buildings to install geothermal or ground-coupled heat pumps just the way the Moby Arena in Fort Collins did and just the way Colorado Mesa University did. To me, it’s really a lost opportunity.”
+
+Geothermal heat pumps use electricity and the temperature of the ground to heat and cool buildings. Mueksch said the area where Residence Halls 1 and 2 will be built is part of the main campus district energy loop, making it more cost and energy efficient to place those buildings on the loop rather than on their own systems.
+CU Boulder climate activists express concerns about decarbonizing the West District Energy Plant on the CU Boulder campus. (Cliff Grassmick/Staff Photographer)
+CU Boulder climate activists express concerns about decarbonizing the West District Energy Plant on the CU Boulder campus. (Cliff Grassmick/Staff Photographer)
+
+Kutscher said other universities and colleges in Colorado, including Colorado State University, Colorado School of Mines and Colorado Mesa University, have made the decision to make sustainability investments.
+
+“I think it’s critically important for a university to set much more ambitious targets in terms of carbon emissions,” he said, adding, “I’m not happy with the goals, I don’t think they’re ambitious enough. I think CU should be a leader, just like other universities are.”
+
+Colorado State University updated its Climate Action Plan in 2021 with the goal to reach carbon neutrality by 2040.
+
+“Compared to other universities in the state, CU is behind,” Fleming said.
+
+CU Boulder has applied for a pair of grants from the state to explore the feasibility of using geothermal energy.
+
+“Currently, there are not non-fossil fuel sources that will support our existing infrastructure and ensure that the campus can meet its operational and sustainability needs,” Mueksch said. “The transition from these systems will take time, and CU Boulder leadership shares our campus community’s values around decarbonizing as fast as possible, and one role of the new Campus Sustainability Executive Council is to look for opportunities and resources to accelerate our transition to carbon neutrality.”
+
+Two challenges that limit the pace of decarbonizing the heating system is funding and the disruption that would result from the buildings being closed.
+
+“Peer universities in the state are doing some great things,” Mueksch said. “We continue to collaborate with and learn from them and other peer institutions of similar size, age and scale as us. And while we can’t really comment on how CSU will meet their goals, we are exploring ways to accelerate our goal of being carbon neutral by no later than 2050.”
+Divestment from fossil fuels
+
+Athletics and investments were two categories excluded from the Climate Action Plan.
+
+According to the appendices of the Climate Action Plan, the CU System maintains $270 million in fossil fuel investments. The CU System includes CU Boulder, The University of Colorado Colorado Springs, The University of Colorado Denver and the University of Colorado Anschutz. The University of Colorado Board of Regents, the elected board that oversees the CU System, makes the decisions regarding those investments.
+
+In the appendices, it calculated that CU Boulder’s share of the fossil fuel investments is $146 million, equating to 372,000 MTCO2e, or metric tons of carbon dioxide equivalent. This estimate is larger than all categories of CU Boulder’s emissions combined, which is 260,366 MTCO2e.
+
+“The issue of divestment of the University of Colorado’s financial assets is a complex one, and it falls under the purview of CU system leadership and the Board of Regents,” Mueksch said. “We encourage our students, faculty and others who are passionate about this issue to explore the details, engage constructively and continue to connect with the Board of Regents and leadership of the CU system.”
+
+CU Boulder students, faculty and alumni have called on the CU System to divest from fossil fuels through protests and by speaking to the Board of Regents. Fleming said CU Boulder should take accountability for the fossil fuel investments.
+
+“We kind of just think that’s an excuse because the number is really large,” Fleming said, adding, “CU Boulder is the largest university within the CU System and should take some responsibility for the CU endowment.”
+
+Emissions of 6,474 MTCO2e from athletics were not included in the Climate Action Plan, according to its appendices.
+
+“Analysis on the disaggregation of these emissions into the 15 categories of Scope 3 was not completed in time for the CAP’s publication, but will be a priority for the Scope 3 Action Plan,” the appendices said.
+
+Within the Climate Action Plan steering committee was an equity subcommittee that Mark participated in. She said the equity committee did a lot of good work, but leaders of the steering committee “listened and then they ignored what was said.” For example, CU Boulder’s Center for Native American and Indigenous Studies asked for funding for a tribal climate leaders program. Mark said the committee determined that request was out of the scope of the plan.
+
+“The university is sort of incentivized to have really bold messaging on taking ambitious climate action or centering equity, it’s rewarded for that kind of messaging, but then that messaging doesn’t always match the action that’s being taken or the action that’s being planned,” Mark said.
+
+She said students were initially left out of Climate Action Plan committees and had to fight for representation. There were also power inequalities within the steering committee, Mark said.
+
+“A lot of people on the steering committee reported to the vice chancellor of infrastructure and sustainability, and as an employee of someone, you’re unlikely to contradict what they decide,” Mark said. “That’s not to place blame or say anything bad, it’s just the very way the committee was structured didn’t enable contradictory voices to surface or a democratic or inclusive process to occur.”
+
+Mueksch said there has been student representation on multiple committees and councils related to the Climate Action Plan.
+
+“We recognize these students were added to the CAP steering committee late last spring, after the CAP process had begun, and appreciate their many contributions from the early drafts through final release of the CAP in late April of this year,” Mueksch said.
+
+There were two students on the steering committee, one of which was Mark. The two joined the committee in May of 2023, and the other 10 members had been involved since October of 2022.
+
+“There’s this huge justice issue and unfairness to climate change, and that works on a generational level, too, that young people who haven’t had a chance yet to be involved in these decisions are going to see some of the worst impacts,” Mark said. “And so at the university, in a highly wealthy place with a lot of access to resources, I think CU Boulder has a responsibility not only to do the bare minimum to be consistent with the Paris Agreement but to really lead, to really be ambitious, to really show its students that there is hope for mitigating climate change and building resilience.”
+
+
+
+
+Then a good summary for the news should resemble something like this: 
+
+Climate activists at the University of Colorado Boulder criticize the university’s new Climate Action Plan for lacking ambition and transparency. The plan, released on April 25, aims for a 50% reduction in campus emissions by 2030 and zero emissions by 2050, with an estimated cost of $800 million to $1.4 billion. Critics, including geography graduate student Sara Fleming and Renewable and Sustainable Energy Institute fellow Chuck Kutscher, argue that the plan is not aggressive enough and fails to provide a clear roadmap for achieving its targets. They also highlight inconsistencies in data reporting and a lack of genuine public engagement.
+
+Despite acknowledging past shortcomings, CU Boulder maintains that the plan is a significant step forward. The university cites the formation of a Sustainability Executive Council to oversee its implementation. However, concerns remain about the pace of decarbonizing campus heating systems and the exclusion of fossil fuel investments and athletics from the plan. Activists call for more ambitious targets and greater accountability, urging the university to lead by example in climate action.
+###
+
+
+Please summarize the following news article in a markdown format and make sure it is concise:
 ```
 {news_content}
 ```
@@ -48,14 +184,18 @@ Here is a one shot example:
 ###
 If a summary is: "A new report reveals that Colorado's rivers and streams will experience a 5% to 30% decrease in flow over the next 30 years due to climate change. The state has already seen a 2.3-degree increase in average annual temperature since 1980, with projections of an additional 1 to 4 degrees by 2050. This warming will exacerbate issues like toxic ozone pollution, wildfire danger, and wildlife displacement. Agriculture, which uses 80% of Colorado's water, will suffer, impacting the economy and forcing difficult choices for farmers. The outdoor recreation industry, including skiing and rafting, will also be affected. Environmental advocates urge immediate action to combat climate change and criticize the fossil fuel industry's role in exacerbating these issues."
 
-Then some actions could be : 
+Your response would be: 
 
-1.) Go on a weekend activity on bike instead of car to reduce carbon emissions.
+1.) Go on a weekend activity on bike instead of car to reduce carbon emissions. 
+
 2.) Make a rain water collection barrel to reduce water needed for yard and garden.
+
 3.) Make a vegitarian meal to avoid the large amount of water needed for animal growth.
+
 ###
 
-Make sure to format this for an email! Use line breaks, etc. This will be sent straight to the user, so format it nicely but do NOT reference the user by name.
+Come up with 3 ideas to fight climate change that relate to the given news summary.
+
 Action Items:
 """
 

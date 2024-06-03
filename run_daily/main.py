@@ -16,6 +16,7 @@ For AWS Lambda entry point, we'll probbaly set up a function parallel to `async_
 import sys
 import json
 import asyncio
+import re
 from pathlib import Path
 
 from utiloori.ansi_color import ansi_color
@@ -140,6 +141,11 @@ async def async_main(sterms, dryrun, set_date):
 
     summary = first_search_result['summary']
     action_items = first_search_result['action_items']
+
+    # XXX : Temp solution untill
+    summary = re.sub("<\|im_end\|>", '', summary)
+    action_items = re.sub("<\|im_end\|>", '', action_items)
+
     url = first_search_result['url']
 
     # Is it a configured e-mail send day? Run e-mail blast if so
