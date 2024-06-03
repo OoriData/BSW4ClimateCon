@@ -64,7 +64,7 @@ docker run --rm \
     searxng/searxng
 ```
 
-Note: We want to have soem sort of APi key, but doesn't seem there is any built-in approach (`SEARXNG_SECRET` is something different). We might have to use a reverse proxy with HTTP auth.
+Note: We want to have some sort of APi key, but doesn't seem there is any built-in approach (`SEARXNG_SECRET` is something different). We might have to use a reverse proxy with HTTP auth.
 
 This gets SearXNG runing on port 8888. Feel free to adjust as necessary in the 10minclimate.com config.
 
