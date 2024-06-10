@@ -194,7 +194,7 @@ Your response would be:
 
 ###
 
-Come up with 3 ideas to fight climate change that relate to the given news summary.
+Come up with 3 ideas to fight climate change that relate to the given news summary in a markdown format.
 
 Be concise and do not reference the user by name,
 
@@ -228,7 +228,7 @@ Then some actions could be :
 3.) Replace lightbulbs with LED lightbulbs to save energy and money.
 ###
 
-Come up with 3 ideas to fight climate change that relate to the given news summary.
+Come up with 3 ideas to fight climate change that relate to the given news summary in a markdown format.
 
 Be concise and do not reference the user by name,
 
