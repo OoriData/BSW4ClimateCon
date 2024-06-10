@@ -143,8 +143,8 @@ async def async_main(sterms, dryrun, set_date):
     action_items = first_search_result['action_items']
 
     # XXX : Temp solution untill
-    summary = re.sub("<\|im_end\|>", '', summary)
-    action_items = re.sub("<\|im_end\|>", '', action_items)
+    summary = re.sub("<\|im_end\|>|`", '', summary)
+    action_items = re.sub("<\|im_end\|>|`", '', action_items)
 
     url = first_search_result['url']
 
