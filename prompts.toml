@@ -196,6 +196,8 @@ Your response would be:
 
 Come up with 3 ideas to fight climate change that relate to the given news summary.
 
+Be concise and do not reference the user by name,
+
 Action Items:
 """
 
@@ -226,9 +228,10 @@ Then some actions could be :
 3.) Replace lightbulbs with LED lightbulbs to save energy and money.
 ###
 
-Make sure to format this for an email! Use line breaks, etc. This will be sent straight to the user, so format it nicely but do NOT reference the user by name.
+Come up with 3 ideas to fight climate change that relate to the given news summary.
 
-Only provide 3 short actions. 
+Be concise and do not reference the user by name,
+
 Action Items:
 """
 
