@@ -9,3 +9,5 @@ fastapi
 python-dotenv
 mailchimp_marketing
 utiloori
+python-dotenv
+markdown

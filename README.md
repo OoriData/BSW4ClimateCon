@@ -64,7 +64,7 @@ docker run --rm \
     searxng/searxng
 ```
 
-Note: We want to have some sort of APi key, but doesn't seem there is any built-in approach (`SEARXNG_SECRET` is something different). We might have to use a reverse proxy with HTTP auth.
+Note: We want to have some sort of API key, but doesn't seem there is any built-in approach (`SEARXNG_SECRET` is something different). We might have to use a reverse proxy with HTTP auth.
 
 This gets SearXNG runing on port 8888. Feel free to adjust as necessary in the 10minclimate.com config.
 
@@ -130,16 +130,22 @@ pip install -Ur requirements.txt
 Until you're sure you know what you're doing, you probably want to use the dry run feature (see testing section, below)
 
 ## Testing
-### Set environment variables:
-```
-set -o allexport && source .env && set +o allexport
-```
+### Setting environment variables:
 
-(Or equivalent, base don how you prefer to set up your environment)
+[Use a sound approach to set up the environment, including secrets.](https://github.com/OoriData/OgbujiPT/discussions/36)
+
+For example, if you use 1password and have a file `op.env`, you can just set the environment inline to run any `COMMAND`:
+
+```
+op run —env-file op.env -- COMMAND
+```
 
 ### Test command:
+
+So in the case of tsting:
+
 ```
-run_daily/main.py --dry-run "boulder climate change news"
+dotenv -f op.env run -- op run --env-file=op.env -- run_daily/main.py --dry-run
 ```
 
 ### example `.env`

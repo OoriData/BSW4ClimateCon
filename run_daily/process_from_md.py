@@ -11,12 +11,14 @@ import asyncio
 from datetime import datetime, date
 from pathlib import Path
 
+from markdown import markdown as markdown2html
+import click
+
 from ogbujipt.llm_wrapper import prompt_to_chat, llama_cpp_http_chat
 from utiloori.ansi_color import ansi_color
 
 from config import PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH
 
-import click
 
 g_summarization_llm = llama_cpp_http_chat(base_url=SUMMARIZATION_LLM_URL)
 g_scoring_llm = llama_cpp_http_chat(base_url=SCORING_LLM_URL)
@@ -53,14 +55,14 @@ async def summarize_news(batch):
     get summary of the news item from LLM
     '''
     for item in batch:
-        print(ansi_color(f'\nSummarizing news item {item["title"]}...', 'yellow'))
+        print(ansi_color(f'\nSummarizing news item {item["title"]} (using {SUMMARIZATION_LLM_URL})...', 'yellow'))
         call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item['content'])
 
         response = await g_summarization_llm(prompt_to_chat(call_prompt),
             timeout=LLM_TIMEOUT,
             max_tokens=2047
         )
-        item['summary'] = response.first_choice_text.strip()
+        item['summary'] = markdown2html(response.first_choice_text.strip())
 
     return batch
 
@@ -89,9 +91,6 @@ async def generate_action_items(batch):
     '''
     have an LLM generate action items for the news items
     '''
-    
-
-
     for item in batch:
         print(ansi_color(f'\nGenerating action items for news item {item["title"]}...', 'yellow'))
 
@@ -105,7 +104,7 @@ async def generate_action_items(batch):
             timeout=LLM_TIMEOUT,
             max_tokens=2047
         )
-        item['action_items'] = response.first_choice_text.strip()
+        item['action_items'] = markdown2html(response.first_choice_text.strip())
 
     return batch
 
