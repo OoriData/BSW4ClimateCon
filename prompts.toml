@@ -209,7 +209,7 @@ Your response would be:
 
 ###
 
-Make sure the action items are in markdown format. Be concise and do not reference the user by name,
+Make sure the action items are in markdown format including endlines. Be concise and do not reference the user by name,
 
 Action Items:
 """
