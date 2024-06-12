@@ -148,6 +148,20 @@ async def async_main(sterms, dryrun, set_date):
 
     url = first_search_result['url']
 
+    ### Message from the developers.
+    dev_text, dev_msg = "",""
+    with open('developer_message.txt', 'r') as file:
+        dev_text = file.read()
+
+    if dev_text != "":
+        try:
+                dev_msg =  '''<div class="section">
+                <h2>Message from the developers</h2>
+                <p>{dev_copy}</p>
+                </div>'''.format(dev_copy=dev_text)
+        except:
+                dev_msg = ""
+
     # Is it a configured e-mail send day? Run e-mail blast if so
     run_email_blast = today.weekday() in DAYS_TO_RUN
     if run_email_blast:
@@ -156,10 +170,10 @@ async def async_main(sterms, dryrun, set_date):
         print(ansi_color('Configured to NOT send e-mail on this day', 'yellow'), file=sys.stderr)
     if dryrun:
         print(ansi_color('Whether or not it\'s a configured day e-mail a dry run will simulate. Look for a browser pop-up.', 'yellow'), file=sys.stderr)
-        test_campaign(url, summary, action_items)
+        test_campaign(url, summary, action_items, dev_msg)
     elif run_email_blast:
         # FIXME: Should be some sort of success/failure response, or better yet try/except
-        create_campaign(url, summary, action_items)
+        create_campaign(url, summary, action_items, dev_msg)
         # If we sent an e-mail delete files in the working space
         for f in SERPS_PATH.glob('*.json'):
             f.unlink()

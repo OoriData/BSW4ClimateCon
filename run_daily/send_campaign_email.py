@@ -14,7 +14,7 @@ client = MailchimpMarketing.Client()
 client.set_config({'api_key': MAILCHIMP_API_KEY, 'server': MAILCHIMP_API_SERVER})
 
 
-def create_campaign(url, summary, action_items):
+def create_campaign(url, summary, action_items, dev_msg):
     print(ansi_color('\nCreating email campaign...', 'green'))
     try:
         response = client.campaigns.create(
@@ -30,7 +30,7 @@ def create_campaign(url, summary, action_items):
         )
         campaign_id = response['id']
 
-        html_content = EMAIL_TEMPLATE.format(url=url, summary=summary, action_items=action_items)
+        html_content = EMAIL_TEMPLATE.format(url=url, summary=summary, action_items=action_items, dev_block=dev_msg)
 
         client.campaigns.set_content(campaign_id, body={'html': html_content})
 
@@ -53,9 +53,9 @@ def display_html_string(html_string):
     webbrowser.open_new_tab('file://' + temp_file_path)
 
 
-def test_campaign(url, summary, action_items):
+def test_campaign(url, summary, action_items, dev_msg):
     print(ansi_color('\nCreating test email...', 'green'))
-    html_content = EMAIL_TEMPLATE.format(url=url, summary=summary, action_items=action_items)
+    html_content = EMAIL_TEMPLATE.format(url=url, summary=summary, action_items=action_items, dev_block=dev_msg)
     print('HTML of e-mail to be sent out', html_content)
     display_html_string(html_content)
     
