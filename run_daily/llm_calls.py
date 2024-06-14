@@ -15,7 +15,7 @@ from markdown import markdown as markdown2html
 import click
 
 from ogbujipt.llm_wrapper import prompt_to_chat, llama_cpp_http_chat
-from ogbujipt.embedding.pgvector import DataDB
+from ogbujipt.embedding.pgvector import DataDB, match_exact
 from utiloori.ansi_color import ansi_color
 
 from config import (PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH,
@@ -50,13 +50,51 @@ def MD_extract(searxng_JSON):
     return refined_data
 
 
+async def filter_news(news_batch):
+    '''
+    Reads news and makes sure its a news story and nor 
+    '''
+    climateDB = await DataDB.from_conn_params(  # Perhaps this should be a conn pool that we dip into from config. this whole program needs a hefty batch of actual async, tbh
+        embedding_model=E_MODEL, 
+        table_name=PGV_DB_TABLENAME,
+        db_name=PGV_DB_NAME,
+        host=PGV_DB_HOST,
+        port=int(PGV_DB_PORT),
+        user=PGV_DB_USER,
+        password=PGV_DB_PASSWORD
+    )
+
+    filtered_news = []
+    for item in news_batch:
+        if list(await climateDB.search(text='', meta_filter=match_exact('url', item['url']))):  # Look for the article in the DB, if not found, continue
+            print(ansi_color(f'News item "{item["title"]}" is already in DB, skipping', 'cyan'))
+        else:
+            print(ansi_color(f'Filtering news item "{item["title"]}"...', 'yellow'))
+
+            call_prompt = PROMPT['filter_msg'].format(news_content=item['content'])
+
+            response = await g_scoring_llm(prompt_to_chat(call_prompt),
+                timeout=LLM_TIMEOUT
+            )
+
+            response = response.first_choice_text.strip()
+
+            if "true" in response.lower():
+                filtered_news.append(item)
+                print(ansi_color(f'Good - {response}', 'green'))
+            else:
+                print(ansi_color(f'Bad- {response}', 'red'))
+
+    return filtered_news
+
+
 # FIXME: Needs to be rethought (async requests?)
-async def summarize_news(batch):
+async def summarize_news(news_batch):
     '''
     get summary of the news item from LLM
     '''
-    for item in batch:
-        print(ansi_color(f'\nSummarizing news item {item["title"]} (using {SUMMARIZATION_LLM_URL})...', 'yellow'))
+    for item in news_batch:
+        print(ansi_color(f'\nSummarizing news item "{item["title"]}" (using {SUMMARIZATION_LLM_URL})...', 'yellow'))
         call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item['content'])
 
         response = await g_summarization_llm(prompt_to_chat(call_prompt),
@@ -65,16 +103,16 @@ async def summarize_news(batch):
         )
         item['summary'] = markdown2html(response.first_choice_text.strip())
 
-    return batch
+    return news_batch
 
 
 # FIXME: Needs to be rethought (async requests?)
-async def score_news(batch):
+async def score_news(news_batch):
     '''
     have an LLM score the item
     '''
-    for item in batch:
-        print(ansi_color(f'\nScoring news item {item["title"]}...', 'yellow'))
+    for item in news_batch:
+        print(ansi_color(f'\nScoring news item "{item["title"]}"...', 'yellow'))
         call_prompt = PROMPT['score_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
 
         response = await g_scoring_llm(prompt_to_chat(call_prompt),
@@ -84,16 +122,16 @@ async def score_news(batch):
 
         print(f'Scored {item["score"]}/10!')
 
-    return batch
+    return news_batch
 
 
 # FIXME: Needs to be rethought (async requests?)
-async def generate_action_items(batch):
+async def generate_action_items(news_batch):
     '''
     have an LLM generate action items for the news items
     '''
-    for item in batch:
-        print(ansi_color(f'\nGenerating action items for news item {item["title"]}...', 'yellow'))
+    for item in news_batch:
+        print(ansi_color(f'\nGenerating action items for news item "{item["title"]}"...', 'yellow'))
 
         if date.today().weekday() == 5:
             call_prompt = PROMPT['sat_action_plan_sysmsg'].format(target_reader=PROMPT['demo_persona'], news_content=item['summary'])
@@ -107,7 +145,7 @@ async def generate_action_items(batch):
         )
         item['action_items'] = markdown2html(response.first_choice_text.strip())
 
-    return batch
+    return news_batch
 
 
 def write_news_to_dated_folder(news_batch):
@@ -143,38 +181,13 @@ async def write_news_to_DB(news_batch):
         user=PGV_DB_USER,
         password=PGV_DB_PASSWORD
     )
-    await climateDB.create_table()
+    await climateDB.create_table()  # FIXME: handle this in specialize climate_pg class
 
     bundled_news_batch = []
     for item in news_batch:
         item['search_timestamp'] = today
         bundled_news_batch.append((item['title'], item))  # Would prefer a very short summary to using the often goofy and truncated title
     await climateDB.insert_many(bundled_news_batch)
-
-
-async def filter_news(news_batch):
-    '''
-    Reads news and makes sure its a news story and nor 
-    '''
-    filtered_news = []
-    for article in news_batch:
-        print(ansi_color(f'\Filtering news item {article["title"]}', 'yellow'))
-
-        call_prompt = PROMPT['filter_msg'].format(news_content=article['content'])
-
-        response = await g_scoring_llm(prompt_to_chat(call_prompt),
-            timeout=LLM_TIMEOUT
-        )
-
-        response = response.first_choice_text.strip()
-
-        if "true" in response.lower():
-            filtered_news.append(article)
-            print(ansi_color(f'Good - {response}', 'green'))
-        else:
-            print(ansi_color(f'Bad- {response}', 'red'))
-
-    return filtered_news
 
 
 async def async_main(searxng_JSON):
