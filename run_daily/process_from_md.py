@@ -153,6 +153,33 @@ async def write_news_to_DB(news_batch):
         )
 
 
+async def filter_news(news_batch):
+    '''
+    Reads news and makes sure its a news story and nor 
+    '''
+    filtered_news = []
+    print(len(news_batch))
+    for article in news_batch:
+        print(ansi_color(f'\Filtering news item {article["title"]}', 'yellow'))
+
+        call_prompt = PROMPT['filter_msg'].format(news_content=article['content'])
+
+        response = await g_scoring_llm(prompt_to_chat(call_prompt),
+            timeout=LLM_TIMEOUT
+        )
+
+        response = response.first_choice_text.strip()
+
+        if "true" in response.lower():
+            filtered_news.append(article)
+            print(ansi_color(f'Good - {response}', 'green'))
+        else:
+            print(ansi_color(f'Bad- {response}', 'red'))
+
+    return filtered_news
+
+
+
 async def async_main(searxng_JSON):
     print(ansi_color('\nProcessing searxng results to Database:', 'yellow'))
 
@@ -160,12 +187,12 @@ async def async_main(searxng_JSON):
     news_batch = MD_extract(searxng_JSON)
     print(ansi_color(f'Got {len(news_batch)} stories!', 'yellow'))
 
-    news_batch = [item for item in news_batch if 'wikipedia'.lower() not in item['title'].lower()]
-
-    news_batch = await summarize_news(news_batch)
+    # news_batch = [item for item in news_batch if 'wikipedia'.lower() not in item['title'].lower()]
 
     # TODO: make this into a function that just vibe checks if this is a story, or if it's wikipeidia entry or w/e
-    # news_batch = score_news(news_batch)
+    news_batch = await filter_news(news_batch)
+
+    news_batch = await summarize_news(news_batch)
 
     news_batch = await generate_action_items(news_batch)
     

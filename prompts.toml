@@ -166,7 +166,22 @@ Your relevance score, out of 10:
 """
 _m = ["news_content"]
 
+[filter_msg]
+_ = """
+You are an editor bot whos job is to determined if a peice of text is a part of a news story.
 
+If the text is indeed a news article return "true"
+If the text is anything other than a news story return "false"
+
+Some examples of what is not a news article are:  Wikipedia articles or Error messages.
+
+Here is the news article:
+```
+{news_content}
+```
+
+Now respond with True or Flase and then explain why.
+"""
 # Sources of ideas:
 # * https://www.earthday.org/campaign/act-on-climate-change
 # * https://cotap.org/reduce-carbon-footprint
