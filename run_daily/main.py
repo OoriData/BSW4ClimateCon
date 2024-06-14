@@ -26,7 +26,7 @@ import click
 import httpx
 from trafilatura import extract
 
-import process_from_md as process_from_md  # Requires same directory import
+import run_daily.llm_calls as llm_calls  # Requires same directory import
 
 from config import (SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS,
                     E_MODEL, PGV_DB_NAME, PGV_DB_HOST, PGV_DB_PORT, PGV_DB_USER, PGV_DB_PASSWORD, PGV_DB_TABLENAME)
@@ -151,7 +151,7 @@ async def async_main(sterms, dryrun, set_date):
     fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + '.json')
     with open(fname, 'rb') as fp:
         searxng_results = json.load(fp)
-    await process_from_md.async_main(searxng_results)
+    await llm_calls.async_main(searxng_results)
 
     # Get the news
     # today_folder = SERPS_PATH / 'daily_news' / today.isoformat()
