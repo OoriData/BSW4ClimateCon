@@ -177,12 +177,12 @@ async def async_main(sterms, dryrun, set_date):
         if daily_news:
             for item in daily_news:
                 climate_news.append(item)
-    import pprint;pprint.pprint(climate_news)
-    first_search_result = climate_news[0]['metadata']  # 'metadata' just gets us back the JSON as we like it
 
+    # TODO: we are just blindly selecting the first news item; that's not good
+    first_search_result = climate_news[0]['metadata']  # 'metadata' just gets us back the JSON as we like it
     summary = first_search_result['summary']
-    # action_items = first_search_result['action_items']
-    action_items = '*gestures at guillotine*'
+    action_items = first_search_result['action_items']
+    # action_items = '*gestures at guillotine*'
 
     # XXX : Temp solution for stinky models
     # summary = re.sub("<\|im_end\|>|`", '', summary)
