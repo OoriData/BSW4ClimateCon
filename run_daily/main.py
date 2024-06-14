@@ -26,7 +26,7 @@ import click
 import httpx
 from trafilatura import extract
 
-import run_daily.llm_calls as llm_calls  # Requires same directory import
+import llm_calls as llm_calls  # Requires same directory import
 
 from config import (SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS,
                     E_MODEL, PGV_DB_NAME, PGV_DB_HOST, PGV_DB_PORT, PGV_DB_USER, PGV_DB_PASSWORD, PGV_DB_TABLENAME)
@@ -118,7 +118,7 @@ def get_past_dates(days):
     
     # Loop to get the past x dates
     for i in range(days + 1):
-        date = (today - timedelta(days=i)).strftime("%Y%m%d")
+        date = (today - timedelta(days=i)).strftime("%Y-%m-%d")
         dates.append(date)
     
     return dates
@@ -172,7 +172,7 @@ async def async_main(sterms, dryrun, set_date):
     for day in date_range:
         daily_news = list(await climateDB.search(
             text='Climate Change News',
-            meta_filter=match_exact('searchTimestamp', day)
+            meta_filter=match_exact('search_timestamp', day)
         ))
         if daily_news:
             for item in daily_news:

@@ -131,7 +131,7 @@ def write_news_to_dated_folder(news_batch):
 
 
 async def write_news_to_DB(news_batch):
-    today = datetime.now().strftime("%Y%m%d")
+    today = datetime.now().strftime("%Y-%m-%d")
 
     # Upload news contents to DB
     climateDB = await DataDB.from_conn_params(  # Perhaps this should be a conn pool that we dip into from config. this whole program needs a hefty batch of actual async, tbh
@@ -147,7 +147,7 @@ async def write_news_to_DB(news_batch):
 
     bundled_news_batch = []
     for item in news_batch:
-        item['searchTimestamp'] = today
+        item['search_timestamp'] = today
         bundled_news_batch.append((item['title'], item))  # Would prefer a very short summary to using the often goofy and truncated title
     await climateDB.insert_many(bundled_news_batch)
 
@@ -157,7 +157,6 @@ async def filter_news(news_batch):
     Reads news and makes sure its a news story and nor 
     '''
     filtered_news = []
-    print(len(news_batch))
     for article in news_batch:
         print(ansi_color(f'\Filtering news item {article["title"]}', 'yellow'))
 
@@ -176,34 +175,6 @@ async def filter_news(news_batch):
             print(ansi_color(f'Bad- {response}', 'red'))
 
     return filtered_news
-
-
-
-async def filter_news(news_batch):
-    '''
-    Reads news and makes sure its a news story and nor 
-    '''
-    filtered_news = []
-    print(len(news_batch))
-    for article in news_batch:
-        print(ansi_color(f'\Filtering news item {article["title"]}', 'yellow'))
-
-        call_prompt = PROMPT['filter_msg'].format(news_content=article['content'])
-
-        response = await g_scoring_llm(prompt_to_chat(call_prompt),
-            timeout=LLM_TIMEOUT
-        )
-
-        response = response.first_choice_text.strip()
-
-        if "true" in response.lower():
-            filtered_news.append(article)
-            print(ansi_color(f'Good - {response}', 'green'))
-        else:
-            print(ansi_color(f'Bad- {response}', 'red'))
-
-    return filtered_news
-
 
 
 async def async_main(searxng_JSON):

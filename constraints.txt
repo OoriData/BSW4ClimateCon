@@ -1,5 +1,5 @@
 # If needed to pin to some specific commit, use the following syntax:
-# OgbujiPT @ git+https://github.com/OoriData/OgbujiPT@ef0f060
+# OgbujiPT @ git+https://github.com/OoriData/OgbujiPT@2d47b3c
 
 amara3.iri==3.0.3
 annotated-types==0.7.0
@@ -45,7 +45,7 @@ mdurl==0.1.2
 mpmath==1.3.0
 networkx==3.3
 numpy==1.26.4
-OgbujiPT==0.9.1
+OgbujiPT @ git+https://github.com/OoriData/OgbujiPT@1c9c289
 openai==1.33.0
 orjson==3.10.3
 packaging==24.1
