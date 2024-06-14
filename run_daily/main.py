@@ -18,16 +18,15 @@ import json
 import asyncio
 # import re
 from pathlib import Path
+from datetime import datetime, date, timedelta
 
-from ogbujipt.embedding.pgvector import DataDB
+from ogbujipt.embedding.pgvector import DataDB, match_exact
 from utiloori.ansi_color import ansi_color
 import click
 import httpx
 from trafilatura import extract
 
 import process_from_md as process_from_md  # Requires same directory import
-
-from datetime import date
 
 from config import (SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS,
                     E_MODEL, PGV_DB_NAME, PGV_DB_HOST, PGV_DB_PORT, PGV_DB_USER, PGV_DB_PASSWORD, PGV_DB_TABLENAME)
@@ -107,6 +106,24 @@ async def store_sxng_news_search(result_set):
         json.dump(result_set, fp)
 
 
+def get_past_dates(days):
+    '''
+    Get the date string for `days` previous days, including the current date.
+    '''
+    # List to store the dates
+    dates = []
+    
+    # Get today's date
+    today = datetime.now()
+    
+    # Loop to get the past x dates
+    for i in range(days + 1):
+        date = (today - timedelta(days=i)).strftime("%Y%m%d")
+        dates.append(date)
+    
+    return dates
+
+
 async def async_main(sterms, dryrun, set_date):
     '''
     Entry point (for cmdline, for now)
@@ -150,14 +167,22 @@ async def async_main(sterms, dryrun, set_date):
         user=PGV_DB_USER,
         password=PGV_DB_PASSWORD
     )
-    climate_news = await climateDB.search(
-        text='Climate Change News',  # TODO: personalize
-        limit=1
-    )
-    first_search_result = next(climate_news)['metadata']  # 'metadata' just gets us back the JSON as we like it
+    date_range = get_past_dates(1)  # FIXME: this will fail to grab sunday's news, presuming a tuesday-thursday-saturday cadence
+    climate_news = []
+    for day in date_range:
+        daily_news = list(await climateDB.search(
+            text='Climate Change News',
+            meta_filter=match_exact('searchTimestamp', day)
+        ))
+        if daily_news:
+            for item in daily_news:
+                climate_news.append(item)
+    import pprint;pprint.pprint(climate_news)
+    first_search_result = climate_news[0]['metadata']  # 'metadata' just gets us back the JSON as we like it
 
     summary = first_search_result['summary']
-    action_items = first_search_result['action_items']
+    # action_items = first_search_result['action_items']
+    action_items = '*gestures at guillotine*'
 
     # XXX : Temp solution for stinky models
     # summary = re.sub("<\|im_end\|>|`", '', summary)
