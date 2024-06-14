@@ -175,13 +175,36 @@ If the text is anything other than a news story return "false"
 
 Some examples of what is not a news article are:  Wikipedia articles or Error messages.
 
-Here is the news article:
+As an example, if the news looks like this:
+###
+Boulder is a home rule city in and the county seat of Boulder County, Colorado, United States.[1] With a population of 108,250 at the 2020 census, it is the most-populous city in the county and the 12th-most populous city in Colorado.[6] Boulder is the principal city of the Boulder metropolitan statistical area, which had 330,758 residents in 2020, and is part of the Front Range Urban Corridor.
+
+Boulder is located at the base of the foothills of the Rocky Mountains, at an elevation of 5,430 feet (1,655 m) above sea level.[8][9] The city is 25 miles (40 km) northwest of the Colorado state capital of Denver. Boulder is a college town, hosting the University of Colorado Boulder, the flagship and largest campus of the University of Colorado system as well as numerous research institutes.
+
+History
+For a chronological guide, see Timeline of Boulder, Colorado.
+Archaeological evidence shows the Boulder valley has been continuously inhabited by Native American tribes for over 13,000 years, beginning in the late Pleistocene era. Throughout the Paleo-Indian, Archaic, and Late Prehistoric periods, Indigenous peoples moved seasonally between the mountains and plains, taking shelter in winter along the Front Range trough where Boulder now lies. By the 1500s, the area was occupied by Ute tribes, joined by Arapaho tribes in the early 1800s.[10]
+
+The Indigenous Nations who have ties to the Boulder Valley include the Apache, Arapaho, Cheyenne, Comanche, Kiowa, Pawnee, Shoshone, Sioux, and Ute peoples. In the 1800s, Euro-American settlers colonized the area.[11]
+
+Modern Boulder was founded in late 1858 when prospectors led by Thomas Aikins arrived at Boulder Canyon during the Colorado Gold Rush. Arapaho leader Niwot allowed them to stay for the winter, but this decision ultimately cost his people their land. In early 1859, gold was discovered along Boulder Creek, drawing more miners and merchants to the area. The Boulder City Town Company was formed in February 1859 to establish a settlement at the canyon mouth. By 1860 it had 70 cabins, mostly occupied by Anglo families. Non-whites like Chinese miners and black residents were part of early Boulder but rarely pictured....
+### 
+
+
+Your response would look like this:
+###
+False - This is a wikipedia article and not about live news so therfore not a news article.
+###
+
+
+
+Now here is the real news article:
 ```
 {news_content}
 ```
 
-Now respond with True or Flase and then explain why.
-"""
+Now with respond with "False" for non news articles
+or respond with "True" if its a current news article"""
 # Sources of ideas:
 # * https://www.earthday.org/campaign/act-on-climate-change
 # * https://cotap.org/reduce-carbon-footprint
