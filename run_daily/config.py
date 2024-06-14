@@ -133,6 +133,7 @@ EMAIL_TEMPLATE = """<!DOCTYPE html>
             <h3>This is what you can do to help:</h3>
             <p>{action_items}</p>
         </div>
+        {dev_block}
         
     <div class="footer">
         <p>Contact us at: <a href="mailto:info@10minclimate.org">info@10minclimate.org</a></p>
