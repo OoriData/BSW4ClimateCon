@@ -15,10 +15,11 @@ from markdown import markdown as markdown2html
 import click
 
 from ogbujipt.llm_wrapper import prompt_to_chat, llama_cpp_http_chat
+from ogbujipt.embedding.pgvector import DataDB
 from utiloori.ansi_color import ansi_color
 
-from config import PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH
-
+from config import (PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH,
+                    E_MODEL, PGV_DB_NAME, PGV_DB_HOST, PGV_DB_PORT, PGV_DB_USER, PGV_DB_PASSWORD, PGV_DB_TABLENAME)
 
 g_summarization_llm = llama_cpp_http_chat(base_url=SUMMARIZATION_LLM_URL)
 g_scoring_llm = llama_cpp_http_chat(base_url=SCORING_LLM_URL)
@@ -129,6 +130,29 @@ def write_news_to_dated_folder(news_batch):
     print(ansi_color(f'News items written to folder: {folder_path}', 'yellow'))
 
 
+async def write_news_to_DB(news_batch):
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    # Upload news contents to DB
+    climateDB = await DataDB.from_conn_params(  # Perhaps this should be a conn pool that we dip into from config. this whole program needs a hefty batch of actual async, tbh
+        embedding_model=E_MODEL, 
+        table_name=PGV_DB_TABLENAME,
+        db_name=PGV_DB_NAME,
+        host=PGV_DB_HOST,
+        port=int(PGV_DB_PORT),
+        user=PGV_DB_USER,
+        password=PGV_DB_PASSWORD
+    )
+    await climateDB.create_table()
+    for item in news_batch:
+        item['search_timestamp'] = today
+
+        await climateDB.insert(  # TODO: redo this as insert_many()
+            content=item['title'],  # Would prefer a very short summary to using the often goofy and truncated title
+            metadata=item
+        )
+
+
 async def async_main(searxng_JSON):
     print(ansi_color('\nProcessing searxng results to Database:', 'yellow'))
 
@@ -140,12 +164,14 @@ async def async_main(searxng_JSON):
 
     news_batch = await summarize_news(news_batch)
 
+    # TODO: make this into a function that just vibe checks if this is a story, or if it's wikipeidia entry or w/e
     # news_batch = score_news(news_batch)
 
     news_batch = await generate_action_items(news_batch)
     
     print(ansi_color('\nUploading stories to database...', 'yellow'))
-    write_news_to_dated_folder(news_batch)
+    await write_news_to_DB(news_batch)
+    # write_news_to_dated_folder(news_batch)
     print(ansi_color('Uploaded!', 'yellow'))
 
     # print(ansi_color(f'\nSUMMARY: {news_batch[0]["summary"]}', 'yellow'))

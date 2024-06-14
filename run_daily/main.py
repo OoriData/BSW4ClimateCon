@@ -16,9 +16,10 @@ For AWS Lambda entry point, we'll probbaly set up a function parallel to `async_
 import sys
 import json
 import asyncio
-import re
+# import re
 from pathlib import Path
 
+from ogbujipt.embedding.pgvector import DataDB
 from utiloori.ansi_color import ansi_color
 import click
 import httpx
@@ -28,7 +29,8 @@ import process_from_md as process_from_md  # Requires same directory import
 
 from datetime import date
 
-from config import SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS
+from config import (SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS,
+                    E_MODEL, PGV_DB_NAME, PGV_DB_HOST, PGV_DB_PORT, PGV_DB_USER, PGV_DB_PASSWORD, PGV_DB_TABLENAME)
 from send_campaign_email import create_campaign, test_campaign
 
 # SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'  # Public instances seem all broken. Luckily, easy to self-host
@@ -134,21 +136,36 @@ async def async_main(sterms, dryrun, set_date):
         searxng_results = json.load(fp)
     await process_from_md.async_main(searxng_results)
 
-    today_folder = SERPS_PATH / 'daily_news' / today.isoformat()
-    today_folder.mkdir(parents=True, exist_ok=True)
-    with open(today_folder / 'news_1.json', 'rb') as fp:  # TODO: need to actually consider multiple stories for the user, not just #1
-        first_search_result = json.load(fp)
+    # Get the news
+    # today_folder = SERPS_PATH / 'daily_news' / today.isoformat()
+    # today_folder.mkdir(parents=True, exist_ok=True)
+    # with open(today_folder / 'news_1.json', 'rb') as fp:  # TODO: need to actually consider multiple stories for the user, not just #1
+    #     first_search_result = json.load(fp)
+    climateDB = await DataDB.from_conn_params(  # Perhaps this should be a conn pool that we dip into from config. this whole program needs a hefty batch of actual async, tbh
+        embedding_model=E_MODEL, 
+        table_name=PGV_DB_TABLENAME,
+        db_name=PGV_DB_NAME,
+        host=PGV_DB_HOST,
+        port=int(PGV_DB_PORT),
+        user=PGV_DB_USER,
+        password=PGV_DB_PASSWORD
+    )
+    climate_news = await climateDB.search(
+        text='Climate Change News',  # TODO: personalize
+        limit=1
+    )
+    first_search_result = next(climate_news)['metadata']  # 'metadata' just gets us back the JSON as we like it
 
     summary = first_search_result['summary']
     action_items = first_search_result['action_items']
 
-    # XXX : Temp solution untill
-    summary = re.sub("<\|im_end\|>|`", '', summary)
-    action_items = re.sub("<\|im_end\|>|`", '', action_items)
+    # XXX : Temp solution for stinky models
+    # summary = re.sub("<\|im_end\|>|`", '', summary)
+    # action_items = re.sub("<\|im_end\|>|`", '', action_items)
 
     url = first_search_result['url']
 
-    ### Message from the developers.
+    # Message from the developers.
     dev_text, dev_msg = "",""
     with open('developer_message.txt', 'r') as file:
         dev_text = file.read()
