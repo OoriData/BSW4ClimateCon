@@ -19,7 +19,7 @@ from ogbujipt.embedding.pgvector import DataDB, match_exact
 from utiloori.ansi_color import ansi_color
 
 from config import (PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH,
-                    E_MODEL, SER,DB_NAME, SER,DB_HOST, SER,DB_PORT, SER,DB_USER, SER,DB_PASSWORD, SER,DB_TABLENAME)
+                    E_MODEL, DB_NAME, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_TABLENAME)
 
 g_summarization_llm = llama_cpp_http_chat(base_url=SUMMARIZATION_LLM_URL)
 g_scoring_llm = llama_cpp_http_chat(base_url=SCORING_LLM_URL)
