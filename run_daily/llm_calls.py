@@ -19,7 +19,7 @@ from ogbujipt.embedding.pgvector import DataDB, match_exact
 from utiloori.ansi_color import ansi_color
 
 from config import (PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH,
-                    E_MODEL, PGV_DB_NAME, PGV_DB_HOST, PGV_DB_PORT, PGV_DB_USER, PGV_DB_PASSWORD, PGV_DB_TABLENAME)
+                    E_MODEL, SER,DB_NAME, SER,DB_HOST, SER,DB_PORT, SER,DB_USER, SER,DB_PASSWORD, SER,DB_TABLENAME)
 
 g_summarization_llm = llama_cpp_http_chat(base_url=SUMMARIZATION_LLM_URL)
 g_scoring_llm = llama_cpp_http_chat(base_url=SCORING_LLM_URL)
@@ -45,7 +45,7 @@ def MD_extract(searxng_JSON):
         }
         refined_data.append(extracted_item)
         if not extracted_item['content']:
-            print(ansi_color(f'WARNING: No content for {extracted_item["title"]}', 'red'))
+            print(ansi_color(f'No content for {extracted_item["title"]}, skipping', 'purple'))
 
     return refined_data
 
@@ -56,18 +56,18 @@ async def filter_news(news_batch):
     '''
     climateDB = await DataDB.from_conn_params(  # Perhaps this should be a conn pool that we dip into from config. this whole program needs a hefty batch of actual async, tbh
         embedding_model=E_MODEL, 
-        table_name=PGV_DB_TABLENAME,
-        db_name=PGV_DB_NAME,
-        host=PGV_DB_HOST,
-        port=int(PGV_DB_PORT),
-        user=PGV_DB_USER,
-        password=PGV_DB_PASSWORD
+        table_name=DB_TABLENAME,
+        db_name=DB_NAME,
+        host=DB_HOST,
+        port=int(DB_PORT),
+        user=DB_USER,
+        password=DB_PASSWORD
     )
 
     filtered_news = []
     for item in news_batch:
         if list(await climateDB.search(text='', meta_filter=match_exact('url', item['url']))):  # Look for the article in the DB, if not found, continue
-            print(ansi_color(f'News item "{item["title"]}" is already in DB, skipping', 'cyan'))
+            print(ansi_color(f'News item "{item["title"]}" is already in DB, skipping', 'purple'))
         else:
             print(ansi_color(f'Filtering news item "{item["title"]}"...', 'yellow'))
 
@@ -81,9 +81,9 @@ async def filter_news(news_batch):
 
             if "true" in response.lower():
                 filtered_news.append(item)
-                print(ansi_color(f'Good - {response}', 'green'))
+                print(ansi_color(f'GOOD: {response}', 'green'))
             else:
-                print(ansi_color(f'Bad- {response}', 'red'))
+                print(ansi_color(f'BAD : {response}', 'red'))
 
     return filtered_news
 

@@ -24,12 +24,14 @@ from ogbujipt.embedding.pgvector import DataDB, match_exact
 from utiloori.ansi_color import ansi_color
 import click
 import httpx
+from httpx import ReadTimeout
 from trafilatura import extract
 
-import llm_calls as llm_calls  # Requires same directory import
+import climate_pg
+import llm_calls  # Requires same directory import
 
 from config import (SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS,
-                    E_MODEL, PGV_DB_NAME, PGV_DB_HOST, PGV_DB_PORT, PGV_DB_USER, PGV_DB_PASSWORD, PGV_DB_TABLENAME)
+                    E_MODEL, DB_NAME, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_TABLENAME)
 from send_campaign_email import create_campaign, test_campaign
 
 # SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'  # Public instances seem all broken. Luckily, easy to self-host
@@ -86,12 +88,17 @@ async def add_content_as_markdown(client, result):
     Load HTML from the content of the result HTML, converts it to Markdown & adds it back to the results structure
     '''
     url = result['url']
-    resp = await client.get(url)
-    print(ansi_color(f'\n Got URL: {url}', 'blue'))
-    md_content = extract(resp.content,
-                            output_format='markdown',
-                            include_links=True,
-                            include_comments=False)
+    try:
+        resp = await client.get(url)
+        print(ansi_color(f'\n Got URL: {url}', 'blue'))
+        md_content = extract(resp.content,
+                                output_format='markdown',
+                                include_links=True,
+                                include_comments=False)
+    except ReadTimeout:
+        print(ansi_color(f'COULD NOT READ URL {url}', 'red'))
+        md_content = 'READ TIMEOUT ERROR'
+
     result['markdown_content'] = md_content
 
 
@@ -124,11 +131,20 @@ def get_past_dates(days):
     return dates
 
 
+async def init_DB():
+    global DB
+    db = await climate_pg.DBHelper.from_pool_params(DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, E_MODEL)
+    # Monkeypatch in a global DBHelper instance
+    DB = climate_pg.DB = db
+
+
 async def async_main(sterms, dryrun, set_date):
     '''
     Entry point (for cmdline, for now)
     Takes search engine results & launches the main task to pull & process news
     '''
+    await init_DB()
+
     if sterms is None:
         search_sets = SEARCH_SETS
     else:
@@ -160,18 +176,18 @@ async def async_main(sterms, dryrun, set_date):
     #     first_search_result = json.load(fp)
     climateDB = await DataDB.from_conn_params(  # Perhaps this should be a conn pool that we dip into from config. this whole program needs a hefty batch of actual async, tbh
         embedding_model=E_MODEL, 
-        table_name=PGV_DB_TABLENAME,
-        db_name=PGV_DB_NAME,
-        host=PGV_DB_HOST,
-        port=int(PGV_DB_PORT),
-        user=PGV_DB_USER,
-        password=PGV_DB_PASSWORD
+        table_name=DB_TABLENAME,
+        db_name=DB_NAME,
+        host=DB_HOST,
+        port=int(DB_PORT),
+        user=DB_USER,
+        password=DB_PASSWORD
     )
-    date_range = get_past_dates(1)  # FIXME: this will fail to grab sunday's news, presuming a tuesday-thursday-saturday cadence
+    date_range = get_past_dates(1)  # FIXME: this will fail to grab sunday's news, presuming a Tuesday-Thursday-Saturday cadence
     climate_news = []
     for day in date_range:
         daily_news = list(await climateDB.search(
-            text='Climate Change News',
+            text='',
             meta_filter=match_exact('search_timestamp', day)
         ))
         if daily_news:

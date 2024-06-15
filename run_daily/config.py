@@ -44,15 +44,14 @@ with open("prompts.toml", mode="rb") as fp:
     PROMPT = word_loom.load(fp)
 
 # PGVector connection
-PGV_DB_NAME = os.environ["CLIMATE_ACTION_DB_NAME"]
-PGV_DB_HOST = os.environ["CLIMATE_ACTION_DB_HOST"]
-PGV_DB_PORT = int(os.environ["CLIMATE_ACTION_DB_PORT"])
-PGV_DB_USER = os.environ["CLIMATE_ACTION_DB_USER"]
-PGV_DB_PASSWORD = os.environ["CLIMATE_ACTION_DB_PASSWORD"]
+DB_NAME = os.environ["CLIMATE_ACTION_DB_NAME"]
+DB_HOST = os.environ["CLIMATE_ACTION_DB_HOST"]
+DB_PORT = int(os.environ["CLIMATE_ACTION_DB_PORT"])
+DB_USER = os.environ["CLIMATE_ACTION_DB_USER"]
+DB_PASSWORD = os.environ["CLIMATE_ACTION_DB_PASSWORD"]
 # Just let a Traceback let the user know they're missing config, for now
 
-PGV_DB_TABLENAME = "climate_news"
-
+DB_TABLENAME = "climate_news"
 
 # Shared vector DB table
 async def ensure_db():
@@ -63,11 +62,11 @@ async def ensure_db():
     VDB = await DataDB.from_conn_params(  # connect to PG
         embedding_model=E_MODEL,
         table_name=PGV_DB_TABLENAME,
-        db_name=PGV_DB_NAME,
-        host=PGV_DB_HOST,
-        port=PGV_DB_PORT,
-        user=PGV_DB_USER,
-        password=PGV_DB_PASSWORD,
+        db_name=DB_NAME,
+        host=DB_HOST,
+        port=DB_PORT,
+        user=DB_USER,
+        password=DB_PASSWORD,
     )
 
     await VDB.create_table()  # Create a new table (if doesn't exist)
