@@ -95,9 +95,9 @@ async def add_content_as_markdown(client, result):
                                 output_format='markdown',
                                 include_links=True,
                                 include_comments=False)
-    except ReadTimeout:
+    except:
         print(ansi_color(f'COULD NOT READ URL {url}', 'red'))
-        md_content = 'READ TIMEOUT ERROR'
+        md_content = 'URL ERROR'
 
     result['markdown_content'] = md_content
 
@@ -143,7 +143,7 @@ async def async_main(sterms, dryrun, set_date):
     Entry point (for cmdline, for now)
     Takes search engine results & launches the main task to pull & process news
     '''
-    await init_DB()
+    # await init_DB()
 
     if sterms is None:
         search_sets = SEARCH_SETS
@@ -192,19 +192,18 @@ async def async_main(sterms, dryrun, set_date):
         ))
         if daily_news:
             for item in daily_news:
-                climate_news.append(item)
+                climate_news.append(item['metadata'])
+
+    print(ansi_color(f'Got {len(climate_news)} from DB. Selecting most relevant item...', 'Blue'))
+    selected_item = await llm_calls.narrow_down_items(climate_news)
 
     # TODO: we are just blindly selecting the first news item; that's not good
-    first_search_result = climate_news[0]['metadata']  # 'metadata' just gets us back the JSON as we like it
-    summary = first_search_result['summary']
-    action_items = first_search_result['action_items']
+    summary = selected_item['summary']
+
+    action_items = selected_item['action_items']  # TODO: generate these here, instead of just fetching them
     # action_items = '*gestures at guillotine*'
 
-    # XXX : Temp solution for stinky models
-    # summary = re.sub("<\|im_end\|>|`", '', summary)
-    # action_items = re.sub("<\|im_end\|>|`", '', action_items)
-
-    url = first_search_result['url']
+    url = selected_item['url']
 
     # Message from the developers.
     dev_text, dev_msg = "",""
