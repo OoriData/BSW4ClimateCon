@@ -155,7 +155,7 @@ SEARXNG_LIMIT="6"
 
 SUMMARIZATION_LLM_URL="http://localhost:8000"
 SCORING_LLM_URL="http://localhost:8000"
-ACTIONGEN_LLM_URL="http://localhost:8000"
+ACTION_GEN_LLM_URL="http://localhost:8000"
 
 CLIMATE_ACTION_DB_NAME="climateDB"
 CLIMATE_ACTION_DB_HOST="localhost"

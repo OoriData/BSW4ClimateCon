@@ -35,9 +35,12 @@ LIMIT = int(os.getenv('SEARXNG_LIMIT', '3'))  # number of results to process
 # LLMs endpoints
 SUMMARIZATION_LLM_URL = os.getenv("SUMMARIZATION_LLM_URL", "http://localhost:8000")
 SCORING_LLM_URL = os.getenv("SCORING_LLM_URL", "http://localhost:8000")
-ACTIONGEN_LLM_URL = os.getenv("ACTIONGEN_LLM_URL", "http://localhost:8000")
+ACTION_GEN_LLM_URL = os.getenv("ACTION_GEN_LLM_URL", "http://localhost:8000")
 
 LLM_TIMEOUT = 90.0
+CALL_ATTEMPTS = 6
+
+BUNDLE_SIZE = 6  # size of tournament rounds for narrowing down articles
 
 # Prompts & other natural language
 with open("prompts.toml", mode="rb") as fp:
@@ -51,42 +54,22 @@ DB_USER = os.environ["CLIMATE_ACTION_DB_USER"]
 DB_PASSWORD = os.environ["CLIMATE_ACTION_DB_PASSWORD"]
 # Just let a Traceback let the user know they're missing config, for now
 
-DB_TABLENAME = "climate_news"
 
-# Shared vector DB table
-async def ensure_db():
-    """
-    Ensure the needed DB table exists & has the right initial data
-    """
-    global VDB
-    VDB = await DataDB.from_conn_params(  # connect to PG
-        embedding_model=E_MODEL,
-        table_name=PGV_DB_TABLENAME,
-        db_name=DB_NAME,
-        host=DB_HOST,
-        port=DB_PORT,
-        user=DB_USER,
-        password=DB_PASSWORD,
-    )
+async def try_func(func, *args, **kwargs):
+    retries = 0
+    succeeded = False
+    while not succeeded:
+        try:
+            response = await func(*args, **kwargs)
+            succeeded = True
+        except Exception as e:
+            retries += 1
+            print(ansi_color(f'UH OH, had to retry a call due to "{e}"', bg_color='red'))
+            print(ansi_color(f'retries: {retries}', bg_color='red'))
+            if retries >= CALL_ATTEMPTS:
+                raise e
 
-    await VDB.create_table()  # Create a new table (if doesn't exist)
-
-
-async def ensure_language_item(litem):
-    """
-    Given a language item, make sure it's in the DB, but avoid dupes
-    """
-    # If we find anything with >98% similarity, treat it as a dupe
-    litem_str = str(litem)
-    matches = list(await VDB.search(litem_str, threshold=0.98))
-    if matches:
-        # FIXME: Should also check metadata
-        print("✅", end="", flush=True)
-        return False
-
-    print("➕", end="", flush=True)
-    await VDB.insert(content=litem_str, metadata=litem.meta)
-    return True
+    return response
 
 
 MAILCHIMP_API_KEY = os.getenv("MAILCHIMP_API_KEY")

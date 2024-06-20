@@ -30,8 +30,8 @@ from trafilatura import extract
 import climate_pg
 import llm_calls  # Requires same directory import
 
-from config import (SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS,
-                    E_MODEL, DB_NAME, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_TABLENAME)
+from config import (try_func, SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS,
+                    E_MODEL, DB_NAME, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD)
 from send_campaign_email import create_campaign, test_campaign
 
 # SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'  # Public instances seem all broken. Luckily, easy to self-host
@@ -60,7 +60,7 @@ async def do_sxng_news_search(terms):
     # async with httpx.AsyncClient(verify=False) as client:
     print(ansi_color(f'\nRunning search for: "{terms}"', 'blue'))
     async with httpx.AsyncClient() as client:
-        resp = await client.get(SEARXNG_ENDPOINT, params=qparams)
+        resp = await try_func(client.get, SEARXNG_ENDPOINT, params=qparams)
         # html = resp.content.decode(resp.encoding or 'utf-8')
         results_obj = resp.json()
         if LIMIT:
@@ -95,8 +95,8 @@ async def add_content_as_markdown(client, result):
                                 output_format='markdown',
                                 include_links=True,
                                 include_comments=False)
-    except:
-        print(ansi_color(f'COULD NOT READ URL {url}', 'red'))
+    except Exception as e:
+        print(ansi_color(f'COULD NOT READ URL {url} DUE TO "{e}"', 'red'))
         md_content = 'URL ERROR'
 
     result['markdown_content'] = md_content
@@ -143,7 +143,7 @@ async def async_main(sterms, dryrun, set_date):
     Entry point (for cmdline, for now)
     Takes search engine results & launches the main task to pull & process news
     '''
-    # await init_DB()
+    await init_DB()
 
     if sterms is None:
         search_sets = SEARCH_SETS
@@ -162,31 +162,18 @@ async def async_main(sterms, dryrun, set_date):
     for result_set in search_tasks.result():
         await store_sxng_news_search(result_set)
 
-    # Here we call the article summarizer (in process_from_md.py)
     today = date.today() if set_date is None else date.fromisoformat(set_date)
     fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + '.json')
     with open(fname, 'rb') as fp:
         searxng_results = json.load(fp)
-    await llm_calls.async_main(searxng_results)
+
+    await llm_calls.async_main(searxng_results, DB)
 
     # Get the news
-    # today_folder = SERPS_PATH / 'daily_news' / today.isoformat()
-    # today_folder.mkdir(parents=True, exist_ok=True)
-    # with open(today_folder / 'news_1.json', 'rb') as fp:  # TODO: need to actually consider multiple stories for the user, not just #1
-    #     first_search_result = json.load(fp)
-    climateDB = await DataDB.from_conn_params(  # Perhaps this should be a conn pool that we dip into from config. this whole program needs a hefty batch of actual async, tbh
-        embedding_model=E_MODEL, 
-        table_name=DB_TABLENAME,
-        db_name=DB_NAME,
-        host=DB_HOST,
-        port=int(DB_PORT),
-        user=DB_USER,
-        password=DB_PASSWORD
-    )
     date_range = get_past_dates(1)  # FIXME: this will fail to grab sunday's news, presuming a Tuesday-Thursday-Saturday cadence
     climate_news = []
     for day in date_range:
-        daily_news = list(await climateDB.search(
+        daily_news = list(await DB.news.conn.search(
             text='',
             meta_filter=match_exact('search_timestamp', day)
         ))
@@ -197,27 +184,21 @@ async def async_main(sterms, dryrun, set_date):
     print(ansi_color(f'Got {len(climate_news)} from DB. Selecting most relevant item...', 'Blue'))
     selected_item = await llm_calls.narrow_down_items(climate_news)
 
-    # TODO: we are just blindly selecting the first news item; that's not good
-    summary = selected_item['summary']
-
-    action_items = selected_item['action_items']  # TODO: generate these here, instead of just fetching them
-    # action_items = '*gestures at guillotine*'
-
-    url = selected_item['url']
+    selected_item = await llm_calls.generate_action_items(selected_item)
 
     # Message from the developers.
-    dev_text, dev_msg = "",""
+    dev_text, dev_msg = '', ''
     with open('developer_message.txt', 'r') as file:
         dev_text = file.read()
 
-    if dev_text != "":
+    if dev_text != '':
         try:
-                dev_msg =  '''<div class="section">
-                <h2>Message from the developers</h2>
-                <p>{dev_copy}</p>
-                </div>'''.format(dev_copy=dev_text)
-        except:
-                dev_msg = ""
+            dev_msg =  '''<div class="section">
+            <h2>Message from the developers</h2>
+            <p>{dev_copy}</p>
+            </div>'''.format(dev_copy=dev_text)
+        except Exception as e:
+            dev_msg = ""
 
     # Is it a configured e-mail send day? Run e-mail blast if so
     run_email_blast = today.weekday() in DAYS_TO_RUN
@@ -227,10 +208,10 @@ async def async_main(sterms, dryrun, set_date):
         print(ansi_color('Configured to NOT send e-mail on this day', 'yellow'), file=sys.stderr)
     if dryrun:
         print(ansi_color('Whether or not it\'s a configured day e-mail a dry run will simulate. Look for a browser pop-up.', 'yellow'), file=sys.stderr)
-        test_campaign(url, summary, action_items, dev_msg)
+        test_campaign(selected_item['url'], selected_item['summary'], selected_item['action_items'], dev_msg)
     elif run_email_blast:
         # FIXME: Should be some sort of success/failure response, or better yet try/except
-        create_campaign(url, summary, action_items, dev_msg)
+        create_campaign(selected_item['url'], selected_item['summary'], selected_item['action_items'], dev_msg)
         # If we sent an e-mail delete files in the working space
         for f in SERPS_PATH.glob('*.json'):
             f.unlink()

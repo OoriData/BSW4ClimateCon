@@ -15,15 +15,14 @@ from markdown import markdown as markdown2html
 import click
 
 from ogbujipt.llm_wrapper import prompt_to_chat, llama_cpp_http_chat
-from ogbujipt.embedding.pgvector import DataDB, match_exact
+from ogbujipt.embedding.pgvector import match_exact
 from utiloori.ansi_color import ansi_color
 
-from config import (PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTIONGEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH,
-                    E_MODEL, DB_NAME, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_TABLENAME)
+from config import try_func, PROMPT, SUMMARIZATION_LLM_URL, SCORING_LLM_URL, ACTION_GEN_LLM_URL, LLM_TIMEOUT, SERPS_PATH, BUNDLE_SIZE
 
-g_summarization_llm = llama_cpp_http_chat(base_url=SUMMARIZATION_LLM_URL)
-g_scoring_llm = llama_cpp_http_chat(base_url=SCORING_LLM_URL)
-g_actiongen_llm = llama_cpp_http_chat(base_url=ACTIONGEN_LLM_URL)
+SUMMARIZATION_LLM = llama_cpp_http_chat(base_url=SUMMARIZATION_LLM_URL)
+SCORING_LLM = llama_cpp_http_chat(base_url=SCORING_LLM_URL)
+ACTION_GEN_LLM = llama_cpp_http_chat(base_url=ACTION_GEN_LLM_URL)
 
 
 def MD_extract(searxng_JSON):
@@ -47,46 +46,37 @@ def MD_extract(searxng_JSON):
         if extracted_item['content']:
             refined_items.append(extracted_item)
         else:
-            print(ansi_color(f'No content for {extracted_item["title"]}, skipping', 'purple'))
+            print(ansi_color(f'No content for {extracted_item['title']}, skipping', 'purple'))
 
     return refined_items
 
 
-async def filter_news(news_batch):
+async def filter_news(news_batch, DB):
     '''
     Reads news and makes sure its a news story and nor 
     '''
-    climateDB = await DataDB.from_conn_params(  # Perhaps this should be a conn pool that we dip into from config. this whole program needs a hefty batch of actual async, tbh
-        embedding_model=E_MODEL, 
-        table_name=DB_TABLENAME,
-        db_name=DB_NAME,
-        host=DB_HOST,
-        port=int(DB_PORT),
-        user=DB_USER,
-        password=DB_PASSWORD
-    )
-
     filtered_news = []
     for item in news_batch:
-        if list(await climateDB.search(text='', meta_filter=match_exact('url', item['url']))):  # Look for the article in the DB, if not found, continue
-            print(ansi_color(f'News item "{item["title"]}" is already in DB, skipping', 'purple'))
+        if list(await DB.news.conn.search(text='', meta_filter=match_exact('url', item['url']))):  # Look for the article in the DB, if not found, continue
+            print(ansi_color(f'News item "{item['title']}" is already in DB, skipping', 'purple'))
+        elif not item['content']:
+            print(ansi_color(f'No content for "{item['title']}", skipping', 'purple'))
         else:
-            print(ansi_color(f'Filtering news item "{item["title"]}"...', 'yellow'))
+            print(ansi_color(f'Filtering news item "{item['title']}"...', 'yellow'))
 
             call_prompt = PROMPT['filter_msg'].format(news_content=item['content'])
 
-            try:
-                response = (await g_scoring_llm(prompt_to_chat(call_prompt),
-                                                timeout=LLM_TIMEOUT
-                )).first_choice_text.strip()
-            except:
-                print('UH OH')
+            response = (await try_func(
+                SCORING_LLM,
+                    prompt_to_chat(call_prompt),
+                    timeout=LLM_TIMEOUT
+            )).first_choice_text.strip()
 
-            if "true" in response.lower():
+            if 'true' in response.lower():
                 filtered_news.append(item)
-                print(ansi_color(f'"{item["title"]}" is news: "{response}"', 'green'))
+                print(ansi_color(f'"{item['title']}" is news: "{response}"', 'green'))
             else:
-                print(ansi_color(f'"{item["title"]}" is NOT news, skipping: "{response}"', 'red'))
+                print(ansi_color(f'"{item['title']}" is NOT news, skipping: "{response}"', 'red'))
 
     return filtered_news
 
@@ -97,12 +87,14 @@ async def summarize_news(news_batch):
     get summary of the news item from LLM
     '''
     for item in news_batch:
-        print(ansi_color(f'\nSummarizing news item "{item["title"]}" (using {SUMMARIZATION_LLM_URL})...', 'yellow'))
+        print(ansi_color(f'\nSummarizing news item "{item['title']}" (using {SUMMARIZATION_LLM_URL})...', 'yellow'))
         call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item['content'])
 
-        response = (await g_summarization_llm(prompt_to_chat(call_prompt),
-                                              timeout=LLM_TIMEOUT,
-                                              max_tokens=2047
+        response = (await try_func(
+            SUMMARIZATION_LLM,
+                prompt_to_chat(call_prompt),
+                timeout=LLM_TIMEOUT,
+                max_tokens=2047
         )).first_choice_text.strip()
         item['summary'] = markdown2html(response)
 
@@ -115,16 +107,18 @@ async def generate_batch_action_items(news_batch, reader_description=PROMPT['dem
     have an LLM generate action items for the news items
     '''
     for item in news_batch:
-        print(ansi_color(f'\nGenerating action items for news item "{item["title"]}"...', 'yellow'))
+        print(ansi_color(f'\nGenerating action items for news item "{item['title']}"...', 'yellow'))
 
         if date.today().weekday() == 5:
             call_prompt = PROMPT['sat_action_plan_sysmsg'].format(target_reader=reader_description, news_content=item['summary'])
         else:
             call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=reader_description, news_content=item['summary'])
 
-        response = (await g_actiongen_llm(prompt_to_chat(call_prompt),
-                                          timeout=LLM_TIMEOUT,
-                                          max_tokens=2047
+        response = (await try_func(
+            ACTION_GEN_LLM,
+                prompt_to_chat(call_prompt),
+                timeout=LLM_TIMEOUT,
+                max_tokens=2047
         )).first_choice_text.strip()
         item['action_items'] = markdown2html(response)
 
@@ -135,16 +129,18 @@ async def generate_action_items(item, reader_description=PROMPT['demo_reader']):
     '''
     have an LLM generate action items for a news item
     '''
-    print(ansi_color(f'\nGenerating action items for news item "{item["title"]}"...', 'yellow'))
+    print(ansi_color(f'\nGenerating action items for news item "{item['title']}"...', 'yellow'))
 
     if date.today().weekday() == 5:
         call_prompt = PROMPT['sat_action_plan_sysmsg'].format(target_reader=reader_description, news_content=item['summary'])
     else:
         call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=reader_description, news_content=item['summary'])
 
-    response = (await g_actiongen_llm(prompt_to_chat(call_prompt),
-                                      timeout=LLM_TIMEOUT,
-                                      max_tokens=2047
+    response = (await try_func(
+        ACTION_GEN_LLM,
+            prompt_to_chat(call_prompt),
+            timeout=LLM_TIMEOUT,
+            max_tokens=2047
     )).first_choice_text.strip()
     item['action_items'] = markdown2html(response)
 
@@ -167,10 +163,13 @@ async def narrow_down_call(news_batch, reader_description):
 
     call_prompt = PROMPT['score_sysmsg'].format(prepped_bundle=prepped_bundle, target_reader=reader_description)
 
-    response = (await g_summarization_llm(prompt_to_chat(call_prompt),
-                                          timeout=LLM_TIMEOUT,
-                                          max_tokens=2047
+    response = (await try_func(
+        SCORING_LLM,
+            prompt_to_chat(call_prompt),
+            timeout=LLM_TIMEOUT,
+            max_tokens=2047
     )).first_choice_text.strip()
+    # response = response.first_choice_text.strip()
 
     response_lines = response.split('\n')
     most_relevant_index = int(response_lines[0])
@@ -186,23 +185,19 @@ async def narrow_down_items(news_batch, reader_description=PROMPT['demo_reader']
     '''
     Narrow down items and find the best item via recursive elimination.
     '''
-    bundle_size = 6
-
-    # Base case: If the news_batch has one or fewer items, return the first item.
-    if len(news_batch) <= 1:
+    if len(news_batch) <= 1:  # Base case: If the news_batch has one or fewer items, return the first item.
         return news_batch[0]
 
-    news_bundles = list(make_bundles(news_batch, bundle_size))
+    news_bundles = list(make_bundles(news_batch, BUNDLE_SIZE))
 
     finalists = [await narrow_down_call(bundle, reader_description) for bundle in news_bundles]
 
-    # Recursive call with the finalists
-    return await narrow_down_items(finalists, reader_description)
+    return await narrow_down_items(finalists, reader_description)  # Recursive call with the finalists
 
 
 def write_news_to_dated_folder(news_batch):
     # Create a folder with today's date
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now().strftime('%Y-%m-%d')
     folder_path = os.path.join(f'{os.getcwd()}/workspace/daily_news', today)
     folder_path = SERPS_PATH / 'daily_news' / Path(today)
     os.makedirs(folder_path, exist_ok=True)
@@ -210,7 +205,7 @@ def write_news_to_dated_folder(news_batch):
     # Write each news item to a JSON file
     for i, item in enumerate(news_batch, start=1):
         # Construct the filename
-        filename = f"news_{i}.json"
+        filename = f'news_{i}.json'
         file_path = os.path.join(folder_path, filename)
 
         # Write the news item to the JSON file
@@ -220,49 +215,38 @@ def write_news_to_dated_folder(news_batch):
     print(ansi_color(f'News items written to folder: {folder_path}', 'yellow'))
 
 
-async def write_news_to_DB(news_batch):
-    today = datetime.now().strftime("%Y-%m-%d")
-
-    # Upload news contents to DB
-    climateDB = await DataDB.from_conn_params(  # Perhaps this should be a conn pool that we dip into from config. this whole program needs a hefty batch of actual async, tbh
-        embedding_model=E_MODEL, 
-        table_name=DB_TABLENAME,
-        db_name=DB_NAME,
-        host=DB_HOST,
-        port=int(DB_PORT),
-        user=DB_USER,
-        password=DB_PASSWORD
-    )
-    await climateDB.create_table()  # FIXME: handle this in specialize climate_pg class
+async def write_news_to_DB(news_batch, DB):
+    today = datetime.now().strftime('%Y-%m-%d')
 
     bundled_news_batch = []
     for item in news_batch:
         item['search_timestamp'] = today
         bundled_news_batch.append((item['title'], item))  # Would prefer a very short summary to using the often goofy and truncated title
-    await climateDB.insert_many(bundled_news_batch)
+    
+    await DB.news.conn.insert_many(bundled_news_batch)
 
 
-async def async_main(searxng_JSON):
+async def async_main(searxng_JSON, DB):
     print(ansi_color('\nProcessing searxng results to Database:', 'yellow'))
 
     print(ansi_color('Processing searxng results JSON...', 'yellow'))
     news_batch = MD_extract(searxng_JSON)
     print(ansi_color(f'Got {len(news_batch)} stories!', 'yellow'))
 
-    news_batch = await filter_news(news_batch)
+    news_batch = await filter_news(news_batch, DB)
 
     news_batch = await summarize_news(news_batch)
 
-    news_batch = await generate_batch_action_items(news_batch)  # TODO: Move this to happen *after* the news item is selected to be sent in the email
+    # news_batch = await generate_batch_action_items(news_batch)
     
     print(ansi_color('\nUploading stories to database...', 'yellow'))
-    await write_news_to_DB(news_batch)
+    await write_news_to_DB(news_batch, DB)
     # write_news_to_dated_folder(news_batch)
 
     print(ansi_color('Uploaded!', 'yellow'))
 
-    # print(ansi_color(f'\nSUMMARY: {news_batch[0]["summary"]}', 'yellow'))
-    # print(ansi_color(f'\nACTION ITEMS: {news_batch[0]["action_items"]}', 'yellow'))
+    # print(ansi_color(f'\nSUMMARY: {news_batch[0]['summary']}', 'yellow'))
+    # print(ansi_color(f'\nACTION ITEMS: {news_batch[0]['action_items']}', 'yellow'))
 
 
 @click.command()

@@ -38,8 +38,8 @@ def create_campaign(url, summary, action_items, dev_msg):
         client.campaigns.send(campaign_id)
         print(ansi_color('Campaign sent successfully!', 'green'))
 
-    except ApiClientError as error:
-        print(ansi_color(f'Error creating/sending campaign: {error.text}', 'red'))
+    except ApiClientError as e:
+        print(ansi_color(f'Error creating/sending campaign: {e.text}', 'red'))
 
 
 def display_html_string(html_string):

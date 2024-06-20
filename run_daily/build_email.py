@@ -3,11 +3,11 @@ import asyncio
 # XXX: We probably want to use the chat API rather than raw completion
 from ogbujipt.llm_wrapper import openai_api
 
-from config import PROMPT, SUMMARIZATION_LLM_URL, ACTIONGEN_LLM_URL, ensure_db, ensure_language_item
+from config import PROMPT, SUMMARIZATION_LLM_URL, ACTION_GEN_LLM_URL, ensure_db, ensure_language_item
 
 
 g_summarization_llm = openai_api(base_url=SUMMARIZATION_LLM_URL)
-g_actiongen_llm = openai_api(base_url=ACTIONGEN_LLM_URL)
+g_action_gen_llm = openai_api(base_url=ACTION_GEN_LLM_URL)
 
 async def init():
     sample_actions = PROMPT['sample_actions']

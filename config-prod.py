@@ -35,7 +35,7 @@ LIMIT = 3  # number of results to process
 # LLMs endpoints
 SUMMARIZATION_LLM_URL = os.getenv("SUMMARIZATION_LLM_URL", "http://localhost:8000")
 SCORING_LLM_URL = os.getenv("SCORING_LLM_URL", "http://localhost:8000")
-ACTIONGEN_LLM_URL = os.getenv("ACTIONGEN_LLM_URL", "http://localhost:8000")
+ACTION_GEN_LLM_URL = os.getenv("ACTION_GEN_LLM_URL", "http://localhost:8000")
 
 LLM_TIMEOUT = 90.0
 
