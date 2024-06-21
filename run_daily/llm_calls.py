@@ -57,7 +57,7 @@ async def filter_news(news_batch, DB):
         if list(await DB.news.conn.search(text='', meta_filter=match_exact('url', item['url']))):  # Look for the article in the DB, if not found, continue
             print(ansi_color(f'News item "{item['title']}" is already in DB, skipping', 'purple'))
         elif not item['content']:
-            print(ansi_color(f'No content for news item"{item['title']}", skipping', 'purple'))
+            print(ansi_color(f'No content for news item "{item['title']}", skipping', 'purple'))
         else:
             print(ansi_color(f'Filtering news item "{item['title']}"...', 'yellow'))
 
