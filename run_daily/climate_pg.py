@@ -2,13 +2,14 @@
 Helper routines for PostgresQL (PG) DB access.
 '''
 import                           logging
+from datetime                    import datetime
 
 import                           asyncpg
 from ogbujipt.embedding.pgvector import DataDB, PGVectorHelper
 from utiloori.ansi_color         import ansi_color
 
 DB_PREFIX = 'climate'
-DB_VERSION = 'v0_1_0'
+DB_VERSION = 'v0_2_0'
 
 logger = logging.getLogger(__name__)  #This is the only logging config needed here
 
@@ -66,15 +67,11 @@ class MotDDBHelper:
 
     async def setup(self):
         logger.debug(f'Creating MOTD table as needed: {self.motd_table_name}')
-        self.conn = await DataDB.from_conn_params(
-            table_name=self.motd_table_name, **self.db_connect)
         async with self.wrapper.pool.acquire() as conn:
             async with conn.transaction():
                 await conn.execute(
-            Create_MOTD.format(
-                table_name = self.motd_table_name
-            )
-        )
+                    Create_MOTD.format(table_name = self.motd_table_name)
+                )
 
     async def get_motd(self):
         ''' 
@@ -84,11 +81,11 @@ class MotDDBHelper:
         async with self.wrapper.pool.acquire() as conn:
             async with conn.transaction():
                 motd = await conn.fetch(
-                Recent_MOTD.format(table_name=self.motd_table_name)
-                )   
+                    Recent_MOTD.format(table_name=self.motd_table_name)
+                )
                 if len(motd) != 0:
                     await conn.execute(
-                        Update_MOTD.format(table_name=self.motd_table_name), timedate ,motd[0]['id']
+                        Update_MOTD.format(table_name=self.motd_table_name), timedate, motd[0]['id']
                     )
         
         return motd
