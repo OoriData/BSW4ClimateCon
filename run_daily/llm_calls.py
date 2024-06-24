@@ -55,11 +55,11 @@ async def filter_news(news_batch, DB):
     filtered_news = []
     for item in news_batch:
         if list(await DB.news.conn.search(text='', meta_filter=match_exact('url', item['url']))):  # Look for the article in the DB, if not found, continue
-            print(ansi_color(f'News item "{item['title']}" is already in DB, skipping', 'purple'))
+            print(ansi_color(f'News item "{item["title"]}" is already in DB, skipping', 'purple'))
         elif not item['content']:
-            print(ansi_color(f'No content for news item "{item['title']}", skipping', 'purple'))
+            print(ansi_color(f'No content for news item "{item["title"]}", skipping', 'purple'))
         else:
-            print(ansi_color(f'Filtering news item "{item['title']}"...', 'yellow'))
+            print(ansi_color(f'Filtering news item "{item["title"]}"...', 'yellow'))
 
             call_prompt = PROMPT['filter_msg'].format(news_content=item['content'])
 
@@ -71,9 +71,9 @@ async def filter_news(news_batch, DB):
 
             if 'true' in response.lower():
                 filtered_news.append(item)
-                print(ansi_color(f'"{item['title']}" is news: "{response}"', 'green'))
+                print(ansi_color(f'"{item["title"]}" is news: "{response}"', 'green'))
             else:
-                print(ansi_color(f'"{item['title']}" is NOT news, skipping: "{response}"', 'red'))
+                print(ansi_color(f'"{item["title"]}" is NOT news, skipping: "{response}"', 'red'))
 
     return filtered_news
 
@@ -84,7 +84,7 @@ async def summarize_news(news_batch):
     get summary of the news item from LLM
     '''
     for item in news_batch:
-        print(ansi_color(f'\nSummarizing news item "{item['title']}" (using {SUMMARIZATION_LLM_URL})...', 'yellow'))
+        print(ansi_color(f'\nSummarizing news item "{item["title"]}" (using {SUMMARIZATION_LLM_URL})...', 'yellow'))
         call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item['content'])
 
         response = (await try_func(
@@ -104,7 +104,7 @@ async def generate_batch_action_items(news_batch, reader_description=PROMPT['dem
     have an LLM generate action items for the news items
     '''
     for item in news_batch:
-        print(ansi_color(f'\nGenerating action items for news item "{item['title']}"...', 'yellow'))
+        print(ansi_color(f'\nGenerating action items for news item "{item["title"]}"...', 'yellow'))
 
         if date.today().weekday() == 5:
             call_prompt = PROMPT['sat_action_plan_sysmsg'].format(target_reader=reader_description, news_content=item['summary'])
@@ -126,7 +126,7 @@ async def generate_action_items(item, reader_description=PROMPT['demo_reader']):
     '''
     have an LLM generate action items for a news item
     '''
-    print(ansi_color(f'\nGenerating action items for news item "{item['title']}"...', 'yellow'))
+    print(ansi_color(f'\nGenerating action items for news item "{item["title"]}"...', 'yellow'))
 
     if date.today().weekday() == 5:
         call_prompt = PROMPT['sat_action_plan_sysmsg'].format(target_reader=reader_description, news_content=item['summary'])
@@ -159,7 +159,7 @@ async def narrow_down_call(news_batch, reader_description):
     for index, item in enumerate(news_batch, start=1):  # Starting from 1 because LLMs are dumdums that won't pick index 0
         print(f'  * "{item['title']}"')
         prepped_bundle += f'[news item {index}]:\n'
-        prepped_bundle += f'{item['summary']}\n\n'
+        prepped_bundle += f'{item["summary"]}\n\n'
 
     # print(ansi_color(prepped_bundle, bg_color='white'))
 

@@ -16,7 +16,24 @@ logger = logging.getLogger(__name__)  #This is the only logging config needed he
 # PG only supports proper query arguments (e.g. $1, $2, etc.) for values, not for table or column names
 # Table names are checked to be legit sequel table names, and embed_dimension is assured to be an integer
 
+Recent_MOTD = '''
+SELECT * FROM {table_name} WHERE date_sent IS NULL ORDER BY date_posted LIMIT 1;
+'''
 
+Create_MOTD = '''
+CREATE TABLE IF NOT EXISTS {table_name} (
+        id SERIAL PRIMARY KEY,
+        date_posted DATE NOT NULL,
+        message TEXT NOT NULL,
+        date_sent DATE
+    )
+'''
+
+Update_MOTD = '''
+UPDATE {table_name}
+            SET date_sent = $1
+            WHERE id = $2
+'''
 
 # ------ SQL queries ---------------------------------------------------------------------------------------------------
 
@@ -51,7 +68,30 @@ class MotDDBHelper:
         logger.debug(f'Creating MOTD table as needed: {self.motd_table_name}')
         self.conn = await DataDB.from_conn_params(
             table_name=self.motd_table_name, **self.db_connect)
-        await self.conn.create_table()
+        async with self.wrapper.pool.acquire() as conn:
+            async with conn.transaction():
+                await conn.execute(
+            Create_MOTD.format(
+                table_name = self.motd_table_name
+            )
+        )
+
+    async def get_motd(self):
+        ''' 
+        Returns the most recent MOTD uploaded to DB that hasnt been sent yet
+        '''
+        timedate = datetime.now()
+        async with self.wrapper.pool.acquire() as conn:
+            async with conn.transaction():
+                motd = await conn.fetch(
+                Recent_MOTD.format(table_name=self.motd_table_name)
+                )   
+                if len(motd) != 0:
+                    await conn.execute(
+                        Update_MOTD.format(table_name=self.motd_table_name), timedate ,motd[0]['id']
+                    )
+        
+        return motd
 
 
 class DBHelper:

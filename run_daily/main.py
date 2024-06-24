@@ -190,19 +190,17 @@ async def async_main(sterms, dryrun, set_date):
     selected_item = await llm_calls.generate_action_items(selected_item)
 
     # Message from the developers.
-    dev_text, dev_msg = '', ''
+    dev_msg, dev_html = '', ''
     with open('developer_message.txt', 'r') as file:
-        dev_text = file.read()
+        dev_msg = file.read()
 
-    if dev_text:
-        try:
-            dev_msg =  '''<div class="section">
-            <h2>Message from the developers</h2>
-            <p>{dev_copy}</p>
-            </div>'''.format(dev_copy=dev_text)
-        except Exception as e:
-            print(ansi_color(f'Could not insert dev MotD due to "{e}"', 'red'))
-            dev_msg = ''
+    dev_msg = await DB.motd.get_motd()
+
+    if dev_msg:
+        dev_html =  '''<div class="section">
+        <h2>Message from the developers</h2>
+        <p>{dev_copy}</p>
+        </div>'''.format(dev_copy=dev_msg[0]['message'])
 
     # Is it a configured e-mail send day? Run e-mail blast if so
     run_email_blast = today.weekday() in DAYS_TO_RUN
@@ -212,10 +210,10 @@ async def async_main(sterms, dryrun, set_date):
         print(ansi_color('Configured to NOT send e-mail on this day', 'yellow'), file=sys.stderr)
     if dryrun:
         print(ansi_color('Whether or not it\'s a configured day e-mail a dry run will simulate. Look for a browser pop-up.', 'yellow'), file=sys.stderr)
-        test_campaign(selected_item['url'], selected_item['summary'], selected_item['action_items'], dev_msg)
+        test_campaign(selected_item['url'], selected_item['summary'], selected_item['action_items'], dev_html)
     elif run_email_blast:
         # FIXME: Should be some sort of success/failure response, or better yet try/except
-        create_campaign(selected_item['url'], selected_item['summary'], selected_item['action_items'], dev_msg)
+        create_campaign(selected_item['url'], selected_item['summary'], selected_item['action_items'], dev_html)
         # If we sent an e-mail delete files in the working space
         for f in SERPS_PATH.glob('*.json'):
             f.unlink()
