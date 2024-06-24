@@ -191,12 +191,14 @@ async def async_main(sterms, dryrun, set_date):
     with open('developer_message.txt', 'r') as file:
         dev_text = file.read()
 
-    if dev_text != '':
+    dev_text = await DB.motd.get_motd()
+
+    if len(dev_text) != 0:
         try:
             dev_msg =  '''<div class="section">
             <h2>Message from the developers</h2>
             <p>{dev_copy}</p>
-            </div>'''.format(dev_copy=dev_text)
+            </div>'''.format(dev_copy=dev_text[0]['message'])
         except Exception as e:
             dev_msg = ""
 
