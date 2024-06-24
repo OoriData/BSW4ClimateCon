@@ -151,12 +151,17 @@ def make_bundles(seq, k):
 
 
 async def narrow_down_call(news_batch, reader_description):
+    if len(news_batch) <= 1:  # Base case: If the news_batch has one or fewer items, return the first item.
+        return news_batch[0]
+
     prepped_bundle = ''
-    print(ansi_color('CHOOSING between these 6 items:', 'yellow'))
-    for index, item in enumerate(news_batch):
+    print(ansi_color(f'CHOOSING between these {len(news_batch)} items:', bg_color='yellow'))
+    for index, item in enumerate(news_batch, start=1):  # Starting from 1 because LLMs are dumdums that won't pick index 0
         print(f'  * "{item['title']}"')
         prepped_bundle += f'[news item {index}]:\n'
         prepped_bundle += f'{item['summary']}\n\n'
+
+    # print(ansi_color(prepped_bundle, bg_color='white'))
 
     call_prompt = PROMPT['score_sysmsg'].format(prepped_bundle=prepped_bundle, target_reader=reader_description)
 
@@ -166,14 +171,16 @@ async def narrow_down_call(news_batch, reader_description):
             timeout=LLM_TIMEOUT,
             max_tokens=2047
     )).first_choice_text.strip()
-    # response = response.first_choice_text.strip()
 
     response_lines = response.split('\n')
-    most_relevant_index = int(response_lines[0])
+    most_relevant_index = int(response_lines[0]) - 1  # Subtract 1 because this is the human index, not the computer index
     most_relevant_item = news_batch[most_relevant_index]
-    
+    reason = '\n'.join(response_lines[1:]).strip()
+    most_relevant_item['winning_reason'] = reason
+
+    print(ansi_color(f'Chosen index: {most_relevant_index}', 'cyan'))
+    print(ansi_color(f'Reasoning: {most_relevant_item['winning_reason']}', 'cyan'))
     print(ansi_color(f'SELECTION: "{most_relevant_item['title']}"', 'yellow'))
-    print(ansi_color(response, 'cyan'))
 
     return most_relevant_item
 

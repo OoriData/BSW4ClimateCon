@@ -2,7 +2,6 @@
 Helper routines for PostgresQL (PG) DB access.
 '''
 import                           logging
-from datetime                    import datetime, timezone
 
 import                           asyncpg
 from ogbujipt.embedding.pgvector import DataDB, PGVectorHelper

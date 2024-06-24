@@ -8,22 +8,21 @@ import sys
 from pathlib import Path
 
 from ogbujipt import word_loom
-from ogbujipt.embedding.pgvector import DataDB
 from utiloori.ansi_color import ansi_color
 
 from sentence_transformers import SentenceTransformer  # noqa: E402
 
 print(
-    ansi_color("Importing SentenceTransformer; can be slow!", "purple"), file=sys.stderr
+    ansi_color('Importing SentenceTransformer; can be slow!', 'purple'), file=sys.stderr
 )
 
-E_MODEL = SentenceTransformer("all-mpnet-base-v2")  # Load the embedding model
+E_MODEL = SentenceTransformer('all-mpnet-base-v2')  # Load the embedding model
 
 SEARCH_SETS = [
-    "climate change news boulder",
+    'boulder climate change news',
 ]
 
-SERPS_PATH = Path("./workspace")
+SERPS_PATH = Path('./workspace')
 
 # python date.weekday() 1 = Tuesdsay, 3 = Thursday, 5 = Saturday
 DAYS_TO_RUN = [1, 3, 5]
@@ -33,9 +32,9 @@ SEARXNG_ENDPOINT = os.getenv('SEARXNG_ENDPOINT', 'http://localhost:8888/search')
 LIMIT = int(os.getenv('SEARXNG_LIMIT', '3'))  # number of results to process
 
 # LLMs endpoints
-SUMMARIZATION_LLM_URL = os.getenv("SUMMARIZATION_LLM_URL", "http://localhost:8000")
-SCORING_LLM_URL = os.getenv("SCORING_LLM_URL", "http://localhost:8000")
-ACTION_GEN_LLM_URL = os.getenv("ACTION_GEN_LLM_URL", "http://localhost:8000")
+SUMMARIZATION_LLM_URL = os.getenv('SUMMARIZATION_LLM_URL', 'http://localhost:8000')
+SCORING_LLM_URL = os.getenv('SCORING_LLM_URL', 'http://localhost:8000')
+ACTION_GEN_LLM_URL = os.getenv('ACTION_GEN_LLM_URL', 'http://localhost:8000')
 
 LLM_TIMEOUT = 90.0
 CALL_ATTEMPTS = 6
@@ -43,15 +42,15 @@ CALL_ATTEMPTS = 6
 BUNDLE_SIZE = 6  # size of tournament rounds for narrowing down articles
 
 # Prompts & other natural language
-with open("prompts.toml", mode="rb") as fp:
+with open('prompts.toml', mode='rb') as fp:
     PROMPT = word_loom.load(fp)
 
 # PGVector connection
-DB_NAME = os.environ["CLIMATE_ACTION_DB_NAME"]
-DB_HOST = os.environ["CLIMATE_ACTION_DB_HOST"]
-DB_PORT = int(os.environ["CLIMATE_ACTION_DB_PORT"])
-DB_USER = os.environ["CLIMATE_ACTION_DB_USER"]
-DB_PASSWORD = os.environ["CLIMATE_ACTION_DB_PASSWORD"]
+DB_NAME = os.environ['CLIMATE_ACTION_DB_NAME']
+DB_HOST = os.environ['CLIMATE_ACTION_DB_HOST']
+DB_PORT = int(os.environ['CLIMATE_ACTION_DB_PORT'])
+DB_USER = os.environ['CLIMATE_ACTION_DB_USER']
+DB_PASSWORD = os.environ['CLIMATE_ACTION_DB_PASSWORD']
 # Just let a Traceback let the user know they're missing config, for now
 
 
@@ -72,12 +71,12 @@ async def try_func(func, *args, **kwargs):
     return response
 
 
-MAILCHIMP_API_KEY = os.getenv("MAILCHIMP_API_KEY")
-MAILCHIMP_API_SERVER = os.getenv("MAILCHIMP_API_SERVER")
-MAILCHIMP_AUDIENCE_ID = os.getenv("MAILCHIMP_AUDIENCE_ID")
+MAILCHIMP_API_KEY = os.getenv('MAILCHIMP_API_KEY')
+MAILCHIMP_API_SERVER = os.getenv('MAILCHIMP_API_SERVER')
+MAILCHIMP_AUDIENCE_ID = os.getenv('MAILCHIMP_AUDIENCE_ID')
 
 
-EMAIL_TEMPLATE = """<!DOCTYPE html>
+EMAIL_TEMPLATE = '''<!DOCTYPE html>
 <html>
 <head>
     <style>
@@ -124,4 +123,4 @@ EMAIL_TEMPLATE = """<!DOCTYPE html>
     </div>
 </body>
 </html>
-"""
+'''

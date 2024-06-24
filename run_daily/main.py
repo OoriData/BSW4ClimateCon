@@ -150,10 +150,11 @@ async def async_main(sterms, dryrun, set_date):
     else:
         search_sets = [sterms]
 
+    today = date.today() if set_date is None else date.fromisoformat(set_date)
+
     search_tasks = asyncio.gather(*[
         asyncio.create_task(do_sxng_news_search(sterm)) for sterm in search_sets])
 
-    # searx_task = asyncio.create_task(do_sxng_news_search(sterms))
     indicator_task = asyncio.create_task(indicate_progress())
     tasks = [indicator_task, search_tasks]
     done, _ = await asyncio.wait(
@@ -162,7 +163,6 @@ async def async_main(sterms, dryrun, set_date):
     for result_set in search_tasks.result():
         await store_sxng_news_search(result_set)
 
-    today = date.today() if set_date is None else date.fromisoformat(set_date)
     fname = SERPS_PATH / Path('SERPS-' + today.isoformat() + '.json')
     with open(fname, 'rb') as fp:
         searxng_results = json.load(fp)
@@ -180,6 +180,9 @@ async def async_main(sterms, dryrun, set_date):
         if daily_news:
             for item in daily_news:
                 climate_news.append(item['metadata'])
+    
+    if not climate_news:
+        raise 'No climate news (within specified timeframe) in database!'
 
     print(ansi_color(f'Got {len(climate_news)} from DB. Selecting most relevant item...', 'Blue'))
     selected_item = await llm_calls.narrow_down_items(climate_news)
@@ -191,14 +194,15 @@ async def async_main(sterms, dryrun, set_date):
     with open('developer_message.txt', 'r') as file:
         dev_text = file.read()
 
-    if dev_text != '':
+    if dev_text:
         try:
             dev_msg =  '''<div class="section">
             <h2>Message from the developers</h2>
             <p>{dev_copy}</p>
             </div>'''.format(dev_copy=dev_text)
         except Exception as e:
-            dev_msg = ""
+            print(ansi_color(f'Could not insert dev MotD due to "{e}"', 'red'))
+            dev_msg = ''
 
     # Is it a configured e-mail send day? Run e-mail blast if so
     run_email_blast = today.weekday() in DAYS_TO_RUN
