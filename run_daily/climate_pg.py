@@ -18,23 +18,36 @@ logger = logging.getLogger(__name__)  #This is the only logging config needed he
 # PG only supports proper query arguments (e.g. $1, $2, etc.) for values, not for table or column names
 # Table names are checked to be legit sequel table names, and embed_dimension is assured to be an integer
 
-RECENT_MOTD = '''
-SELECT * FROM {table_name} WHERE date_sent IS NULL ORDER BY date_posted LIMIT 1;
-'''
-
 CREATE_MOTD = '''
 CREATE TABLE IF NOT EXISTS {table_name} (
-        id SERIAL PRIMARY KEY,
-        date_posted DATE NOT NULL,
-        message TEXT NOT NULL,
-        date_sent DATE
-    )
+    id SERIAL PRIMARY KEY,
+    date_posted DATE NOT NULL,
+    message TEXT NOT NULL,
+    date_sent DATE
+);
+'''
+
+RECENT_MOTD = '''
+SELECT
+    *
+FROM
+    {table_name}
+WHERE
+    date_sent IS NULL 
+ORDER BY 
+    date_posted 
+LIMIT 1
+;
 '''
 
 UPDATE_MOTD = '''
-UPDATE {table_name}
-            SET date_sent = $1
-            WHERE id = $2
+UPDATE
+    {table_name}
+SET
+    date_sent = $1
+WHERE
+    id = $2
+;
 '''
 
 # ------ SQL queries ---------------------------------------------------------------------------------------------------
