@@ -16,26 +16,20 @@ For AWS Lambda entry point, we'll probbaly set up a function parallel to `async_
 import sys
 import json
 import asyncio
-# import re
 from pathlib import Path
 from datetime import datetime, date, timedelta
 
-from ogbujipt.embedding.pgvector import DataDB, match_exact
+from ogbujipt.embedding.pgvector import match_exact
 from utiloori.ansi_color import ansi_color
 import click
 import httpx
-from httpx import ReadTimeout
 from trafilatura import extract
 
 import climate_pg
-import llm_calls  # Requires same directory import
-
-from config import (try_func, SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS,
+import llm_calls
+from config import (try_func, SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS, DEFAULT_DOTS_SPACING,
                     E_MODEL, DB_NAME, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD)
 from send_campaign_email import create_campaign, test_campaign
-
-# SEARXNG_ENDPOINT = 'https://search.incogniweb.net/'  # Public instances seem all broken. Luckily, easy to self-host
-DEFAULT_DOTS_SPACING = 0.2  # Number of seconds between each dot printed to console
 
 
 async def indicate_progress(pause=DEFAULT_DOTS_SPACING):

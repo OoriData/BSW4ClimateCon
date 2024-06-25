@@ -12,11 +12,10 @@ from utiloori.ansi_color import ansi_color
 
 from sentence_transformers import SentenceTransformer  # noqa: E402
 
-print(
-    ansi_color('Importing SentenceTransformer; can be slow!', 'purple'), file=sys.stderr
-)
-
+print(ansi_color('Importing SentenceTransformer; can be slow!', 'purple'), file=sys.stderr)
 E_MODEL = SentenceTransformer('all-mpnet-base-v2')  # Load the embedding model
+
+DEFAULT_DOTS_SPACING = 0.2  # Number of seconds between each dot printed to console
 
 SEARCH_SETS = [
     'boulder climate change news',
