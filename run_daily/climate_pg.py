@@ -89,7 +89,7 @@ class MotDDBHelper:
         ''' 
         Returns the most recent MOTD uploaded to DB that hasnt been sent yet
         '''
-        timedate = datetime.now()
+        today = datetime.now()
         async with self.wrapper.pool.acquire() as conn:
             async with conn.transaction():
                 motd = await conn.fetch(
@@ -98,7 +98,7 @@ class MotDDBHelper:
                 if motd:
                     await conn.execute(
                         UPDATE_MOTD.format(db_prefix=DB_PREFIX, db_version=DB_VERSION),
-                            timedate,
+                            today,
                             motd[0]['id']
                     )
         
