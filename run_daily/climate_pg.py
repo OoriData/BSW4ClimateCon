@@ -28,9 +28,7 @@ CREATE TABLE IF NOT EXISTS {db_prefix}_{db_version}_MOTD (
 '''
 
 RECENT_MOTD = '''
-SELECT
-    *
-FROM
+SELECT * FROM
     {db_prefix}_{db_version}_MOTD
 WHERE
     date_sent IS NULL 
