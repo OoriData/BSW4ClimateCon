@@ -3,6 +3,7 @@ Helper routines for PostgresQL (PG) DB access.
 '''
 import                           logging
 from datetime                    import datetime
+from uuid                        import UUID, uuid4
 
 import                           asyncpg
 from ogbujipt.embedding.pgvector import DataDB, PGVectorHelper
@@ -17,11 +18,11 @@ logger = logging.getLogger(__name__)  #This is the only logging config needed he
 # PG only supports proper query arguments (e.g. $1, $2, etc.) for values, not for table or column names
 # Table names are checked to be legit sequel table names, and embed_dimension is assured to be an integer
 
-Recent_MOTD = '''
+RECENT_MOTD = '''
 SELECT * FROM {table_name} WHERE date_sent IS NULL ORDER BY date_posted LIMIT 1;
 '''
 
-Create_MOTD = '''
+CREATE_MOTD = '''
 CREATE TABLE IF NOT EXISTS {table_name} (
         id SERIAL PRIMARY KEY,
         date_posted DATE NOT NULL,
@@ -30,7 +31,7 @@ CREATE TABLE IF NOT EXISTS {table_name} (
     )
 '''
 
-Update_MOTD = '''
+UPDATE_MOTD = '''
 UPDATE {table_name}
             SET date_sent = $1
             WHERE id = $2
@@ -70,7 +71,7 @@ class MotDDBHelper:
         async with self.wrapper.pool.acquire() as conn:
             async with conn.transaction():
                 await conn.execute(
-                    Create_MOTD.format(table_name = self.motd_table_name)
+                    CREATE_MOTD.format(table_name = self.motd_table_name)
                 )
 
     async def get_motd(self):
@@ -81,11 +82,11 @@ class MotDDBHelper:
         async with self.wrapper.pool.acquire() as conn:
             async with conn.transaction():
                 motd = await conn.fetch(
-                    Recent_MOTD.format(table_name=self.motd_table_name)
+                    RECENT_MOTD.format(table_name=self.motd_table_name)
                 )
                 if len(motd) != 0:
                     await conn.execute(
-                        Update_MOTD.format(table_name=self.motd_table_name), timedate, motd[0]['id']
+                        UPDATE_MOTD.format(table_name=self.motd_table_name), timedate, motd[0]['id']
                     )
         
         return motd
