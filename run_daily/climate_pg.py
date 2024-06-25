@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)  #This is the only logging config needed he
 # Table names are checked to be legit sequel table names, and embed_dimension is assured to be an integer
 
 CREATE_MOTD = '''
-CREATE TABLE IF NOT EXISTS {table_name} (
+CREATE TABLE IF NOT EXISTS {db_prefix}_{db_version}_MOTD (
     id SERIAL PRIMARY KEY,
     date_posted DATE NOT NULL,
     message TEXT NOT NULL,
@@ -31,7 +31,7 @@ RECENT_MOTD = '''
 SELECT
     *
 FROM
-    {table_name}
+    {db_prefix}_{db_version}_MOTD
 WHERE
     date_sent IS NULL 
 ORDER BY 
@@ -42,7 +42,7 @@ LIMIT 1
 
 UPDATE_MOTD = '''
 UPDATE
-    {table_name}
+    {db_prefix}_{db_version}_MOTD
 SET
     date_sent = $1
 WHERE
@@ -84,7 +84,7 @@ class MotDDBHelper:
         async with self.wrapper.pool.acquire() as conn:
             async with conn.transaction():
                 await conn.execute(
-                    CREATE_MOTD.format(table_name = self.motd_table_name)
+                    CREATE_MOTD.format(db_prefix=DB_PREFIX, db_version=DB_VERSION)
                 )
 
     async def get_motd(self):
@@ -95,11 +95,13 @@ class MotDDBHelper:
         async with self.wrapper.pool.acquire() as conn:
             async with conn.transaction():
                 motd = await conn.fetch(
-                    RECENT_MOTD.format(table_name=self.motd_table_name)
+                    RECENT_MOTD.format(db_prefix=DB_PREFIX, db_version=DB_VERSION)
                 )
-                if len(motd) != 0:
+                if motd:
                     await conn.execute(
-                        UPDATE_MOTD.format(table_name=self.motd_table_name), timedate, motd[0]['id']
+                        UPDATE_MOTD.format(db_prefix=DB_PREFIX, db_version=DB_VERSION),
+                            timedate,
+                            motd[0]['id']
                     )
         
         return motd
