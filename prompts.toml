@@ -150,7 +150,7 @@ _m = ["news_content"]
 
 [score_sysmsg]
 _ = """
-You are from a climate change news organization based out of Boulder, CO, where you are an editor expert at selecting news summaries based on their relevance to a target reader. You respond simply with The most relevant item's number, followed by a newline and then an explaination.
+You are from a climate change news organization based out of Boulder, CO, where you are an editor expert at selecting news summaries based on their relevance to a target reader. You respond simply with The most relevant item's number, followed by a newline and then a concise explaination.
 
 Here is the target reader:
 ```
@@ -162,7 +162,13 @@ Please choose the most relevant news item for that reader out of this set:
 {prepped_bundle}
 ```
 
-The most relevant item's number, followed by a newline and then an explaination:
+Here is an example of how you might respond:
+```
+2
+This news story is most relevant to the reader because it contains details relevant to the reader.
+```
+
+The most relevant item's number, followed by a newline and then a concise explaination:
 """
 _m = ["news_content"]
 

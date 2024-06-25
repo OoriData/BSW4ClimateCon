@@ -3,7 +3,6 @@ Helper routines for PostgresQL (PG) DB access.
 '''
 import                           logging
 from datetime                    import datetime
-from uuid                        import UUID, uuid4
 
 import                           asyncpg
 from ogbujipt.embedding.pgvector import DataDB, PGVectorHelper
