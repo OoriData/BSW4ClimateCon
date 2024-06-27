@@ -1,6 +1,6 @@
 # 10minclimate.com
 
-At the [Boulder Startup Week](https://boulderstartupweek.com/) Builder's Room Uche Ogbuji ([Oori Data](https://oori.dev)) had a simple idea: build a simple tool to regularly grab and select climate-related news, and bring these to a subscriber's attention alongside a few relevant action items—so it's not just downer after downer, but a way to feel involved and conscious. Before he knew it, he had a team of 9 folks interested in pitching in, over the course of a 20 hour sprint. We shipped a prototype, came in 2nd place, and 10minclimate.com was born. One inspiration for the project is [ClimateCon!](https://climatecon.world/), a conference in Boulder, a few weeks after BSW (31 May 2024).
+At [Boulder Startup Week](https://boulderstartupweek.com/) Builder's Room Uche Ogbuji ([Oori Data](https://oori.dev)) had a simple idea: build a simple tool to regularly grab and select climate-related news, and bring these to a subscriber's attention alongside a few relevant action items—so it's not just downer after downer, but a way to feel involved and conscious. Before he knew it, he had a team of 9 folks interested in pitching in, over the course of a 20 hour sprint. We shipped a prototype, came in 2nd place, and 10minclimate.com was born. One inspiration for the project is [ClimateCon!](https://climatecon.world/), a conference in Boulder, a few weeks after BSW (31 May 2024).
 
 The project continues, and we hope it will continue to be of use to busy people who care about the climate, and need an affirmative way to keep engaged.
 
@@ -33,6 +33,8 @@ Code structure:
 * For this BSW Builder sprint it will just be all-in-one run-daily command (presumed via cron)
 
 -->
+
+10minclimate.com does run on an LLM workload, and it's well known that [AI itself has a Climate Change problem](https://builtin.com/artificial-intelligence/ai-climate-change-dilemma). We ran (courtesy [Zachariah Malik](https://github.com/ZaMalik123) ([LinkedIn](https://www.linkedin.com/in/zachariah-malik-74a13a190/))) some numbers to see that on the M1 Mac Studio we're using to host its LLM inference, the CO₂ contribution is less than that of one person breathing.
 
 # Implementation
 
