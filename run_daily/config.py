@@ -18,7 +18,7 @@ E_MODEL = SentenceTransformer('all-mpnet-base-v2')  # Load the embedding model
 DEFAULT_DOTS_SPACING = 0.2  # Number of seconds between each dot printed to console
 
 SEARCH_SETS = [
-    'boulder climate change news',
+    'climate',
 ]
 
 SERPS_PATH = Path('./workspace')
@@ -41,7 +41,7 @@ CALL_ATTEMPTS = 6
 BUNDLE_SIZE = 6  # size of tournament rounds for narrowing down articles
 
 # Prompts & other natural language
-with open('prompts.toml', mode='rb') as fp:
+with open('prompt/prompt_frames.toml', mode='rb') as fp:
     PROMPT = word_loom.load(fp)
 
 # PGVector connection

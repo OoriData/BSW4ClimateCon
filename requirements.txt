@@ -11,3 +11,4 @@ mailchimp_marketing
 utiloori
 python-dotenv
 markdown
+toml

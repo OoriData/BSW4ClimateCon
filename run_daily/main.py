@@ -16,6 +16,7 @@ For AWS Lambda entry point, we'll probbaly set up a function parallel to `async_
 import sys
 import json
 import asyncio
+import toml
 from pathlib import Path
 from datetime import datetime, date, timedelta
 
@@ -132,22 +133,28 @@ async def init_DB():
     DB = climate_pg.DB = db
 
 
-async def async_main(sterms, dryrun, set_date):
+async def async_main(topic, dryrun, set_date):
     '''
     Entry point (for cmdline, for now)
     Takes search engine results & launches the main task to pull & process news
     '''
     await init_DB()
 
-    if sterms is None:
-        search_sets = SEARCH_SETS
-    else:
-        search_sets = [sterms]
-
     today = date.today() if set_date is None else date.fromisoformat(set_date)
 
+    prompt_file = f"prompt/{topic}_prompts.toml"
+    with open(prompt_file, 'r') as f:
+        prompt_content = toml.load(f)
+
+    search_term = prompt_content['search_term']
+
+    if not isinstance(search_term, list):
+        seach_term = [search_term]
+
+    
+
     search_tasks = asyncio.gather(*[
-        asyncio.create_task(do_sxng_news_search(sterm)) for sterm in search_sets])
+        asyncio.create_task(do_sxng_news_search(topic)) for topic in [topic]])
 
     indicator_task = asyncio.create_task(indicate_progress())
     tasks = [indicator_task, search_tasks]
@@ -237,14 +244,14 @@ async def async_test(content):
               help='Don\'t actually send e-mail blast, but always generate & pop-up HTML output.')
 @click.option('--set-date',
               help='Run as if on the given date (in ISO8601 format). Only use with --dry-run flag.')
-@click.argument('sterms', required=False)
-def main(sterms, testfile, dry_run, dry_run_web, set_date):
-    # print('Args:', (sterms, testfile, dry_run))
+@click.argument('topic', type=click.Choice(SEARCH_SETS), required=True)
+def main(topic, testfile, dry_run, dry_run_web, set_date):
+    # print('Args:', (topic, testfile, dry_run))
     if set_date: assert dry_run or dry_run_web  # noqa: E701
     if testfile:
         asyncio.run(async_test(testfile))
     else:
-        asyncio.run(async_main(sterms, dry_run, set_date))
+        asyncio.run(async_main(topic, dry_run, set_date))
 
 
 if __name__ == '__main__':

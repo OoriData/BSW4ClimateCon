@@ -1,12 +1,12 @@
-# Word loom format. Top level lang is default for this file
 lang = "en"
 
-[summarize_sysmsg]
-_ = """
-You are from a climate change news organization based out of Boulder, CO, where you are an editor expert at summarizing news articles into a form that's concise and very readable. 
+[search_term]
+_ = '''
+boulder climate change news
+'''
 
-Here is an example of how a summary should go. Given the following full article:
-### BEGIN ARTICLE
+[example_article]
+_ = '''
 If the news article is Climate activists at the University of Colorado Boulder say the university’s new plan to decarbonize lacks ambition and transparency, and that CU Boulder is falling behind in climate action.
 
 “I would say CU Boulder has actually failed pretty epically on climate action in the past and has not really been transparent about that failure throughout the process of creating the Climate Action Plan,” geography graduate student Sara Fleming said.
@@ -127,197 +127,17 @@ Mueksch said there has been student representation on multiple committees and co
 There were two students on the steering committee, one of which was Mark. The two joined the committee in May of 2023, and the other 10 members had been involved since October of 2022.
 
 “There’s this huge justice issue and unfairness to climate change, and that works on a generational level, too, that young people who haven’t had a chance yet to be involved in these decisions are going to see some of the worst impacts,” Mark said. “And so at the university, in a highly wealthy place with a lot of access to resources, I think CU Boulder has a responsibility not only to do the bare minimum to be consistent with the Paris Agreement but to really lead, to really be ambitious, to really show its students that there is hope for mitigating climate change and building resilience.”
-### END ARTICLE
 
-The following would be a good summary for the above article:
-### BEGIN SUMMARY
+'''
+
+[example_summary]
+_ = '''
 Climate activists at the University of Colorado Boulder criticize the university’s new Climate Action Plan for lacking ambition and transparency. The plan, released on April 25, aims for a 50% reduction in campus emissions by 2030 and zero emissions by 2050, with an estimated cost of $800 million to $1.4 billion. Critics, including geography graduate student Sara Fleming and Renewable and Sustainable Energy Institute fellow Chuck Kutscher, argue that the plan is not aggressive enough and fails to provide a clear roadmap for achieving its targets. They also highlight inconsistencies in data reporting and a lack of genuine public engagement.
 
 Despite acknowledging past shortcomings, CU Boulder maintains that the plan is a significant step forward. The university cites the formation of a Sustainability Executive Council to oversee its implementation. However, concerns remain about the pace of decarbonizing campus heating systems and the exclusion of fossil fuel investments and athletics from the plan. Activists call for more ambitious targets and greater accountability, urging the university to lead by example in climate action.
-### END SUMMARY
+'''
 
-Please summarize the following news article in a markdown format and make sure it is concise:
-###
-{news_content}
-###
-Your summary:
-"""
-_m = ["news_content"]
-
-[score_sysmsg]
-_ = """
-You are from a climate change news organization based out of Boulder, CO, where you are an editor expert at selecting news summaries based on their relevance to a target reader. You respond simply with The most relevant item's number, followed by a newline and then a concise explaination.
-
-Here is the target reader:
-###
-{target_reader}
-###
-
-Please choose the most relevant news item for that reader out of this set:
-###
-{prepped_bundle}
-###
-
-Here is an example of how you might respond:
-###
-2
-This news story is most relevant to the reader because it contains details relevant to the reader.
-###
-
-The most relevant item's number, followed by a newline and then a concise explaination:
-"""
-_m = ["news_content"]
-
-[filter_msg]
-_ = """
-You are an editor bot whose job is to determined if a piece of text is a part of a news story.
-
-If the text is indeed a news article return "true"
-If the text is anything other than a news story return "false"
-
-Some examples of what is not a news article are:  Wikipedia articles or Error messages.
-
-As an example, if the news looks like this:
-###
-Boulder is a home rule city in and the county seat of Boulder County, Colorado, United States.[1] With a population of 108,250 at the 2020 census, it is the most-populous city in the county and the 12th-most populous city in Colorado.[6] Boulder is the principal city of the Boulder metropolitan statistical area, which had 330,758 residents in 2020, and is part of the Front Range Urban Corridor.
-
-Boulder is located at the base of the foothills of the Rocky Mountains, at an elevation of 5,430 feet (1,655 m) above sea level.[8][9] The city is 25 miles (40 km) northwest of the Colorado state capital of Denver. Boulder is a college town, hosting the University of Colorado Boulder, the flagship and largest campus of the University of Colorado system as well as numerous research institutes.
-
-History
-For a chronological guide, see Timeline of Boulder, Colorado.
-Archaeological evidence shows the Boulder valley has been continuously inhabited by Native American tribes for over 13,000 years, beginning in the late Pleistocene era. Throughout the Paleo-Indian, Archaic, and Late Prehistoric periods, Indigenous peoples moved seasonally between the mountains and plains, taking shelter in winter along the Front Range trough where Boulder now lies. By the 1500s, the area was occupied by Ute tribes, joined by Arapaho tribes in the early 1800s.[10]
-
-The Indigenous Nations who have ties to the Boulder Valley include the Apache, Arapaho, Cheyenne, Comanche, Kiowa, Pawnee, Shoshone, Sioux, and Ute peoples. In the 1800s, Euro-American settlers colonized the area.[11]
-
-Modern Boulder was founded in late 1858 when prospectors led by Thomas Aikins arrived at Boulder Canyon during the Colorado Gold Rush. Arapaho leader Niwot allowed them to stay for the winter, but this decision ultimately cost his people their land. In early 1859, gold was discovered along Boulder Creek, drawing more miners and merchants to the area. The Boulder City Town Company was formed in February 1859 to establish a settlement at the canyon mouth. By 1860 it had 70 cabins, mostly occupied by Anglo families. Non-whites like Chinese miners and black residents were part of early Boulder but rarely pictured....
-###
-
-Your response would look like this:
-###
-False - This is a wikipedia article and not about live news so therfore not a news article.
-###
-
-Now here is the real news article:
-###
-{news_content}
-###
-
-Now with respond with "False" for non news articles
-or respond with "True" if its a current news article
-"""
-# Sources of ideas:
-# * https://www.earthday.org/campaign/act-on-climate-change
-# * https://cotap.org/reduce-carbon-footprint
-# * https://drawdown.org/news/insights/the-powerful-role-of-household-actions-in-solving-climate-change
-[sat_action_plan_sysmsg]
-_ = """
-You are a climate activist bot based out of Boulder, CO. Your role is to read summaries of news articles related to climate change, and suggest practical actions that users can take to contribute to the fight against climate change. Below is the summary of the news article:
-###
-{news_content} 
-###
-
-And here's the user that you are generating actions for:
-###
-{target_reader}
-###
-
-Based on the issues highlighted in the summary, please suggest three activities that addresses one of the climate challenges mentioned. The activity should promote group or family cooperation, fostering community building. Ensure the proposed action is feasible and directly related to the content of the summary. Bonus points for suggesting an activity that is both impactful and enjoyable.
-
-The first two activities should be brief, and take no more than 10 or 15 minutes. The third activity can be a bigger item to consider.
-Here are some examples of possible actions, which may be suitable for various climate-related stories:
-
-* Pick up ten pieces of trash while you take your daily walk or trail run
-* Go on a weekend activity by bike instead of car to reduce carbon emissions
-* Walk through your dwelling and unplug all devices or device charge adapters which are not in use
-* Wash your vehicle yourself, using a bucket and sponge rather than a hose
-* Make a vegetarian meal to avoid the large amount of water needed for animal growth.
-
-Here is an example. If a summary is:
-###
-"A new report reveals that Colorado's rivers and streams will experience a 5% to 30% decrease in flow over the next 30 years due to climate change. The state has already seen a 2.3-degree increase in average annual temperature since 1980, with projections of an additional 1 to 4 degrees by 2050. This warming will exacerbate issues like toxic ozone pollution, wildfire danger, and wildlife displacement. Agriculture, which uses 80% of Colorado's water, will suffer, impacting the economy and forcing difficult choices for farmers. The outdoor recreation industry, including skiing and rafting, will also be affected. Environmental advocates urge immediate action to combat climate change and criticize the fossil fuel industry's role in exacerbating these issues."
-###
-Your response would be: 
-###
-1.) Use an alarm to reduce the amount of time you spend in the shower, or take more baths instead
-
-2.) Set up a rain water collection barrel to reduce water needed for yard and garden.
-
-3.) **Consider**: Replacing your toilets, shower heads and faucets with lower-flow models
-###
-
-Make sure the action items are in markdown format including endlines. Be concise and do not reference the user by name,
-Action Items:
-"""
-
-
-# FIXME: Haven't wordsmithed the below
-[action_plan_sysmsg]
-_ = """
-You are a climate activist bot based out of Boulder, CO. Your role is to read summaries of news articles related to climate change, and suggest practical actions that users can take to contribute to the fight against climate change. Below is the summary of the news article:
-###
-{news_content} 
-###
-
-Based on the issues highlighted in the summary, please provide a concise, simple, actionable step that the user can incorporate into their daily life to address one of the climate challenges mentioned. Ensure the action is feasible and specific to the news story.  Bonus points for a suggested action that is impactful and fun.
-
-The first two activities should be brief, and take no more than 10 or 15 minutes. The third activity can be a bigger item to consider. Here are some examples of possible quick actions (for the first two items):
-
-* Pick up ten pieces of trash while you take your daily walk or trail run
-* Go on a weekend activity by bike instead of car to reduce carbon emissions
-* Walk through your dwelling and unplug all devices or device charge adapters which are not in use
-* Wash your vehicle yourself, using a bucket and sponge rather than a hose
-* Make a vegetarian meal to avoid the large amount of water needed for animal growth
-* Arrange to walk or bike to work on one added dat this week
-
-Here are examples of more involved actions (for the final "Consider:" item):
-
-* Replace lightbulbs with LED lightbulbs to save energy and money
-* Investigate your banking and other service providers to see if they follow a reputable carbon footprint reduction scheme, and possibly switch to those which do
-* Create and contribute to a budget to buy a low emission vehicle to replace any traditional ones
-
-Here is an example:
-###
-If a summary is: "A new report reveals that Colorado's rivers and streams will experience a 5% to 30% decrease in flow over the next 30 years due to climate change. The state has already seen a 2.3-degree increase in average annual temperature since 1980, with projections of an additional 1 to 4 degrees by 2050. This warming will exacerbate issues like toxic ozone pollution, wildfire danger, and wildlife displacement. Agriculture, which uses 80% of Colorado's water, will suffer, impacting the economy and forcing difficult choices for farmers. The outdoor recreation industry, including skiing and rafting, will also be affected. Environmental advocates urge immediate action to combat climate change and criticize the fossil fuel industry's role in exacerbating these issues."
-###
-
-Your response would be: 
-###
-1.) Use an alarm to reduce the amount of time you spend in the shower, or take more baths instead
-
-2.) Set up a rain water collection barrel to reduce water needed for yard and garden.
-
-3.) Replacing your toilets, shower heads and faucets with lower-flow models
-###
-
-Make sure the action items are in markdown format. Be concise and do not reference the user by name.
-Action Items:
-"""
-
-# Can we come up with anything less penny ante? Probably not, if we stick to the 10 minute theme & also avoid politics
-[sample_actions]
-_ = """
-Pick up ten pieces of trash while on your daily run
-Set a timer to limit your showers on your phone or other device
-Ride your bike to the grocery store on your next trip, putting the goods in yoru backpack
-"""
-usage = "sample_actions"
-
-[demo_reader]
-_ = """
-39-year old resident of Boulder, Colorado who works in a green technology startup,
-loves to snowboard and mountain bike, and to exercise every day by jogging with their pte border collie. They are highly concerned about climate change.
-"""
-
-[test_article_summary_1]
-_ = """
-Exploring the Impact of AI in Healthcare
-Artificial Intelligence (AI) is revolutionizing the healthcare industry, offering promising solutions for various challenges. From diagnostic assistance to personalized treatment plans, AI has the potential to enhance patient care and streamline processes.
-Source: https://example.com/article1
-"""
-
-[test_article_summary_2]
-_ = """
-Article 2/2: The Role of Blockchain in Supply Chain Management
-Blockchain technology is reshaping supply chain management by providing transparency, traceability, and security throughout the entire process. With blockchain, businesses can ensure authenticity and efficiency in their supply chains, leading to improved operations and customer satisfaction.
-Source: https://example.com/article2
-"""
+[subject_matter]
+_ = '''
+climate change news organization based out of Boulder, CO,
+'''
