@@ -79,13 +79,13 @@ async def filter_news(news_batch, DB):
 
 
 # FIXME: Needs to be rethought (async requests?)
-async def summarize_news(news_batch):
+async def summarize_news(news_batch, prompt_content):
     '''
     get summary of the news item from LLM
     '''
     for item in news_batch:
         print(ansi_color(f'\nSummarizing news item "{item["title"]}" (using {SUMMARIZATION_LLM_URL})...', 'yellow'))
-        call_prompt = PROMPT['summarize_sysmsg'].format(news_content=item['content'])
+        call_prompt = PROMPT['summarize_sysmsg_frame'].format(subject_matter = prompt_content['example_article']['_'], example_summary = prompt_content['example_summary'], news_content = item['content'])
 
         response = (await try_func(
             SUMMARIZATION_LLM,
@@ -230,7 +230,7 @@ async def write_news_to_DB(news_batch, DB):
     await DB.news.conn.insert_many(bundled_news_batch)
 
 
-async def async_main(searxng_JSON, DB):
+async def async_main(searxng_JSON, DB, prompt_content):
     print(ansi_color('\nProcessing searxng results to Database:', 'yellow'))
 
     print(ansi_color('Processing searxng results JSON...', 'yellow'))
@@ -239,7 +239,7 @@ async def async_main(searxng_JSON, DB):
 
     news_batch = await filter_news(news_batch, DB)
 
-    news_batch = await summarize_news(news_batch)
+    news_batch = await summarize_news(news_batch, prompt_content)
 
     # news_batch = await generate_batch_action_items(news_batch)
     

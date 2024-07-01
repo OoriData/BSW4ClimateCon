@@ -6,6 +6,7 @@
 import os
 import sys
 from pathlib import Path
+import toml
 
 from ogbujipt import word_loom
 from utiloori.ansi_color import ansi_color
@@ -31,9 +32,9 @@ SEARXNG_ENDPOINT = os.getenv('SEARXNG_ENDPOINT', 'http://localhost:8888/search')
 LIMIT = int(os.getenv('SEARXNG_LIMIT', '3'))  # number of results to process
 
 # LLMs endpoints
-SUMMARIZATION_LLM_URL = os.getenv('SUMMARIZATION_LLM_URL', 'http://localhost:8000')
-SCORING_LLM_URL = os.getenv('SCORING_LLM_URL', 'http://localhost:8000')
-ACTION_GEN_LLM_URL = os.getenv('ACTION_GEN_LLM_URL', 'http://localhost:8000')
+SUMMARIZATION_LLM_URL = os.getenv('SUMMARIZATION_LLM_URL', 'http://localhost:9000')
+SCORING_LLM_URL = os.getenv('SCORING_LLM_URL', 'http://localhost:9000')
+ACTION_GEN_LLM_URL = os.getenv('ACTION_GEN_LLM_URL', 'http://localhost:9000')
 
 LLM_TIMEOUT = 90.0
 CALL_ATTEMPTS = 6

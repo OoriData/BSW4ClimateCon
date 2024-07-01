@@ -168,7 +168,7 @@ async def async_main(topic, dryrun, set_date):
     with open(fname, 'rb') as fp:
         searxng_results = json.load(fp)
 
-    await llm_calls.async_main(searxng_results, DB)
+    await llm_calls.async_main(searxng_results, DB, prompt_content)
 
     # Get the news
     date_range = get_past_dates(1)  # FIXME: this will fail to grab sunday's news, presuming a Tuesday-Thursday-Saturday cadence
