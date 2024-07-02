@@ -19,7 +19,7 @@ print(
 
 E_MODEL = SentenceTransformer("all-mpnet-base-v2")  # Load the embedding model
 
-SEARCH_SETS = [
+SUBJECT_LIST = [
     "climate change news boulder",
 ]
 

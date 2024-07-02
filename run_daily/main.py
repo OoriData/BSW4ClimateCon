@@ -28,7 +28,7 @@ from trafilatura import extract
 
 import climate_pg
 import llm_calls
-from config import (try_func, SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SEARCH_SETS, DEFAULT_DOTS_SPACING,
+from config import (try_func, SERPS_PATH, DAYS_TO_RUN, SEARXNG_ENDPOINT, LIMIT, SUBJECT_LIST, DEFAULT_DOTS_SPACING,
                     E_MODEL, DB_NAME, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD)
 from send_campaign_email import create_campaign, test_campaign
 
@@ -186,9 +186,9 @@ async def async_main(topic, dryrun, set_date):
         raise 'No climate news (within specified timeframe) in database!'
 
     print(ansi_color(f'Got {len(climate_news)} from DB. Selecting most relevant item...', 'Blue'))
-    selected_item = await llm_calls.narrow_down_items(climate_news)
+    selected_item = await llm_calls.narrow_down_items(climate_news, prompt_content)
 
-    selected_item = await llm_calls.generate_action_items(selected_item)
+    selected_item = await llm_calls.generate_action_items(selected_item, prompt_content)
 
     # Message from the developers.
     dev_msg, dev_html = '', ''
@@ -244,7 +244,7 @@ async def async_test(content):
               help='Don\'t actually send e-mail blast, but always generate & pop-up HTML output.')
 @click.option('--set-date',
               help='Run as if on the given date (in ISO8601 format). Only use with --dry-run flag.')
-@click.argument('topic', type=click.Choice(SEARCH_SETS), required=True)
+@click.argument('topic', type=click.Choice(SUBJECT_LIST), required=True)
 def main(topic, testfile, dry_run, dry_run_web, set_date):
     # print('Args:', (topic, testfile, dry_run))
     if set_date: assert dry_run or dry_run_web  # noqa: E701

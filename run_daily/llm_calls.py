@@ -85,8 +85,12 @@ async def summarize_news(news_batch, prompt_content):
     '''
     for item in news_batch:
         print(ansi_color(f'\nSummarizing news item "{item["title"]}" (using {SUMMARIZATION_LLM_URL})...', 'yellow'))
-        call_prompt = PROMPT['summarize_sysmsg_frame'].format(subject_matter = prompt_content['example_article']['_'], example_summary = prompt_content['example_summary'], news_content = item['content'])
-
+        # print(prompt_content)
+        call_prompt = PROMPT['summarize_sysmsg_frame'].format(
+            subject_matter = prompt_content['subject_matter']['_'],
+            example_article = prompt_content['example_article']['_'],
+            example_summary = prompt_content['example_summary']['_'],
+            news_content = item['content'])
         response = (await try_func(
             SUMMARIZATION_LLM,
                 prompt_to_chat(call_prompt),
@@ -122,16 +126,16 @@ async def generate_batch_action_items(news_batch, reader_description=PROMPT['dem
     return news_batch
 
 
-async def generate_action_items(item, reader_description=PROMPT['demo_reader']):
+async def generate_action_items(item, prompt_content, reader_description=PROMPT['demo_reader']):
     '''
     have an LLM generate action items for a news item
     '''
     print(ansi_color(f'\nGenerating action items for news item "{item["title"]}"...', 'yellow'))
 
     if date.today().weekday() == 5:
-        call_prompt = PROMPT['sat_action_plan_sysmsg'].format(target_reader=reader_description, news_content=item['summary'])
+        call_prompt = PROMPT['sat_action_plan_sysmsg'].format(subject_matter = prompt_content['subject_matter']['_'], target_reader=reader_description, news_content=item['summary'])
     else:
-        call_prompt = PROMPT['action_plan_sysmsg'].format(target_reader=reader_description, news_content=item['summary'])
+        call_prompt = PROMPT['action_plan_sysmsg'].format(subject_matter = prompt_content['subject_matter']['_'], target_reader=reader_description, news_content=item['summary'])
 
     response = (await try_func(
         ACTION_GEN_LLM,
@@ -150,7 +154,7 @@ def make_bundles(seq, k):
         yield seq[i:i + k]
 
 
-async def narrow_down_call(news_batch, reader_description):
+async def narrow_down_call(news_batch, reader_description, prompt_content):
     if len(news_batch) <= 1:  # Base case: If the news_batch has one or fewer items, return the first item.
         return news_batch[0]
 
@@ -163,7 +167,10 @@ async def narrow_down_call(news_batch, reader_description):
 
     # print(ansi_color(prepped_bundle, bg_color='white'))
 
-    call_prompt = PROMPT['score_sysmsg'].format(prepped_bundle=prepped_bundle, target_reader=reader_description)
+    call_prompt = PROMPT['score_sysmsg'].format(
+        subject_matter = prompt_content['subject_matter']['_'],
+        prepped_bundle=prepped_bundle, 
+        target_reader=reader_description)
 
     response = (await try_func(
         SCORING_LLM,
@@ -185,7 +192,7 @@ async def narrow_down_call(news_batch, reader_description):
     return most_relevant_item
 
 
-async def narrow_down_items(news_batch, reader_description=PROMPT['demo_reader']):
+async def narrow_down_items(news_batch, prompt_content ,reader_description=PROMPT['demo_reader']):
     '''
     Narrow down items and find the best item via recursive elimination.
     '''
@@ -194,9 +201,9 @@ async def narrow_down_items(news_batch, reader_description=PROMPT['demo_reader']
 
     news_bundles = list(make_bundles(news_batch, BUNDLE_SIZE))
 
-    finalists = [await narrow_down_call(bundle, reader_description) for bundle in news_bundles]
+    finalists = [await narrow_down_call(bundle, reader_description, prompt_content) for bundle in news_bundles]
 
-    return await narrow_down_items(finalists, reader_description)  # Recursive call with the finalists
+    return await narrow_down_items(finalists, prompt_content, reader_description)  # Recursive call with the finalists
 
 
 def write_news_to_dated_folder(news_batch):

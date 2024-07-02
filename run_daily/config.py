@@ -18,8 +18,9 @@ E_MODEL = SentenceTransformer('all-mpnet-base-v2')  # Load the embedding model
 
 DEFAULT_DOTS_SPACING = 0.2  # Number of seconds between each dot printed to console
 
-SEARCH_SETS = [
+SUBJECT_LIST = [
     'climate',
+    'food'
 ]
 
 SERPS_PATH = Path('./workspace')

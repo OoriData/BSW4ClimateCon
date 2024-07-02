@@ -1,0 +1,80 @@
+lang = "en"
+
+[search_term]
+_ = '''
+Denver resturaunt and food news
+'''
+
+[example_article]
+_ = '''
+Summer has arrived, and with it, the pace of restaurant closures seems to have slowed down — for now, at least. In June, we reported just four businesses that shuttered, two of which are rebranding. Logan Street Restaurant was closed for less than a week before reopening as Mexican concept Pancho Poncho. And Citizen Rail is being swapped for Ajax Downtown, an offshoot of the original in Aspen; it's slated to debut in August.
+
+Even Enzo's End may make a comeback. Owner Charlie Puma is ready for retirement from the business he ran for nearly three decades but is still searching for someone to buy the brand. One concept that will not be coming back: Harvey Park Grille, which lasted just four months in the former Rosemary Cafe space.
+
+The 21 openings we reported last month were dominated by comebacks and expansions.
+
+Jessie's Smokin' NOLA made its return in Parker after shutting down operations at Max Taps in Centennial last October; Dozens is back in a new downtown location two years after a fire closed its longtime location nearby; Beau Jo's once again has a Denver outpost after closing the last one in 2017. And more than four years after it shuttered for the pandemic, Vine Street welcomed guests back inside once again for burgers, beers and wings.
+EDITOR'S PICKS
+Nine New Options for Eating and Drinking Opened This Week
+Every Opening and Closing This Week: Lobster Rolls at Middleman and More
+Vine Street Celebrates a Successful Opening Weekend
+
+Other local favorites such as Babe's Tea Room, Cerebral Brewing, Huckleberry Roasters, Queen City and Illegal Pete's added locations last month.
+
+But June also saw some exciting new additions, including Rosso Pomodoro. The Italian-born chain may be familiar to anyone who has visited an Eataly location, but now it's brought its Neapolitan pizza expertise to Denver with its first standalone outpost in the U.S.
+
+There's also a new globally inspired steakhouse, Carne, from chef Dana Rodriguez, and a new affordable lunch option downtown complete with a salad bar, J&T’s Family Kitchen.
+
+Here's the complete list of restaurants and bars that opened and closed in June:*
+RELATED
+Every Opening This Week: Dozens and Beau Jo's Are Back in Denver and More
+
+ribeye asada with a green sauce and roasted tomatoes
+Ribeye asada with papas enchiladas, grilled onion, roasted tomatoes and cilantro chimichurri from Pancho Poncho.
+Pancho Poncho/Istagram
+Openings
+Babe's Tea Room, 1027 Washington Avenue, Golden
+Beau Jo's,  2110 South University Boulevard
+Carne, 2601 Larimer Street
+Cerebral Brewing, 9990 East Colfax Avenue, Aurora
+Dillon’s Dumpling House, 3571 South Tower Road, Aurora
+Downhill Brewing, 9672 East Arapahoe Road, Greenwood Village
+Dozens, 323 14th Street
+Embers Lodge Bar and The Fortunate Prospector at Gaylord Rockies, 6700 North Gaylord Rockies Boulevard, Aurora
+Green Bus Cafe, 1426 East 22nd Avenue
+Huckleberry Roasters, 1406 Larimer Street
+Illegal Pete's, 657 South Broadway, Boulder
+Jessie's Smokin' NOLA, 11061 South Parker Road, Parker
+J&T’s Family Kitchen, 1560 Broadway
+Paris Banh Mi Cafe Bakery, 475 Sable Boulevard, Aurora
+Pancho Poncho, 400 East Seventh Avenue
+Peko Peko at Avanti Boulder, 1401 Pearl Street, Boulder
+Queen City Lakeside, 4999 West 44th Avenue
+Rosso Pomodoro, 7505 East 29th Place
+Vine Street Pub & Brewery, 1700 Vine Street
+Vinnameals, 1500 West Littleton Boulevard, Littleton
+Wanderment Brewing, 800 East 64th Avenue
+
+exterior of a building with a white brick wall and a retro statue on top
+Enzo's End may still make a comeback.
+Molly Martin
+RELATED
+Award-Winning Cidery Snow Capped Opens Western Slope Taproom
+Closures
+Citizen Rail (reopening as Ajax Downtown in August), 1899 16th Street Mall
+Enzo's End, 3424 East Colfax Avenue
+Harvey Park Grille, 2133 South Sheridan Boulevard
+Logan Street Restaurant (replaced by Pancho Poncho), 400 East Seventh Avenue
+
+*Or earlier and not previously reported.
+'''
+
+[example_summary]
+_ = '''
+The pace of restaurant closures in Denver slowed in June, with only four closures reported, two of which are rebranding. Logan Street Restaurant quickly reopened as Pancho Poncho, a Mexican concept, while Citizen Rail will transform into Ajax Downtown by August. Enzo's End may return under new ownership, but Harvey Park Grille has permanently closed after just four months. June saw 21 restaurant openings dominated by comebacks and expansions, including Jessie's Smokin' NOLA, Dozens, and Vine Street. New additions include Rosso Pomodoro, Carne by chef Dana Rodriguez, and J&T’s Family Kitchen offering affordable lunch options downtown.
+'''
+
+[subject_matter]
+_ = '''
+Food and resturaunt enthusiast out of denver/boulder colorado.
+'''

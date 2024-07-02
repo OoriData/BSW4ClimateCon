@@ -193,7 +193,7 @@ usage = "sample_actions"
 [demo_reader]
 _ = """
 39-year old resident of Boulder, Colorado who works in a green technology startup,
-loves to snowboard and mountain bike, and to exercise every day by jogging with their pte border collie. They are highly concerned about climate change.
+loves to snowboard and mountain bike, and to exercise every day by jogging with their pte border collie.
 """
 
 [test_article_summary_1]
